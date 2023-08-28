@@ -99,10 +99,8 @@ class Volunteer(db.Model):
 class Rating(db.Model):
     id = db.Column(db.Integer, primary_key=True)   
     rating = db.Column(db.Integer)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
-    user = db.relationship('User')
-    # rating_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
-    # user = db.relationship('User')
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship('User', backref=db.backref('ratings'))
 
     def __repr__(self):
         return f'<Rating {self.rating}>'
