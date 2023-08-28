@@ -1,5 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
 
+from datetime import datetime
+from sqlalchemy import DateTime
+
 db = SQLAlchemy()
 
 class User(db.Model):
@@ -146,6 +149,7 @@ class TipsPets(db.Model):
         }
     
 
+
 class Animal(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), unique=True, nullable=False)
@@ -156,7 +160,7 @@ class Animal(db.Model):
     # type_of_animal = db.Column(db.Enum, nullable=False)
     description = db.Column(db.String(1000), unique=True, nullable=False)
     # animal_lost = db.Column(db.Enum)
-    # date = db.Column(db.datetime)
+    date = db.Column(DateTime, default=datetime.utcnow, nullable=False)
     contact = db.Column(db.String(1000), unique=True, nullable=False)
     photo = db.Column(db.String(250), unique=True, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
@@ -178,7 +182,7 @@ class Animal(db.Model):
             "is_active": self.is_active,
             "contact": self.contact,
             # "animal_lost": self.animal_lost,
-            # "date": self.date,
+            "date": self.post_date.isoformat()
             # do not serialize the password, its a security breach
         }
     
