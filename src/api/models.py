@@ -104,6 +104,10 @@ class Volunteer(db.Model):
 class Rating(db.Model):
     id = db.Column(db.Integer, primary_key=True)   
     rating = db.Column(db.Integer)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship('User', foreign_keys=[user_id])
+    rated_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    rated = db.relationship('User', foreign_keys=[rated_id])
 
     @validates('rating')
     def validate_rating(self, key, rating):
@@ -111,15 +115,14 @@ class Rating(db.Model):
             raise ValueError("Rating value must be between 1 and 5")
         return rating
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    user = db.relationship('User', backref=db.backref('ratings'))
-
     def __repr__(self):
         return f'<Rating {self.rating}>'
     
     def serialize(self):
         return {
             "rating": self.rating,
+            "user":self.user_id,      
+            "rated":self.rated_id
         }
     
 

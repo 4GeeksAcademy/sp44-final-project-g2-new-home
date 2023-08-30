@@ -8,7 +8,7 @@ class CustomUsersModelView(ModelView):
     column_list = ['id', 'email', 'is_active', 'role', 'rating']
 
 class CustomRatingModelView(ModelView):
-    column_list = ['rating']
+    column_list = ['rating', 'user', 'rated']
 
 def setup_admin(app):
     app.secret_key = os.environ.get('FLASK_APP_KEY', 'sample key')
