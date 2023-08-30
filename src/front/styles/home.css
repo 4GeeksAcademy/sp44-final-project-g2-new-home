@@ -1,7 +1,61 @@
-/*
-    home.css: This website contains selectors only used in home.css
+/* BOTONES */
+a:hover {
+    background: #03e9f4;
+    color: #050801;
+    box-shadow: 0 0 5px #03e9f4,
+                0 0 25px #03e9f4,
+                0 0 50px #03e9f4,
+                0 0 200px #03e9f4;
+    -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
+}
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+.navbar-brand:nth-child(1) {
+    filter: hue-rotate(270deg);
+}
+
+.navbar-brand:nth-child(2) {
+    filter: hue-rotate(110deg);
+}
+
+.navbar-brand span {
+    position: absolute;
+    display: block;
+}
+
+.navbar-brand {
+    margin: 5px;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 30px;
+    margin-top: 25px;
+}
+
+/* LOGO */
+.logo {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 0;
+    max-height: 300px;
+    z-index: 100;
+}
+
+/* MEDIA QUERY PARA CAMBIAR TAMAÑO LOGO DEPENDIENDO DE PANTALLA */
+@media (max-width: 767.98px) {
+    .logo {
+        max-height: 100px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1399.98px) {
+    .logo {
+        max-height: 200px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .logo {
+        max-height: 300px;
+    }
+}
+
