@@ -1,6 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from sqlalchemy import DateTime
+from sqlalchemy.orm import validates
+
 
 db = SQLAlchemy()
 
@@ -9,7 +11,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    role = db.Column(db.Enum('Volunteer', 'Admin', 'AnimalShelter', 'Person', name='role'), nullable=False)
+    role = db.Column(db.Enum('Admin', 'AnimalShelter', 'Person', name='role'), nullable=False)
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -67,6 +69,7 @@ class AnimalShelter(db.Model):
             "zip_code": self.zip_code,
             "cif": self.cif,
             "web": self.web,
+            "status_animal": self.status_animal
         }
 
 
@@ -101,6 +104,13 @@ class Volunteer(db.Model):
 class Rating(db.Model):
     id = db.Column(db.Integer, primary_key=True)   
     rating = db.Column(db.Integer)
+
+    @validates('rating')
+    def validate_rating(self, key, rating):
+        if not (1 <= rating <= 5):
+            raise ValueError("Rating value must be between 1 and 5")
+        return rating
+
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship('User', backref=db.backref('ratings'))
 

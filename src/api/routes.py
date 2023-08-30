@@ -17,6 +17,7 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
+
 @api.route('/users', methods=['POST', 'GET'])
 def handle_users():
     if request.method =='GET':
@@ -35,7 +36,7 @@ def handle_users():
                     email = request_body["email"],
                     password = request_body['password'],
                     is_active = request_body['is_active'],
-                    role = request_body['role']                )
+                    role = request_body['role'])
         db.session.add(user)
         db.session.commit()
         response_body = {
@@ -44,6 +45,7 @@ def handle_users():
             "new_user": request_body}
         # response_body = {"message": "Esto devuelve el POST del endpooint users"}
         return response_body, 200
+
 
 @api.route('/users/<int:id>', methods=['GET', 'PUT', 'DELETE'])
 def handle_user(id):
@@ -75,3 +77,53 @@ def handle_user(id):
                      "user_deleting": id,
                      }
     return response_body, 200
+
+
+# @api.route('/ratings', methods=['POST'])
+# def handle_ratings():
+#     request_body = request.get_json()
+    
+#     rater_id = request_body.get('user_id')
+#     rated_id = request_body.get('user_id')
+#     rating_value = request_body.get('rating')
+    
+#     if rater_id is None or rated_id is None or rating_value is None:
+#         return jsonify({"message": "Invalid request body"}), 400
+    
+#     # Verifica si los usuarios existen y son de los tipos adecuados----
+#     # Obtén los usuarios por sus IDs
+#     rater = User.query.get_or_404(rater_id)
+#     rated = User.query.get_or_404(rated_id)
+
+#     # Verifica que los roles sean los adecuados
+#     allowed_roles = ['Person', 'AnimalShelter']
+#     if rater.role not in allowed_roles or rated.role not in allowed_roles:
+#         return jsonify({"message": "Invalid user roles"}), 400
+
+    
+#     # Valida que el rater y el rated tengan roles coincidentes
+#     if rater.role != rated.role:
+#         return jsonify({"message": "Rater and rated must have the same role"}), 400
+    
+#     # Validar que el rater no esté votando a sí mismo
+#     if rater_id == rated_id:
+#         return jsonify({"message": "Users cannot rate themselves"}), 400
+    
+#     # Validar que el valor de la valoración esté entre 1 y 5
+#     if not (1 <= rating_value <= 5):
+#         return jsonify({"message": "Rating value must be between 1 and 5"}), 400
+    
+#     new_rating = Rating(rater_id=rater_id, rated_id=rated_id, rating=rating_value)
+    
+#     db.session.add(new_rating)
+#     db.session.commit()
+    
+#     response_body = {
+#         "message": "Rating added successfully",
+#         "status": "ok",
+#         "new_rating": new_rating.serialize()
+#     }
+    
+#     return response_body, 201
+
+
