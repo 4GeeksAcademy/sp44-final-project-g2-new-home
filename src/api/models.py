@@ -1,5 +1,4 @@
 from flask_sqlalchemy import SQLAlchemy
-
 from datetime import datetime
 from sqlalchemy import DateTime
 
@@ -10,6 +9,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    role = db.Column(db.Enum('Volunteer', 'Admin', 'AnimalShelter', 'Person', name='role'), nullable=False)
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -18,6 +18,7 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
+            "role":self.role
             # do not serialize the password, its a security breach
         }
 
@@ -50,6 +51,7 @@ class AnimalShelter(db.Model):
     zip_code = db.Column(db.String(10), unique=True, nullable=False)
     cif = db.Column(db.String(20), unique=True, nullable=False)
     web = db.Column(db.String(100), unique=True, nullable=False)
+    status_animal = db.Column(db.Enum('Lost', 'Found', 'Adopted', name='adopted'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
     user = db.relationship('User')
 
