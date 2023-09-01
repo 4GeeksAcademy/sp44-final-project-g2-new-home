@@ -1,37 +1,175 @@
+/* Estilos generales */
+.navbar-brand {
+    padding: 10px 20px;
+    margin: 10px 20px;
+}
+
+/* Media query para la navbar en pantallas grandes (1400px en adelante) */
+@media (min-width: 1400px) {
+    .navbar-brand {
+        padding: 20px 20px;
+        margin: 20px 20px;
+    }
+}
+
+/* Media query para la navbar en pantallas medianas (768px a 1399.98px) */
+@media (min-width: 768px) and (max-width: 1399.98px) {
+    .navbar-brand {
+        padding: 15px 20px;
+        margin: 15px 20px;
+    }
+}
+
+/* Media query para la navbar en pantallas pequeñas (hasta 767.98px) */
+@media (max-width: 767.98px) {
+    .navbar-brand {
+        display: none; /* Oculta los botones de navegación en pantallas pequeñas */
+    }
+
+    /* Estilos para el menú desplegable en pantallas pequeñas */
+    .navbar-collapse {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #000; /* Cambia el color de fondo a tu preferencia */
+    }
+
+    .navbar-toggler {
+        display: block;
+    }
+
+    .navbar-toggler.active + .navbar-collapse {
+        display: block;
+    }
+
+    .navbar-brand {
+        display: block;
+        padding: 10px;
+        margin: 0;
+        border-bottom: 1px solid #fff; /* Línea separadora entre elementos */
+    }
+
+    .navbar-brand:last-child {
+        border: none; /* Elimina el borde inferior del último elemento */
+    }
+}
+
+#openSearchButton {
+    margin-left: 10px;
+    margin-right: 10px;
+    float: right;
+}
+
+/* Estilos adicionales para la navbar */
+.navbar {
+    background: #000000; 
+}
+
 /* BOTONES */
 a:hover {
     background: #03e9f4;
     color: #050801;
-    box-shadow: 0 0 5px #03e9f4,
+    box-shadow: 0 0 10px #03e9f4,
                 0 0 25px #03e9f4,
                 0 0 50px #03e9f4,
                 0 0 200px #03e9f4;
     -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
+    border-radius: 10px;
 }
 
 .navbar-brand:nth-child(1) {
-    filter: hue-rotate(270deg);
+    filter: hue-rotate(270deg); 
 }
 
 .navbar-brand:nth-child(2) {
-    filter: hue-rotate(110deg);
+    filter: hue-rotate(110deg); 
 }
 
-.navbar-brand span {
-    position: absolute;
-    display: block;
+.navbar-brand:nth-child(3) {
+    filter: hue-rotate(50deg); 
 }
 
-.navbar-brand {
-    margin: 5px;
-    margin-left: 50px;
-    margin-right: 50px;
-    margin-bottom: 30px;
-    margin-top: 25px;
+.navbar-brand:nth-child(4) {
+    filter: hue-rotate(180deg); 
+}
+
+.navbar-brand:nth-child(5) {
+    filter: hue-rotate(300deg); 
+}
+
+.navbar-brand:nth-child(6) {
+    filter: hue-rotate(20deg); 
+}
+
+.navbar-brand:nth-child(1),
+.navbar-brand:nth-child(2),
+.navbar-brand:nth-child(3),
+.navbar-brand:nth-child(4),
+.navbar-brand:nth-child(5),
+.navbar-brand:nth-child(6) {
+    padding: 5px 10px;
+    margin: 40px 40px;
+}
+
+/* Estilos para el modal de búsqueda */
+.search-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    z-index: 1000;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 100%;
+}
+
+.search-modal .modal-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.search-modal select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.search-modal .modal-footer {
+    padding: 0;
+    justify-content: flex-end;
+    border-top: none;
+}
+
+.search-modal button {
+    padding: 10px 20px;
+    margin-left: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-modal button.btn-close {
+    background-color: transparent;
+    color: #333;
+    padding: 0;
+    font-size: 1.5rem;
+}
+
+.search-modal button.btn-close:hover {
+    color: #007bff;
 }
 
 /* LOGO */
-.logo {
+.logo-overlay {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -58,4 +196,3 @@ a:hover {
         max-height: 300px;
     }
 }
-
