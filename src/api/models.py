@@ -1,6 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from sqlalchemy import DateTime
+from sqlalchemy.orm import validates
+
 
 db = SQLAlchemy()
 
@@ -9,7 +11,8 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    role = db.Column(db.Enum('Volunteer', 'Admin', 'AnimalShelter', 'Person', name='role'), nullable=False)
+    role = db.Column(db.Enum('Admin', 'AnimalShelter', 'Person', name='role'), nullable=False)
+    rating = db.Column(db.Integer, default=None)
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -18,7 +21,8 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
-            "role":self.role
+            "role":self.role,
+            "rating": self.rating
             # do not serialize the password, its a security breach
         }
 
@@ -67,6 +71,7 @@ class AnimalShelter(db.Model):
             "zip_code": self.zip_code,
             "cif": self.cif,
             "web": self.web,
+            "status_animal": self.status_animal
         }
 
 
@@ -101,8 +106,18 @@ class Volunteer(db.Model):
 class Rating(db.Model):
     id = db.Column(db.Integer, primary_key=True)   
     rating = db.Column(db.Integer)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    user = db.relationship('User', backref=db.backref('ratings'))
+    sum_total_votes = db.Column(db.Integer)
+    vote_count = db.Column(db.Integer)
+    rater_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    rater = db.relationship('User', foreign_keys=[rater_id])
+    rated_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    rated = db.relationship('User', foreign_keys=[rated_id])
+
+    @validates('rating')
+    def validate_rating(self, key, rating):
+        if not (1 <= rating <= 5):
+            raise ValueError("Rating value must be between 1 and 5")
+        return rating
 
     def __repr__(self):
         return f'<Rating {self.rating}>'
@@ -110,6 +125,10 @@ class Rating(db.Model):
     def serialize(self):
         return {
             "rating": self.rating,
+            "rater":self.rater_id,      
+            "rated":self.rated_id,
+            "vote_count": self.vote_count,
+            "sum_total_votes": self.sum_total_votes
         }
     
 
