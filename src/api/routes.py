@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Volunteer
+from api.models import db, User, Volunteer, ExperiencesBlog
 from api.utils import generate_sitemap, APIException
 
 api = Blueprint('api', __name__)
@@ -140,5 +140,64 @@ def handle_volunteer(id):
       response_body = {"message": "DELETED volunteer",
                        "status": "ok",
                        "volunter_deleting": id,         
+                       }
+      return response_body, 200
+
+@api.route('/experiences', methods=['POST', 'GET'])
+def handle_experiences():
+   if request.method =='GET':
+      # response_body = {"message": "Esto devuelve el get del endpooint experiences"}
+      experiences = db.session.execute(db.select(ExperiencesBlog).order_by(ExperiencesBlog.title)).scalars()
+      results = [item.serialize() for item in experiences]
+      response_body ={
+            "message":"Esto devuelve el endpoint de experiences el GET",
+            "results": results,
+            "status": "ok" }
+      return response_body, 200
+   if request.method =='POST':
+      request_body = request.get_json()
+      print(request_body)
+      experiences = ExperiencesBlog (
+                                     title = request_body["title"],
+                                     body = request_body["body"],
+                                     photo = request_body["photo"])
+      db.session.add(experiences)
+      db.session.commit()
+      response_body = {
+            "message": "Adding new experience",
+            "status": "ok",
+            "new_experience": request_body}
+      # response_body = {"message": "Esto devuelve el POST del endpooint experiences"}
+      return response_body, 200
+
+@api.route('/experiences/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+def handle_experience(id):
+   if request.method == 'GET': 
+      experience = db.get_or_404(ExperiencesBlog, id)
+      print(experience)
+      response_body = {
+          "status": "ok",
+          "results": experience.serialize()
+      }
+      return response_body, 200
+   if request.method == 'PUT':
+      request_body = request.get_json()
+      experience = db.get_or_404(ExperiencesBlog, id)
+      experience.title = request_body["title"]
+      experience.body = request_body["body"]
+      experience.photo = request_body["photo"]
+      db.session.commit() 
+      response_body = {"message" : "Update experience",
+                       "status": "ok",
+                       "experience": request_body
+                       }
+      return response_body, 200
+   if request.method == 'DELETE':  
+      experience = db.get_or_404(ExperiencesBlog, id)
+      db.session.delete(experience)
+      db.session.commit()
+      response_body = {"message": "Delete experience",
+                       "status": "ok",
+                       "experience_deleting": id,
                        }
       return response_body, 200
