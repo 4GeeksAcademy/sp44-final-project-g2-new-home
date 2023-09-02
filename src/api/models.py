@@ -12,7 +12,9 @@ class User(db.Model):
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     role = db.Column(db.Enum('Admin', 'AnimalShelter', 'Person', name='role'), nullable=False)
-    rating = db.Column(db.Integer, default=None)
+    calculated_rating = db.Column(db.Float(precision=2), default=None)
+    sum_total_votes = db.Column(db.Integer)
+    vote_count = db.Column(db.Integer)
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -22,7 +24,9 @@ class User(db.Model):
             "id": self.id,
             "email": self.email,
             "role":self.role,
-            "rating": self.rating
+            "calculated_rating": self.calculated_rating,
+            "vote_count": self.vote_count,
+            "sum_total_votes": self.sum_total_votes
             # do not serialize the password, its a security breach
         }
 
@@ -106,8 +110,6 @@ class Volunteer(db.Model):
 class Rating(db.Model):
     id = db.Column(db.Integer, primary_key=True)   
     rating = db.Column(db.Integer)
-    sum_total_votes = db.Column(db.Integer)
-    vote_count = db.Column(db.Integer)
     rater_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     rater = db.relationship('User', foreign_keys=[rater_id])
     rated_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -127,16 +129,14 @@ class Rating(db.Model):
             "rating": self.rating,
             "rater":self.rater_id,      
             "rated":self.rated_id,
-            "vote_count": self.vote_count,
-            "sum_total_votes": self.sum_total_votes
         }
     
 
 class Report(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(80), unique=False, nullable=False)
+    title = db.Column(db.Enum('Report inappropriate attitude', 'Report inaccurate or inappropriate content', 'Report an animal shelter', 'Report abuse of a pet', 'Others', name='tittle'), nullable=False)
     body = db.Column(db.String(1000), unique=False, nullable=False)
-    user_id =  db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
+    user_id =  db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User')
 
     def __repr__(self):
@@ -154,7 +154,7 @@ class TipsPets(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80), unique=False, nullable=False)
     body = db.Column(db.String(1000), unique=False, nullable=False)
-    user_id =  db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
+    user_id =  db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User')
 
     def __repr__(self):
@@ -176,13 +176,15 @@ class Animal(db.Model):
     phone = db.Column(db.String(20), nullable=False)
     size = db.Column(db.String(15), unique=False, nullable=False)
     color = db.Column(db.String(20), nullable=False)
-    # type_of_animal = db.Column(db.Enum, nullable=False)
+    type_of_animal = db.Column(db.Enum('Dog', 'Cat', name='type_of_animal'), nullable=False)
     description = db.Column(db.String(1000), unique=True, nullable=False)
-    # animal_lost = db.Column(db.Enum)
+    animal_lost = db.Column(db.Enum('Lost', 'Found', name='role'), nullable=False)
     date = db.Column(DateTime, default=datetime.utcnow, nullable=False)
     contact = db.Column(db.String(1000), unique=True, nullable=False)
     photo = db.Column(db.String(250), unique=True, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    user_id =  db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User')
 
     def __repr__(self):
         return f'<User {self.name}>'
@@ -195,14 +197,13 @@ class Animal(db.Model):
             "phone": self.phone,
             "size": self.size,
             "color": self.color,
-            # "type_of_animal": self.type_of_animal,
+            "type_of_animal": self.type_of_animal,
             "description": self.description,
             "photo": self.photo,
             "is_active": self.is_active,
             "contact": self.contact,
-            # "animal_lost": self.animal_lost,
+            "animal_lost": self.animal_lost,
             "date": self.post_date.isoformat()
-            # do not serialize the password, its a security breach
         }
     
 
@@ -211,7 +212,7 @@ class ExperiencesBlog(db.Model):
     title = db.Column(db.String(80), unique=False, nullable=False)
     body = db.Column(db.String(1000), unique=False, nullable=False)
     photo = db.Column(db.String(250), unique=False, nullable=False)
-    user_id =  db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
+    user_id =  db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User')
 
     def __repr__(self):
