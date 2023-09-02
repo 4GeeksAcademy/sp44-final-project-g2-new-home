@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 export const Navbar = () => {
     const [searchVisible, setSearchVisible] = useState(false);
     const [cityFilter, setCityFilter] = useState("");
+    const [petType, setPetType] = useState(""); // Nuevo estado para el tipo de mascota
     const cities = [
         "Madrid",
         "Barcelona",
@@ -35,6 +36,9 @@ export const Navbar = () => {
     const handleSearch = () => {
         setSearchHistory([...searchHistory, cityFilter.toLowerCase()]);
         // Aquí puedes realizar la acción de búsqueda
+        console.log("City: ", cityFilter);
+        console.log("Pet Type: ", petType);
+        closeSearch();
     };
 
     return (
@@ -86,6 +90,21 @@ export const Navbar = () => {
                                                 ))}
                                             </datalist>
                                         </div>
+                                        <div className="col-md-12 mt-3">
+                                            <label className="form-label ms-2" htmlFor="PetType"><b>Pet Type</b></label>
+                                            <select
+                                                id="PetType"
+                                                name="PetType"
+                                                className="form-control"
+                                                value={petType}
+                                                onChange={(e) => {
+                                                    setPetType(e.target.value);
+                                                }}
+                                            >
+                                                <option value="dog">Dog</option>
+                                                <option value="cat">Cat</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="modal-footer">
@@ -94,10 +113,7 @@ export const Navbar = () => {
                                         type="button" // Cambiado de submit a button
                                         className="btn btn-primary"
                                         id="contactBtn"
-                                        onClick={() => {
-                                            handleSearch();
-                                            closeSearch();
-                                        }}
+                                        onClick={handleSearch}
                                     >
                                         Search
                                     </button>
