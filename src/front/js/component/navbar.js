@@ -3,6 +3,18 @@ import { Link } from "react-router-dom";
 
 export const Navbar = () => {
     const [searchVisible, setSearchVisible] = useState(false);
+    const [cityFilter, setCityFilter] = useState("");
+    const cities = [
+        "Madrid",
+        "Barcelona",
+        "Valencia",
+        "Sevilla",
+        "Zaragoza",
+        "Bilbao",
+        // Agrega más ciudades según tus necesidades
+    ];
+
+    const [searchHistory, setSearchHistory] = useState([]); // Historial de búsquedas
 
     const toggleSearch = () => {
         setSearchVisible(!searchVisible);
@@ -10,6 +22,19 @@ export const Navbar = () => {
 
     const closeSearch = () => {
         setSearchVisible(false);
+    };
+
+    const filteredCities = cities
+        .filter(city =>
+            city.toLowerCase().startsWith(cityFilter.toLowerCase())
+        )
+        .filter(city =>
+            !searchHistory.includes(city.toLowerCase())
+        );
+
+    const handleSearch = () => {
+        setSearchHistory([...searchHistory, cityFilter.toLowerCase()]);
+        // Aquí puedes realizar la acción de búsqueda
     };
 
     return (
@@ -41,27 +66,39 @@ export const Navbar = () => {
                                 <div className="modal-body">
                                     <input type="hidden" name="_token" value="HmnY8nKjVRyXFWy9N95Gf0ftsuxgm8nz4NQKhTGS" />
                                     <div className="row">
-                                        <div className="col-md-5">
-                                            <label className="form-label" htmlFor="fl_pais">Country</label>
-                                            <select id="fl_pais" name="fl_pais" className="form-select">
-                                                {/* Country options here */}
-                                            </select>
-                                        </div>
-                                        <div className="col-md-7">
-                                            <label className="form-label" htmlFor="fl_provincia">City</label>
-                                            <select id="fl_provincia" name="fl_provincia" className="form-select" disabled>
-                                                <option selected value="">City</option>
-                                            </select>
+                                        <div className="col-md-12">
+                                            <label className="form-label ms-2" htmlFor="City"><b>City</b></label>
+                                            <input
+                                                type="text"
+                                                id="City"
+                                                name="City"
+                                                className="form-control"
+                                                placeholder="Enter a city"
+                                                list="citySuggestions" 
+                                                value={cityFilter}
+                                                onChange={(e) => {
+                                                    setCityFilter(e.target.value);
+                                                }}
+                                            />
+                                            <datalist id="citySuggestions">
+                                                {filteredCities.map((city, index) => (
+                                                    <option key={index} value={city} />
+                                                ))}
+                                            </datalist>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-light" data-bs-dismiss="modal" onClick={closeSearch}>Close</button>
                                     <button
-                                        type="submit"
+                                        type="button" // Cambiado de submit a button
                                         className="btn btn-primary"
                                         id="contactBtn"
-                                        onClick={() => gtag('event', 'pet_shelters_filter', {'app_name': 'MPS_WEB'})}>
+                                        onClick={() => {
+                                            handleSearch();
+                                            closeSearch();
+                                        }}
+                                    >
                                         Search
                                     </button>
                                 </div>
