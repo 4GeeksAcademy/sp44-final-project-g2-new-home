@@ -1,59 +1,11 @@
+body {
+    background-color: rgb(223 255 236);
+}
+
 /* Estilos generales */
 .navbar-brand {
     padding: 10px 20px;
     margin: 10px 20px;
-}
-
-/* Media query para la navbar en pantallas grandes (1400px en adelante) */
-@media (min-width: 1400px) {
-    .navbar-brand {
-        padding: 20px 20px;
-        margin: 20px 20px;
-    }
-}
-
-/* Media query para la navbar en pantallas medianas (768px a 1399.98px) */
-@media (min-width: 768px) and (max-width: 1399.98px) {
-    .navbar-brand {
-        padding: 15px 20px;
-        margin: 15px 20px;
-    }
-}
-
-/* Media query para la navbar en pantallas pequeñas (hasta 767.98px) */
-@media (max-width: 767.98px) {
-    .navbar-brand {
-        display: none; /* Oculta los botones de navegación en pantallas pequeñas */
-    }
-
-    /* Estilos para el menú desplegable en pantallas pequeñas */
-    .navbar-collapse {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background: #000; /* Cambia el color de fondo a tu preferencia */
-    }
-
-    .navbar-toggler {
-        display: block;
-    }
-
-    .navbar-toggler.active + .navbar-collapse {
-        display: block;
-    }
-
-    .navbar-brand {
-        display: block;
-        padding: 10px;
-        margin: 0;
-        border-bottom: 1px solid #fff; /* Línea separadora entre elementos */
-    }
-
-    .navbar-brand:last-child {
-        border: none; /* Elimina el borde inferior del último elemento */
-    }
 }
 
 #openSearchButton {
@@ -119,53 +71,76 @@ a:hover {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: white;
+    background: rgb(223 255 236 / 75%);
     z-index: 1000;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    max-width: 400px;
-    width: 100%;
+    border-radius: 15px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+    max-width: 550px;
+    width: 90%; /* Ajusta el ancho del modal según tus preferencias */
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
 .search-modal .modal-title {
-    font-size: 1.5rem;
+    font-size: 2rem;
     margin-bottom: 20px;
+    margin-left: 95px;
+    text-align: center;
 }
 
 .search-modal select {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
+    padding: 5px;
+    border: 2px solid #ccc;
     border-radius: 5px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    font-size: 1rem;
 }
 
 .search-modal .modal-footer {
-    padding: 0;
-    justify-content: flex-end;
+    padding: 20px 0;
+    justify-content: center;
     border-top: none;
 }
 
 .search-modal button {
-    padding: 10px 20px;
-    margin-left: 10px;
+    padding: 15px 30px;
+    margin: 0 10px;
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 1.2rem;
 }
 
 .search-modal button.btn-close {
-    background-color: transparent;
-    color: #333;
-    padding: 0;
-    font-size: 1.5rem;
+    padding: 15px 30px;
+    margin: 0 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: none;
 }
 
 .search-modal button.btn-close:hover {
     color: #007bff;
+}
+
+/* Estilos para la imagen de portada */
+.portada-container {
+    width: 100%;
+    max-height: 90vh; /* Aumenta la altura máxima del contenedor al 90% */
+    overflow: hidden;
+}
+
+.portada-image {
+    height: auto;
+    object-fit: cover;
+    width: 100%;
 }
 
 /* LOGO */
@@ -194,5 +169,57 @@ a:hover {
 @media (min-width: 1400px) {
     .logo {
         max-height: 300px;
+    }
+}
+
+/* Media query para la navbar en pantallas pequeñas (hasta 767.98px) */
+@media (max-width: 767.98px) {
+    .navbar-brand {
+        display: none; /* Oculta los botones de navegación en pantallas pequeñas */
+    }
+
+    /* Estilos para el menú desplegable en pantallas pequeñas */
+    .navbar-collapse {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #000; /* Cambia el color de fondo a tu preferencia */
+    }
+
+    .navbar-toggler {
+        display: block;
+    }
+
+    .navbar-toggler.active + .navbar-collapse {
+        display: block;
+    }
+
+    .navbar-brand {
+        display: block;
+        padding: 10px;
+        margin: 0;
+        border-bottom: 1px solid #fff; /* Línea separadora entre elementos */
+    }
+
+    .navbar-brand:last-child {
+        border: none; /* Elimina el borde inferior del último elemento */
+    }
+}
+
+/* Media query para la navbar en pantallas grandes (1400px en adelante) */
+@media (min-width: 1400px) {
+    .navbar-brand {
+        padding: 20px 20px;
+        margin: 20px 20px;
+    }
+}
+
+/* Media query para la navbar en pantallas medianas (768px a 1399.98px) */
+@media (min-width: 768px) and (max-width: 1399.98px) {
+    .navbar-brand {
+        padding: 15px 20px;
+        margin: 15px 20px;
     }
 }
