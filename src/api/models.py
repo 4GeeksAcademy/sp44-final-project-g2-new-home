@@ -55,8 +55,8 @@ class AnimalShelter(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), unique=True, nullable=False)
     address = db.Column(db.String(80))
-    city = db.Column(db.String(120), unique=True, nullable=False)
-    zip_code = db.Column(db.String(10), unique=True, nullable=False)
+    city = db.Column(db.String(120),  nullable=False)
+    zip_code = db.Column(db.String(10),  nullable=False)
     cif = db.Column(db.String(20), unique=True, nullable=False)
     web = db.Column(db.String(100), unique=True, nullable=False)
     status_animal = db.Column(db.Enum('Lost', 'Found', 'Adopted', name='adopted'), nullable=False)
@@ -171,17 +171,17 @@ class TipsPets(db.Model):
 
 class Animal(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20), unique=True, nullable=False)
+    name = db.Column(db.String(20), unique=False, nullable=False)
     city = db.Column(db.String(80), unique=False, nullable=False)
     phone = db.Column(db.String(20), nullable=False)
     size = db.Column(db.String(15), unique=False, nullable=False)
     color = db.Column(db.String(20), nullable=False)
     type_of_animal = db.Column(db.Enum('Dog', 'Cat', name='type_of_animal'), nullable=False)
-    description = db.Column(db.String(1000), unique=True, nullable=False)
+    description = db.Column(db.String(1000), nullable=False)
     animal_status = db.Column(db.Enum('Lost', 'Found', name='animal_status'), nullable=False)
-    # date = db.Column(DateTime, default=datetime.utcnow, nullable=False)
-    contact = db.Column(db.String(1000), unique=True, nullable=False)
-    photo = db.Column(db.String(250), unique=True, nullable=False)
+    date = db.Column(DateTime, default=datetime.utcnow, nullable=False)
+    contact = db.Column(db.String(1000),  nullable=False)
+    photo = db.Column(db.String(250), nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     user_id =  db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User')
@@ -203,6 +203,7 @@ class Animal(db.Model):
             "is_active": self.is_active,
             "contact": self.contact,
             "animal_status": self.animal_status,
+            "user_id": self.user_id,
             # "date": self.post_date.isoformat()
         }
     

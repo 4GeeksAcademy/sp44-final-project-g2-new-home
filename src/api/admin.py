@@ -12,6 +12,9 @@ class CustomRatingModelView(ModelView):
 class CustomReportModelView(ModelView):
     column_list = ['id', 'user_id', 'title', 'body']
 
+# class CustomAnimalModelView(ModelView):
+#     column_list = ['name', 'city', 'rating']
+
 def setup_admin(app):
     app.secret_key = os.environ.get('FLASK_APP_KEY', 'sample key')
     app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
