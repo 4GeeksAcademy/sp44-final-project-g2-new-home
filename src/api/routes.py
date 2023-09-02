@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Volunteer, ExperiencesBlog, Rating, Report, People
+from api.models import db, User, Volunteer, ExperiencesBlog, Rating, Report, People, AnimalShelter, TipsPets, Animal
 from api.utils import generate_sitemap, APIException
 from sqlalchemy import func
 
@@ -435,3 +435,202 @@ def handle_person(id):
                       }
       return response_body, 200
 
+@api.route('/protectors', methods=['POST', 'GET'])
+def handle_protectors():
+    if request.method =='GET':
+        # response_body = {"message": "Esto devuelve el get del endpooint protectors"}
+        protectors = db.session.execute(db.select(AnimalShelter).order_by(AnimalShelter.name)).scalars()
+        results =[item.serialize() for item in protectors]
+        response_body ={
+            "message":"Esto devuelve el endpoint de protectors el GET",
+            "results": results,
+            "status": "ok" }
+        return response_body, 200
+    if request.method =='POST':
+        request_body = request.get_json()
+        print(request_body)       
+        protector = AnimalShelter (
+                                    name = request_body["name"],
+                                    address = request_body["address"],
+                                    city = request_body["city"],
+                                    zip_code = request_body["zip_code"],
+                                    cif = request_body["cif"],
+                                    web = request_body["web"],
+                                    status_animal = request_body["status_animal"] )
+        db.session.add(protector)       
+        db.session.commit()
+        response_body = {
+            "message": "Adding new protector",
+            "status": "ok",
+            "new_protector": request_body }
+        # response_body = {"message": "Esto devuelve el POST del endpooint protectors"}
+        return response_body, 200
+
+@api.route('/protectors/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+def hanlde_protector(id):
+   if request.method == 'GET': 
+      protector = db.get_or_404(AnimalShelter, id)
+      print(protector)
+      response_body = {
+         "status": "ok",
+         "results": protector.serialize()
+      }
+      return response_body, 200
+   if request.method == 'PUT':
+      request_body = request.get_json()
+      protector = db.get_or_404(AnimalShelter, id)
+      protector.name = request_body["name"]
+      protector.address = request_body["address"]
+      protector.city = request_body["city"]
+      protector.zip_code = request_body["zip_code"]
+      protector.cif = request_body["cif"]
+      protector.web = request_body["web"]
+      protector.status_animal = request_body["status_animal"]
+      db.session.commit() 
+      response_body = {"message": "Update protector",
+                       "status": "ok",
+                       "protector": request_body
+                      }
+      return response_body, 200
+   if request.method == 'DELETE':  
+      protector = db.get_or_404(AnimalShelter, id)
+      db.session.delete(protector)
+      db.session.commit()
+      response_body = {"message": "DELETED protector",
+                       "status": "ok",
+                       "protector_deleting": id
+                       }
+      return response_body, 200
+
+@api.route('/tips',methods=['POST', 'GET'])
+def handle_tips():
+   if request.method =='GET':
+        # response_body = {"message": "Esto devuelve el get del endpooint tips"}
+        tips = db.session.execute(db.select(TipsPets).order_by(TipsPets.title)).scalars()
+        results =[item.serialize() for item in tips]
+        response_body = {
+           "message":"Esto devuelve el endpoint de tips el GET",
+           "results": results,
+           "status": "ok" }
+        return response_body, 200
+   if request.method =='POST':
+      request_body = request.get_json()
+      print(request_body)
+      tip = TipsPets (
+                      title = request_body["title"],
+                      body = request_body["body"])
+      db.session.add(tip)
+      db.session.commit()
+      response_body = {
+         "message": "Adding new tip",
+         "status": "ok",
+         "new_tip": request_body }
+      # response_body = {"message": "Esto devuelve el POST del endpooint users"}
+      return response_body, 200
+
+@api.route('/tips/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+def handle_tip(id):
+   if request.method == 'GET': 
+      tip = db.get_or_404(TipsPets, id)
+      print(tip)
+      response_body = {
+         "status": "ok",
+         "results": tip.serialize()
+      }
+      return response_body, 200
+   if request.method == 'PUT':
+    request_body = request.get_json()
+    tip = db.get_or_404(TipsPets, id)
+    tip.title = request_body["title"]
+    tip.body = request_body["body"]
+    db.session.commit() 
+    response_body = {"message": "Update tip",
+                     "status": "ok",
+                     "tip": request_body
+                    }
+    return response_body, 200
+   if request.method == 'DELETE': 
+      tip = db.get_or_404(TipsPets, id) 
+      db.session.delete(tip)
+      db.session.commit()
+      response_body = {"message": "DELETED tip",
+                       "status": "ok",
+                       "tip_deleting": id  }
+      return response_body, 200
+   
+@api.route('animals', methods=['POST', 'GET'])
+def handle_animals():
+   if request.method =='GET':
+        # response_body = {"message": "Esto devuelve el get del endpooint animals"}
+        animals = db.session.execute(db.select(Animal).order_by(Animal.name)).scalars()
+        results = [item.serialize() for item in animals]
+        response_body = {
+           "message":"Esto devuelve el endpoint de animals el GET",
+           "results": results,
+           "status": "ok"  }
+        return response_body, 200
+   if request.method =='POST':
+      request_body = request.get_json()
+      print(request_body)
+      animal = Animal (
+         name = request_body["name"],
+         city = request_body["city"],
+         phone = request_body["phone"],
+         size = request_body["size"],
+         color = request_body["color"],
+         type_of_animal = request_body["type_of_animal"],
+         description = request_body["description"],
+         animal_status = request_body["animal_status"],
+         # date = request_body["date"],
+         contact = request_body["contact"],
+         photo = request_body["photo"],
+         is_active = request_body["is_active"]  )
+      db.session.add(animal)
+      db.session.commit()
+      response_body = {
+         "message": "Adding new animal",
+         "status": "ok",
+         "new_animal": request_body }
+      # response_body = {"message": "Esto devuelve el POST del endpooint animals"}
+      return response_body, 200
+
+@api.route('/animals/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+def handle_animal(id):
+   if request.method == 'GET': 
+      animal = db.get_or_404(Animal, id)
+      print(animal)
+      response_body = {
+         "status": "ok",
+         "results": animal.serialize()
+      }
+      return response_body, 200
+   if request.method == 'PUT':
+    request_body = request.get_json()
+    animal = db.get_or_404(Animal, id)
+    animal.name = request_body["name"]
+    animal.city = request_body["city"]
+    animal.phone = request_body["phone"]
+    animal.size = request_body["size"]
+    animal.color = request_body["color"]
+    animal.type_of_animal = request_body["type_of_animal"]
+    animal.description = request_body["description"]
+    animal.animal_lost = request_body["animal_lost"]
+   #  animal.date = request_body["date"]
+    animal.contact = request_body["contact"]
+    animal.photo = request_body["photo"]
+    animal.is_active = request_body["is_active"]
+    db.session.commit()
+    response_body = {"message": "Update animal",
+                     "status":"ok",
+                     "animal": request_body
+                     }
+    return response_body, 200
+   if request.method == 'DELETE':  
+      animal = db.get_or_404(Animal, id)
+      db.session.delete(animal)
+      db.session.commit()
+      response_body = {"message": "DELETED animal",
+                     "status":"ok",
+                     "animal_deleting": id
+                      }
+      return response_body, 200
