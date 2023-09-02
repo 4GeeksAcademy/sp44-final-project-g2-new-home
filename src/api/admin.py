@@ -1,7 +1,7 @@
   
 import os
 from flask_admin import Admin
-from .models import db, User, Rating, Volunteer, ExperiencesBlog
+from .models import db, User, Rating, Volunteer, ExperiencesBlog, People
 from flask_admin.contrib.sqla import ModelView
 
 class CustomUsersModelView(ModelView):
@@ -21,5 +21,6 @@ def setup_admin(app):
     admin.add_view(CustomRatingModelView(Rating, db.session))
     admin.add_view(CustomRatingModelView(Volunteer, db.session))
     admin.add_view(CustomRatingModelView(ExperiencesBlog, db.session))
+    admin.add_view(CustomRatingModelView(People, db.session))
     # You can duplicate that line to add mew models
     # admin.add_view(ModelView(YourModelName, db.session))
