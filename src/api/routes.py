@@ -2,9 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Volunteer, ExperiencesBlog
-from api.models import db, User, Rating 
-from api.models import db, User, Volunteer
+from api.models import db, User, Volunteer, ExperiencesBlog, Rating, People
 from api.utils import generate_sitemap, APIException
 from sqlalchemy import func
 
@@ -307,4 +305,63 @@ def handle_experience(id):
                        "status": "ok",
                        "experience_deleting": id,
                        }
+      return response_body, 200
+
+@api.route('people', methods=['POST', 'GET'])
+def handle_people():
+   if request.method =='GET':
+      # response_body = {"message": "Esto devuelve el get del endpooint people"}
+      people = db.session.execute(db.select(People).order_by(People.name)).scalars()
+      results = [item.serialize() for item in people]
+      response_body = {
+         "message":"Esto devuelve el endpoint de people el GET",
+         "results": results,
+         "status": "ok" }
+      return response_body, 200
+   if request.method =='POST':
+      request_body = request.get_json()
+      print(request_body)
+      people = People (
+                        name = request_body["name"],
+                        lastname = request_body["lastname"],
+                        trophy = request_body["trophy"] )
+      db.session.add(people)
+      db.session.commit()
+      response_body = {
+         "message": "Adding new people",
+         "status": "ok",
+         "new_people": request_body}
+        # response_body = {"message": "Esto devuelve el POST del endpooint people"}
+      return response_body, 200
+
+@api.route('/people/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+def handle_person(id):
+   if request.method == 'GET': 
+      person = db.get_or404(People, id)
+      print(person)
+      response_body = {
+         "status": "ok",
+         "results": person.serializa()
+      }
+      return response_body, 200
+   if request.method == 'PUT':
+      request_body = request.get_json()
+      person = db.get_or_404(People, id)
+      person.name = request_body["name"]
+      person.lastname = request_body["lastname"]
+      person.trophy = request_body["trophy"]
+      db.session.commit()
+      response_body = {"message": "Updated person",
+                       "status": "ok",
+                       "person": request_body
+                      }
+      return response_body, 200
+   if request.method == 'DELETE':  
+      person = db.get_or_404(People, id)
+      db.session.delete(person)
+      db.session.commit()
+      response_body = {"message": "DELETED person",
+                       "status": "ok",
+                       "person_deleting": id
+                      }
       return response_body, 200
