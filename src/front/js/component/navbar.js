@@ -46,12 +46,12 @@ export const Navbar = () => {
             <div className="container-fluid text-center justify-content-center">
                 <div className="container d-flex justify-content-between align-items-center">
                     <div className="nav-links">
-                        <a className="navbar-brand" href="/">Home</a>
-                        <a className="navbar-brand" href="protectors">Protectors</a>
-                        <a className="navbar-brand" href="tips">Tips</a>
-                        <a className="navbar-brand" href="lostanimals">Lost animals</a>
-                        <a className="navbar-brand" href="voluntaryform">Voluntary form</a>
-                        <a className="navbar-brand" href="experiences">Experiences</a>
+                        <Link to="/" className="navbar-brand" >Home</Link>
+                        <Link to="/protectors" className="navbar-brand" >Protectors</Link>
+                        <Link to="/tips" className="navbar-brand" >Tips</Link>
+                        <Link to="/lostanimals" className="navbar-brand" >Lost animals</Link>
+                        <Link to="/voluntaryform" className="navbar-brand" >Voluntary form</Link>
+                        <Link to="/experiences" className="navbar-brand" >Experiences</Link>
                     </div>
                     <button className="btn btn-outline-success" id="openSearchButton" onClick={toggleSearch}>
                         Open Search

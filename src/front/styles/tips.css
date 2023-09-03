@@ -1,0 +1,61 @@
+.container {
+    text-align: center;
+    padding: 20px;
+}
+  
+h1 {
+    font-size: 60px;
+    color: rgb(130 33 201);
+    text-transform: uppercase;
+    margin-bottom: 30px;
+}
+  
+.card {
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    padding: 20px;
+}
+  
+.card-text {
+    font-size: 18px;
+    color: #555;
+    margin-top: 15px;
+}
+  
+.card-body {
+    padding-top: 10px;
+}
+
+.card-title {
+    margin-bottom: 20px;
+}
+  
+.card:nth-child(even) .Foto.tip1 {
+    border-color: #fff;
+}
+  
+@media screen and (max-width: 768px) {
+    .container {
+      padding: 10px;
+    }
+  
+    h1 {
+      font-size: 30px;
+    }
+  
+    .card-title {
+      font-size: 20px;
+    }
+  
+    .card-text {
+      font-size: 16px;
+    }
+  
+    .Foto.tip1 {
+      width: 150px;
+      height: 150px;
+    }
+}
+  

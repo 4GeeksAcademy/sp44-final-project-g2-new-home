@@ -146,8 +146,8 @@ a:hover {
 /* LOGO */
 .logo-overlay {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 55px;
+    right: 135px;
     padding: 0;
     max-height: 300px;
     z-index: 100;
@@ -155,19 +155,19 @@ a:hover {
 
 /* MEDIA QUERY PARA CAMBIAR TAMAÑO LOGO DEPENDIENDO DE PANTALLA */
 @media (max-width: 767.98px) {
-    .logo {
+    .logo-overlay {
         max-height: 100px;
     }
 }
 
 @media (min-width: 768px) and (max-width: 1399.98px) {
-    .logo {
+    .logo-overlay {
         max-height: 200px;
     }
 }
 
 @media (min-width: 1400px) {
-    .logo {
+    .logo-overlay {
         max-height: 300px;
     }
 }
