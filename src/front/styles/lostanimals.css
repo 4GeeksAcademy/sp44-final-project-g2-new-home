@@ -1,0 +1,72 @@
+/* Estilos para el componente Lostanimals con un ID */
+#lostanimals-container {
+    /* Estilos generales para el contenedor */
+    padding: 20px;
+}
+  
+/* Estilos para el título con id "lostanimals" */
+#lostanimals {
+    color: rgba(213, 143, 34); /* Cambiar el color según tus preferencias */
+    font-weight: bold; /* Cambiar el peso de fuente según tus preferencias */
+    margin-bottom: 20px; /* Espacio inferior para separar del contenido */
+}
+  
+/* Estilos para el botón "Agregar Animal" */
+#add-button {
+    color: white; /* Cambiar el color del texto según tus preferencias */
+    margin-bottom: 20px;
+}
+  
+/* Estilos para el formulario y sus elementos */
+.form-group {
+    margin-bottom: 20px; /* Espacio inferior entre elementos del formulario */
+}
+  
+/* Estilos para las etiquetas de los campos del formulario */
+.form-group label {
+    display: block; /* Hace que las etiquetas se muestren en una línea separada */
+    margin-bottom: 5px; /* Espacio inferior entre etiquetas y campos */
+    font-weight: bold; /* Puedes cambiar el peso de la etiqueta según tus preferencias */
+}
+  
+/* Estilos para los campos de entrada de texto y selección */
+.form-group input[type="text"],
+.form-group select,
+.form-control,
+.form-group textarea {
+    width: 100%; /* Ancho completo para llenar el contenedor */
+    padding: 10px; /* Espacio interno dentro de los campos */
+    border: 1px solid #ccc; /* Borde del campo */
+    border-radius: 4px; /* Borde redondeado */
+    font-size: 16px; /* Tamaño de fuente */
+    box-sizing: border-box; /* Incluir el borde y el relleno en el ancho total */
+}
+
+.row {
+    justify-content: space-evenly;
+}
+  
+/* Estilos para el botón "Enviar" dentro del formulario */
+.form-group .btn-primary {
+    background-color: rgba(213, 143, 34); /* Cambiar el color de fondo según tus preferencias */
+    border-color: rgba(213, 143, 34); /* Cambiar el color del borde según tus preferencias */
+}
+  
+/* Estilos para otros botones en el contenido */
+.card-header .btn {
+    margin-right: 10px; /* Espacio entre botones en la cabecera */
+}
+  
+/* Estilos para el contenido de la tarjeta */
+.card-body {
+    padding: 20px; /* Espacio interno dentro de la tarjeta */
+}
+  
+/* Estilos para el texto del contenido de la tarjeta */
+  .card-text {
+    color: #333; /* Cambiar el color del texto según tus preferencias */
+}
+  
+
+
+

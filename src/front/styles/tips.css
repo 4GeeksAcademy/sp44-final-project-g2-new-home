@@ -8,6 +8,7 @@ h1 {
     color: rgb(130 33 201);
     text-transform: uppercase;
     margin-bottom: 30px;
+    font-weight: bold;
 }
   
 .card {
