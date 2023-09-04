@@ -13,7 +13,7 @@ export const Home = () => {
                 <div className="portada-container">
                     <img src={portada} alt="Portada" className="portada-image" />
                 </div>
-                <img src={logo} alt="Logo" className="logo-overlay" />
+                <img src={logo} alt="Logo" className="logo-overlay animate__animated animate__heartBeat" />
             </div>
         </div>
     );
