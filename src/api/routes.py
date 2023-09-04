@@ -572,6 +572,22 @@ def handle_animals():
    if request.method =='POST':
       request_body = request.get_json()
       print(request_body)
+
+      # Verifica si ya existe un animal con las mismas características
+      existing_animal = Animal.query.filter_by(
+         name=request_body["name"],
+         color=request_body["color"],
+         size=request_body["size"],
+         user_id=request_body["user_id"]
+      ).first()
+
+      if existing_animal:
+         response_body = {
+            "message": "Este animal ya ha sido registrado por el usuario",
+            "status": "error"
+         }
+         return response_body, 400
+
       animal = Animal (
          name = request_body["name"],
          city = request_body["city"],
@@ -581,10 +597,11 @@ def handle_animals():
          type_of_animal = request_body["type_of_animal"],
          description = request_body["description"],
          animal_status = request_body["animal_status"],
-         # date = request_body["date"],
+         date = request_body["date"],
          contact = request_body["contact"],
          photo = request_body["photo"],
-         is_active = request_body["is_active"]  )
+         is_active = request_body["is_active"],
+         user_id = request_body["user_id"]  )
       db.session.add(animal)
       db.session.commit()
       response_body = {
@@ -615,7 +632,7 @@ def handle_animal(id):
     animal.type_of_animal = request_body["type_of_animal"]
     animal.description = request_body["description"]
     animal.animal_lost = request_body["animal_lost"]
-   #  animal.date = request_body["date"]
+    animal.date = request_body["date"]
     animal.contact = request_body["contact"]
     animal.photo = request_body["photo"]
     animal.is_active = request_body["is_active"]
