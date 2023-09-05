@@ -1,62 +1,101 @@
 .container {
-    text-align: center;
-    padding: 20px;
+  text-align: center;
+  padding: 20px;
 }
-  
+
 h1 {
-    font-size: 60px;
-    color: rgb(130 33 201);
-    text-transform: uppercase;
-    margin-bottom: 30px;
-    font-weight: bold;
+  font-size: 60px;
+  color: rgb(130, 33, 201);
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  font-weight: bold;
 }
-  
+
 .card {
-    background-color: #fff;
-    border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin-bottom: 20px;
-    padding: 20px;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+  padding: 20px;
 }
-  
+
 .card-text {
-    font-size: 18px;
-    color: #555;
-    margin-top: 15px;
+  font-size: 18px;
+  color: #555;
+  margin-top: 15px;
 }
-  
+
 .card-body {
-    padding-top: 10px;
+  padding-top: 10px;
 }
 
 .card-title {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
-  
+
 .card:nth-child(even) .Foto.tip1 {
-    border-color: #fff;
+  border-color: #fff;
 }
-  
+
 @media screen and (max-width: 768px) {
-    .container {
+  .container {
       padding: 10px;
-    }
-  
-    h1 {
+  }
+
+  h1 {
       font-size: 30px;
-    }
-  
-    .card-title {
+  }
+
+  .card-title {
       font-size: 20px;
-    }
-  
-    .card-text {
+  }
+
+  .card-text {
       font-size: 16px;
-    }
-  
-    .Foto.tip1 {
+  }
+
+  .Foto.tip1 {
       width: 150px;
       height: 150px;
-    }
+  }
 }
-  
+
+/* Nueva regla para la barra lateral */
+#sidebartips {
+  position: absolute;
+  margin-top: 235px;
+  margin-right: 10px;
+  padding-top: 10px;
+  top: 0;
+  left: 0;
+  max-height: 100%;
+  width: 20%; /* Ancho de la barra lateral */
+  overflow-y: auto; /* Agregar desplazamiento vertical si es necesario */
+  background-color: rgb(255, 255, 255);
+}
+
+#sidebartips h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+#sidebartips ul {
+  list-style: none;
+}
+
+#sidebartips .nav-item {
+  margin-bottom: 10px;
+}
+
+/* Estilo para el contenido principal */
+.content {
+  margin-left: 20px; /* Ancho de la barra lateral + espacio adicional */
+  padding: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  /* Estilos para cuando la pantalla es más pequeña */
+  #a1, #a2, #a3, #a4, #a5, #a6 {
+    padding: 10px;
+  }
+}

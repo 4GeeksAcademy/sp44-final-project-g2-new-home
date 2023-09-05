@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/lostanimals.css";
@@ -7,55 +7,39 @@ export const Lostanimals = () => {
   const { store, actions } = useContext(Context);
   const [activeTab, setActiveTab] = useState("lost");
   const [showForm, setShowForm] = useState(false);
-  const [name, setName] = useState("");
-  const [city, setCity] = useState("");
-  const [phone, setPhone] = useState("");
-  const [color, setColor] = useState("");
-  const [animalType, setAnimalType] = useState("gato");
-  const [date, setDate] = useState("");
-  const [contact, setContact] = useState("");
-  const [description, setDescription] = useState("");
+  const [formData, setFormData] = useState(() => {
+    // Intenta cargar los datos del formulario desde el almacenamiento local al cargar la página
+    const savedFormData = localStorage.getItem("animalFormData");
+    return savedFormData ? JSON.parse(savedFormData) : {
+      name: "",
+      city: "",
+      phone: "",
+      color: "",
+      animalType: "gato",
+      date: "",
+      contact: "",
+      description: "",
+      size: "small",
+    };
+  });
   const [selectedFile, setSelectedFile] = useState(null);
   const [animalListLost, setAnimalListLost] = useState([]);
   const [animalListFound, setAnimalListFound] = useState([]);
-  const [size, setSize] = useState("small");
   const [publishedAnimalsLost, setPublishedAnimalsLost] = useState([]);
   const [publishedAnimalsFound, setPublishedAnimalsFound] = useState([]);
+
+  useEffect(() => {
+    // Guarda los datos del formulario en el almacenamiento local cada vez que cambian
+    localStorage.setItem("animalFormData", JSON.stringify(formData));
+  }, [formData]);
 
   const toggleForm = () => {
     setShowForm(!showForm);
   };
 
-  const handleNameChange = (e) => {
-    setName(e.target.value.slice(0, 20));
-  };
-
-  const handleCityChange = (e) => {
-    setCity(e.target.value.slice(0, 80));
-  };
-
-  const handlePhoneChange = (e) => {
-    setPhone(e.target.value.slice(0, 20));
-  };
-
-  const handleColorChange = (e) => {
-    setColor(e.target.value.slice(0, 20));
-  };
-
-  const handleAnimalTypeChange = (e) => {
-    setAnimalType(e.target.value);
-  };
-
-  const handleDateChange = (e) => {
-    setDate(e.target.value);
-  };
-
-  const handleContactChange = (e) => {
-    setContact(e.target.value.slice(0, 1000));
-  };
-
-  const handleDescriptionChange = (e) => {
-    setDescription(e.target.value.slice(0, 1000));
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleFileChange = (e) => {
@@ -65,15 +49,7 @@ export const Lostanimals = () => {
 
   const handleFormSubmit = () => {
     const newAnimal = {
-      name: name,
-      city: city,
-      phone: phone,
-      color: color,
-      animalType: animalType,
-      date: date,
-      contact: contact,
-      description: description,
-      size: size,
+      ...formData,
       image: selectedFile ? URL.createObjectURL(selectedFile) : null,
     };
 
@@ -85,21 +61,23 @@ export const Lostanimals = () => {
       setPublishedAnimalsFound([...publishedAnimalsFound, newAnimal]);
     }
 
-    // Resto del código para limpiar los campos del formulario
-    setName("");
-    setCity("");
-    setPhone("");
-    setColor("");
-    setAnimalType("gato");
-    setDate("");
-    setContact("");
-    setDescription("");
+    // Limpiar el formulario después de enviar
+    setFormData({
+      name: "",
+      city: "",
+      phone: "",
+      color: "",
+      animalType: "gato",
+      date: "",
+      contact: "",
+      description: "",
+      size: "small",
+    });
     setSelectedFile(null);
-    setSize("small"); // Restablece el tamaño a "small" por defecto
   };
 
   const generateIntroText = (animal) => {
-    return `Hola amigos, me llamo ${animal.name}, vivo en ${animal.city} y tengo un ${animal.size} ${animal.color} ${animal.animalType}. ¡Necesito tu ayuda! Mi contacto es ${animal.contact}, y esta es mi descripción: ${animal.description}. ¡Mira mi foto a continuación!`;
+    return `Greetings, my name is ${animal.name}. I reside in ${animal.city} and I am a ${animal.size} ${animal.color} ${animal.animalType}. I am in need of your assistance! You can reach me at ${animal.phone}, and here's my description: ${animal.description}. The date when I got lost is ${animal.date}. Please take a look at my photo below.`;
   };
 
   return (
@@ -118,8 +96,9 @@ export const Lostanimals = () => {
                 <input
                   type="text"
                   className="form-control"
-                  value={name}
-                  onChange={handleNameChange}
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="col-md-3">
@@ -127,8 +106,9 @@ export const Lostanimals = () => {
                 <input
                   type="text"
                   className="form-control"
-                  value={city}
-                  onChange={handleCityChange}
+                  name="city"
+                  value={formData.city}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="col-md-3">
@@ -136,16 +116,18 @@ export const Lostanimals = () => {
                 <input
                   type="text"
                   className="form-control"
-                  value={phone}
-                  onChange={handlePhoneChange}
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="col-md-3">
                 <label>Size:</label>
                 <select
                   className="form-control"
-                  value={size}
-                  onChange={(e) => setSize(e.target.value)}
+                  name="size"
+                  value={formData.size}
+                  onChange={handleInputChange}
                 >
                   <option value="small">Small</option>
                   <option value="medium">Medium</option>
@@ -159,19 +141,21 @@ export const Lostanimals = () => {
                 <input
                   type="text"
                   className="form-control"
-                  value={color}
-                  onChange={handleColorChange}
+                  name="color"
+                  value={formData.color}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="col-md-3">
                 <label>Type of Animal:</label>
                 <select
                   className="form-control"
-                  value={animalType}
-                  onChange={handleAnimalTypeChange}
+                  name="animalType"
+                  value={formData.animalType}
+                  onChange={handleInputChange}
                 >
-                  <option value="gato">Gato</option>
-                  <option value="perro">Perro</option>
+                  <option value="cat">Cat</option>
+                  <option value="dog">Dog</option>
                 </select>
               </div>
               <div className="col-md-3">
@@ -179,8 +163,9 @@ export const Lostanimals = () => {
                 <input
                   type="date"
                   className="form-control"
-                  value={date}
-                  onChange={handleDateChange}
+                  name="date"
+                  value={formData.date}
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="col-md-3">
@@ -188,8 +173,9 @@ export const Lostanimals = () => {
                 <input
                   type="text"
                   className="form-control"
-                  value={contact}
-                  onChange={handleContactChange}
+                  name="contact"
+                  value={formData.contact}
+                  onChange={handleInputChange}
                 />
               </div>
             </div>
@@ -197,8 +183,9 @@ export const Lostanimals = () => {
               <label>Description:</label>
               <textarea
                 className="form-control"
-                value={description}
-                onChange={handleDescriptionChange}
+                name="description"
+                value={formData.description}
+                onChange={handleInputChange}
               ></textarea>
             </div>
             <div className="form-group">
@@ -239,10 +226,10 @@ export const Lostanimals = () => {
                 <p>{generateIntroText(animal)}</p>
                 {/* <p>Name: {animal.name}</p>
                 <p>City: {animal.city}</p> */}
-                <p>Phone: {animal.phone}</p>
+                {/* <p>Phone: {animal.phone}</p> */}
                 {/* <p>Color: {animal.color}</p>
                 <p>Type of Animal: {animal.animalType}</p> */}
-                <p>Date: {animal.date}</p>
+                {/* <p>Date: {animal.date}</p> */}
                 {/* <p>Contact: {animal.contact}</p> */}
                 <p>Description: {animal.description}</p>
                 {animal.image && <img src={animal.image} alt={`Animal ${index}`} />}

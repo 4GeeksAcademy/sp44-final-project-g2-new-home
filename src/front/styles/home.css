@@ -20,7 +20,7 @@ body {
 }
 
 /* BOTONES */
-a:hover {
+.custom-link:hover {
     background: #03e9f4;
     color: #050801;
     box-shadow: 0 0 10px #03e9f4,
