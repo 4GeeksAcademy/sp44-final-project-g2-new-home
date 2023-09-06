@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
+import { useContext } from "react";
 
 export const Navbar = () => {
+    const { store, actions } = useContext(Context);
     const [searchVisible, setSearchVisible] = useState(false);
     const [cityFilter, setCityFilter] = useState("");
     const [petType, setPetType] = useState(""); // Nuevo estado para el tipo de mascota
@@ -40,6 +43,8 @@ export const Navbar = () => {
         console.log("Pet Type: ", petType);
         closeSearch();
     };
+
+    const user_email = localStorage.getItem("user_email");
 
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -123,6 +128,39 @@ export const Navbar = () => {
                     </div>
                 </div>
             )}
+            <div className="ml-auto">
+                {!store.token ?
+                    (<div className="d-flex me-3">
+                        <Link to="/login">
+                            <button className="btn btn-dark me-3">Login</button>
+                        </Link>
+                        <Link to="/register">
+                            <button className="btn btn-dark">Register</button>
+                        </Link>
+                    </div>
+                ) : (
+                    <div className="d-flex me-3">
+                        <div className="dropdown">
+                            <button
+                                className="btn btn-success"
+                                type="button"
+                                id="userDropdown"
+                                data-bs-toggle="dropdown" // Agregamos esta línea para activar el dropdown de Bootstrap
+                            >
+                                {`Wellcome ${localStorage.getItem("user_email") || "Login"}`}
+                            </button>
+                            <ul className="dropdown-menu dropdown-menu-lg-end" aria-labelledby="userDropdown">
+                                <li>
+                                    <Link to="/" onClick={() => actions.logout()} className="dropdown-item">
+                                        Logout
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    )
+                }
+			</div>
         </nav>
     );
 };

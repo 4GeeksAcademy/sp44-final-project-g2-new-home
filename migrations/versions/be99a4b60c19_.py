@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: d75120602a99
+Revision ID: be99a4b60c19
 Revises: 
-Create Date: 2023-09-02 17:56:53.670123
+Create Date: 2023-09-06 14:47:26.760864
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'd75120602a99'
+revision = 'be99a4b60c19'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -46,30 +46,20 @@ def upgrade():
     sa.Column('is_active', sa.Boolean(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('contact'),
-    sa.UniqueConstraint('description'),
-    sa.UniqueConstraint('name'),
-    sa.UniqueConstraint('photo')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('animal_shelter',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=20), nullable=False),
     sa.Column('address', sa.String(length=80), nullable=True),
     sa.Column('city', sa.String(length=120), nullable=False),
-    sa.Column('zip_code', sa.String(length=10), nullable=False),
-    sa.Column('cif', sa.String(length=20), nullable=False),
+    sa.Column('zip_code', sa.Integer(), nullable=False),
+    sa.Column('cif', sa.Integer(), nullable=False),
     sa.Column('web', sa.String(length=100), nullable=False),
-    sa.Column('status_animal', sa.Enum('Lost', 'Found', 'Adopted', name='adopted'), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('cif'),
-    sa.UniqueConstraint('city'),
-    sa.UniqueConstraint('name'),
-    sa.UniqueConstraint('user_id'),
-    sa.UniqueConstraint('web'),
-    sa.UniqueConstraint('zip_code')
+    sa.UniqueConstraint('user_id')
     )
     op.create_table('experiences_blog',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -88,8 +78,6 @@ def upgrade():
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('lastname'),
-    sa.UniqueConstraint('name'),
     sa.UniqueConstraint('user_id')
     )
     op.create_table('rating',

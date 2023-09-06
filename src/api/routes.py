@@ -5,6 +5,9 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Volunteer, ExperiencesBlog, Rating, Report, People, AnimalShelter, TipsPets, Animal
 from api.utils import generate_sitemap, APIException
 from sqlalchemy import func
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
 
 api = Blueprint('api', __name__)
 
@@ -31,21 +34,58 @@ def handle_users():
             "status": "ok" }
         return response_body, 200
     if request.method =='POST':
-        request_body = request.get_json()
-        print(request_body)
-        user = User(                                     #Creamos una instancia de user
-                    email = request_body["email"],
-                    password = request_body['password'],
-                    is_active = request_body['is_active'],
-                    role = request_body['role'])
-        db.session.add(user)
-        db.session.commit()
-        response_body = {
+      request_body = request.get_json()
+      print(request_body)
+      if request_body['role'] == 'Person':
+         user = User(                                     #Creamos una instancia de user
+                     email = request_body["email"],
+                     password = request_body['password'],
+                     is_active = request_body['is_active'],
+                     role = request_body['role'])
+         db.session.add(user)
+         db.session.commit()
+         # Obtén el ID del usuario recién creado
+         user_id = user.id
+
+         person = People(
+            name=request_body['name'],
+            lastname=request_body['lastname'],
+            trophy=request_body.get('trophy', False),
+            user_id = user_id
+        )
+         db.session.add(person)
+         db.session.commit()
+
+      elif request_body['role'] == 'AnimalShelter':
+         user = User(
+               email=request_body['email'],
+               password=request_body['password'],
+               is_active=request_body['is_active'],
+               role=request_body['role']
+         )
+         db.session.add(user)
+         db.session.commit()
+         # Obtén el ID del usuario recién creado
+         user_id = user.id
+         print("Antes de animal shelter", request_body)
+         animal_shelter = AnimalShelter(
+               name=request_body['name'],
+               address=request_body['address'],
+               city=request_body['city'],
+               zip_code=request_body['zip_code'],
+               web=request_body['web'],
+               cif=request_body['cif'],
+               user_id = user_id
+         )
+         db.session.add(animal_shelter)
+         db.session.commit()
+         print("despues de la solicitud", request_body)
+      response_body = {
             "message": "Adding new user",
             "status": "ok",
             "new_user": request_body}
-        # response_body = {"message": "Esto devuelve el POST del endpooint users"}
-        return response_body, 200
+      # response_body = {"message": "Esto devuelve el POST del endpooint users"}
+      return response_body, 200
 
 
 @api.route('/users/<int:id>', methods=['GET', 'PUT', 'DELETE'])
@@ -80,7 +120,7 @@ def handle_user(id):
     return response_body, 200
 
 
-def update_vote_stats(user_id):
+def update_vote_stars(user_id):
     # Calcula el nuevo valor promedio de rating
     all_ratings = Rating.query.filter_by(rated_id=user_id).all()
     total_ratings = len(all_ratings)
@@ -160,7 +200,7 @@ def handle_ratings():
     sum_total_votes = db.session.query(func.sum(Rating.rating)).filter_by(rated_id=rated_id).scalar()
     vote_count = db.session.query(func.count(Rating.rating)).filter_by(rated_id=rated_id).scalar()
     # Llamar a la función para calcular y actualizar los valores de sum_total_votes, vote_count y rating
-    update_vote_stats(rated_id)
+    update_vote_stars(rated_id)
 
     response_body = {
         "message": "Rating added successfully",
@@ -651,3 +691,25 @@ def handle_animal(id):
                      "animal_deleting": id
                       }
       return response_body, 200
+
+
+@api.route("/token", methods=["POST"])
+def create_token():
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+    
+    # Consulta la base de datos para verificar las credenciales
+    user = User.query.filter_by(email=email, password=password).first()
+
+    if not user:
+        return jsonify({"msg": "Credenciales incorrectas"}), 401
+
+    access_token = create_access_token(identity=email)
+     # Incluye información del usuario en la respuesta
+    user_info = {
+        "access_token": access_token,
+        "user_id": user.id,
+        "user_email": user.email,
+        "user_role": user.role
+    }
+    return jsonify(user_info)
