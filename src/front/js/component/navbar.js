@@ -51,12 +51,12 @@ export const Navbar = () => {
             <div className="container-fluid text-center justify-content-center">
                 <div className="container d-flex justify-content-between align-items-center">
                     <div className="nav-links">
-                        <Link to="/" className="navbar-brand" >Home</Link>
-                        <Link to="/protectors" className="navbar-brand" >Protectors</Link>
-                        <Link to="/tips" className="navbar-brand" >Tips</Link>
-                        <Link to="/lostanimals" className="navbar-brand" >Lost animals</Link>
-                        <Link to="/voluntaryform" className="navbar-brand" >Voluntary form</Link>
-                        <Link to="/experiences" className="navbar-brand" >Experiences</Link>
+                        <Link to="/" className="navbar-brand custom-link">Home</Link>
+                        <Link to="/protectors" className="navbar-brand custom-link">Protectors</Link>
+                        <Link to="/tips" className="navbar-brand custom-link">Tips</Link>
+                        <Link to="/lostanimals" className="navbar-brand custom-link">Lost animals</Link>
+                        <Link to="/voluntaryform" className="navbar-brand custom-link">Voluntary form</Link>
+                        <Link to="/experiences" className="navbar-brand custom-link">Experiences</Link>
                     </div>
                     <button className="btn btn-outline-success" id="openSearchButton" onClick={toggleSearch}>
                         Open Search
@@ -115,7 +115,7 @@ export const Navbar = () => {
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-light" data-bs-dismiss="modal" onClick={closeSearch}>Close</button>
                                     <button
-                                        type="button" // Cambiado de submit a button
+                                        type="button"
                                         className="btn btn-primary"
                                         id="contactBtn"
                                         onClick={handleSearch}
