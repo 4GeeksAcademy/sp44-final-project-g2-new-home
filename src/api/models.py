@@ -33,8 +33,8 @@ class User(db.Model):
 
 class People(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20), unique=True, nullable=False)
-    lastname = db.Column(db.String(20), unique=True, nullable=False)
+    name = db.Column(db.String(20), nullable=False)
+    lastname = db.Column(db.String(20), nullable=False)
     trophy = db. Column(db.Boolean())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
     user = db.relationship('User')
@@ -47,19 +47,19 @@ class People(db.Model):
             "id": self.id,
             "name": self.name,
             "lastname": self.lastname,
-            "trophy": self.trophy
+            "trophy": self.trophy,
+            "user_id": self.user_id
         }
     
 
 class AnimalShelter(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20), unique=True, nullable=False)
+    name = db.Column(db.String(20), unique=False, nullable=False)
     address = db.Column(db.String(80))
-    city = db.Column(db.String(120),  nullable=False)
-    zip_code = db.Column(db.String(10),  nullable=False)
-    cif = db.Column(db.String(20), unique=True, nullable=False)
-    web = db.Column(db.String(100), unique=True, nullable=False)
-    status_animal = db.Column(db.Enum('Lost', 'Found', 'Adopted', name='adopted'), nullable=False)
+    city = db.Column(db.String(120), nullable=False)
+    zip_code = db.Column(db.Integer, nullable=False)
+    cif = db.Column(db.Integer, nullable=False)
+    web = db.Column(db.String(100),  nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
     user = db.relationship('User')
 
@@ -75,8 +75,9 @@ class AnimalShelter(db.Model):
             "zip_code": self.zip_code,
             "cif": self.cif,
             "web": self.web,
-            "status_animal": self.status_animal
+            "user_id": self.user_id
         }
+
 
 
 class Volunteer(db.Model):
@@ -147,6 +148,7 @@ class Report(db.Model):
             "id": self.id,
             "title": self.title,
             "body": self.body,
+            "user_id": self.user_id
         }
 
 
@@ -165,6 +167,7 @@ class TipsPets(db.Model):
             "id": self.id,
             "title": self.title,
             "body": self.body,
+            "user_id": self.user_id
         }
     
 
@@ -224,5 +227,6 @@ class ExperiencesBlog(db.Model):
             "id": self.id,
             "title": self.title,
             "body": self.body,
-            "photo": self.photo
+            "photo": self.photo,
+            "user_id": self.user_id
         }
