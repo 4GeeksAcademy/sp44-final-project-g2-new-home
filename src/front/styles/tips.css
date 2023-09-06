@@ -31,33 +31,11 @@ h1 {
 
 .card-title {
   margin-bottom: 20px;
+  font-weight: bold;
 }
 
 .card:nth-child(even) .Foto.tip1 {
   border-color: #fff;
-}
-
-@media screen and (max-width: 768px) {
-  .container {
-      padding: 10px;
-  }
-
-  h1 {
-      font-size: 30px;
-  }
-
-  .card-title {
-      font-size: 20px;
-  }
-
-  .card-text {
-      font-size: 16px;
-  }
-
-  .Foto.tip1 {
-      width: 150px;
-      height: 150px;
-  }
 }
 
 /* Nueva regla para la barra lateral */
@@ -67,11 +45,13 @@ h1 {
   margin-right: 10px;
   padding-top: 10px;
   top: 0;
-  left: 0;
+  left: 15px;
   max-height: 100%;
   width: 20%; /* Ancho de la barra lateral */
   overflow-y: auto; /* Agregar desplazamiento vertical si es necesario */
   background-color: rgb(255, 255, 255);
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 #sidebartips h2 {
@@ -99,3 +79,48 @@ h1 {
     padding: 10px;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+
+  .card-title {
+    font-size: 20px;
+  }
+
+  .card-text {
+    font-size: 16px;
+  }
+
+  .Foto.tip1 {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+/* Estilos para pantallas más pequeñas (menos de 768px) */
+@media (max-width: 767.98px) {
+  #main {
+    max-width: 300px;
+  }
+}
+
+/* Estilos para pantallas medianas (entre 768px y 1399.98px) */
+@media (min-width: 768px) and (max-width: 1399.98px) {
+  #main {
+    max-width: 580px;
+  }
+}
+
+/* Estilos para pantallas más grandes (1400px o más) */
+@media (min-width: 1400px) {
+  #main {
+    max-width: 1020px;
+  }
+}
+

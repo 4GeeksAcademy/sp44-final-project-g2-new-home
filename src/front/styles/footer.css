@@ -1,0 +1,13 @@
+#main {
+    background-color: rgba(0,0,0,.2);
+    padding: auto;
+    margin-top: 15px;
+    position: relative;
+    max-width: 100%; /* Añade esta línea para que el fondo se extienda por todo el ancho */
+    z-index: -1; /* Agrega esta línea para colocar el fondo detrás del contenido */
+}
+
+h4,
+p {
+    color: white;
+}

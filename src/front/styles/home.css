@@ -16,7 +16,7 @@ body {
 
 /* Estilos adicionales para la navbar */
 .navbar {
-    background: #000000; 
+    background: rgba(0,0,0,.2); 
 }
 
 /* BOTONES */
