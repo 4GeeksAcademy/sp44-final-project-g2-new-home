@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { useContext } from "react";
 
+
 export const Navbar = () => {
     const { store, actions } = useContext(Context);
     const [searchVisible, setSearchVisible] = useState(false);
@@ -57,6 +58,7 @@ export const Navbar = () => {
                         <Link to="/lostanimals" className="navbar-brand custom-link">Lost animals</Link>
                         <Link to="/voluntaryform" className="navbar-brand custom-link">Voluntary form</Link>
                         <Link to="/experiences" className="navbar-brand custom-link">Experiences</Link>
+                        <Link to="/adoptme" className="navbar-brand custom-link">Adoptme</Link>
                     </div>
                     <button className="btn btn-outline-success" id="openSearchButton" onClick={toggleSearch}>
                         Open Search

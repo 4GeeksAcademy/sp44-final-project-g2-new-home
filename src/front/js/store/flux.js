@@ -3,6 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			token: null,
 			message: null,
+			favorite: [],
 			demo: [
 				{
 					title: "FIRST",
@@ -106,6 +107,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error)
 				}
 			},
+			// getPets: async() => {
+			// 	if(localStorage.getItem('petsLocal') !== null){
+			// 	} else {
+			// 		const response = await fetch('https://api.petfinder.com/v2/types/dog');
+			// 		if(response.ok) {
+			// 			const data = await response.json();
+			// 			localStorage.setItem('petsLocal', JSON.stringify(data.results));
+			// 		} else {
+			// 			console.log('error:', response.status, response.statusText)
+			// 		}
+			// 	}
+			// },
+
 			changeColor: (index, color) => {
 				//get the store
 				const store = getStore();
