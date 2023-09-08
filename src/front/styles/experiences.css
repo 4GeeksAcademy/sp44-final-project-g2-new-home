@@ -1,143 +1,149 @@
 /* Estilo del contenedor principal */
 .experiences-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-  }
-  
-  /* Estilo del formulario de publicación */
-  .experience-post {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-  }
-  
-  .experience-post h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .image-upload {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .image-upload label {
-    display: block;
-    background-color: #3498db;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .image-upload label:hover {
-    background-color: #2980b9;
-  }
-  
-  .image-upload img {
-    max-width: 100%;
-    height: auto;
-    margin: 10px 0;
-  }
-  
-  .input-fields input[type="text"],
-  .input-fields textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
-  }
-  
-  .input-fields textarea {
-    height: 100px;
-  }
-  
-  /* Estilo del botón de publicación */
-  .input-fields button {
-    background-color: #3498db;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-  }
-  
-  .input-fields button:hover {
-    background-color: #2980b9;
-  }
-  
-  /* Estilo de la sección de experiencias */
-  .experiences-feed {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Estilo de cada experiencia individual */
-  .experience {
-    padding: 20px;
-    border-bottom: 1px solid #ddd;
-    position: relative;
-  }
-  
-  .experience img {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 10px;
-  }
-  
-  .experience h3 {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
-  
-  .experience p {
-    font-size: 16px;
-    margin-bottom: 10px;
-  }
-  
-  /* Estilo del botón "Me gusta" */
-  .experience button {
-    background-color: transparent;
-    border: none;
-    font-size: 24px;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    color: #333;
-    transition: color 0.3s;
-  }
-  
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Estilo del formulario de publicación */
+.experience-post {
+  background-color: rgb(245 229 7 / 10%);
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 4px 8px 10px rgb(245 229 7 / 60%);
+  margin-bottom: 20px;
+}
+
+.experience-post h2 {
+  font-size: 24px;
+  margin: 15px;
+  margin-bottom: 25px;
+}
+
+.image-upload {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.image-upload label {
+  display: block;
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.image-upload label:hover {
+  background-color: #2980b9;
+}
+
+.image-upload img {
+  max-width: 100%;
+  height: auto;
+  margin: 10px 0;
+}
+
+.input-fields input[type="text"],
+.input-fields textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.input-fields textarea {
+  height: 100px;
+}
+
+/* Estilo del botón de publicación */
+.input-fields button {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.input-fields button:hover {
+  background-color: #2980b9;
+}
+
+/* Estilo de la sección de experiencias */
+.experiences-feed {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo de cada experiencia individual */
+.experience {
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+  position: relative;
+  display: flex; /* Cambio para usar flexbox */
+  justify-content: center;
+}
+
+.experience img {
+  max-width: 100%;
+  height: auto;
+  margin-right: 10px; /* Espacio entre la imagen y el corazón */
+}
+
+.experience h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.experience p {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+/* Estilo del botón "Me gusta" */
+.experience button {
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+  transition: color 0.3s;
+}
+
 /* Estilo del botón "Me gusta" */
 .like-button {
-    background-color: transparent;
-    border: none;
-    font-size: 24px;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-  }
-  
-  .liked-icon {
-    color: #e74c3c; /* Color rojo cuando está "liked" */
-  }
-  
-  
-  /* Estilo para el ícono de "Me gusta" */
-  .experience button span {
-    vertical-align: middle;
-  }
-  
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.liked-icon {
+  color: #e74c3c; /* Color rojo cuando está "liked" */
+}
+
+/* Estilo para el ícono de "Me gusta" */
+.experience button span {
+  vertical-align: middle;
+}
+
+#post {
+  background-color: #007bff;
+  border-radius: 5px;
+  color: white;
+  border: none;
+  width: 50px;
+  height: 35px;
+  margin-top: 10px;
+  font-size: 16px;
+}

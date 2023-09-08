@@ -40,7 +40,7 @@ export const Tips = () => {
             </ul>
           </div>
         </div>
-        <div className="col-md-11" id="main">
+        <div className="col-md-11" id="main1">
           <div className="container text-center">
             <div className=" animate__animated animate__bounceInRight">
               <h1>Tips for Pet Adoption</h1>

@@ -3,6 +3,10 @@
   padding: 20px;
 }
 
+#main1 {
+  background-color: white !important;
+}
+
 h1 {
   font-size: 60px;
   color: rgb(130, 33, 201);
@@ -107,6 +111,7 @@ h1 {
 @media (max-width: 767.98px) {
   #main {
     max-width: 300px;
+    background-color: transparent !important;
   }
 }
 
@@ -114,6 +119,7 @@ h1 {
 @media (min-width: 768px) and (max-width: 1399.98px) {
   #main {
     max-width: 580px;
+    background-color: transparent !important;
   }
 }
 
@@ -121,6 +127,7 @@ h1 {
 @media (min-width: 1400px) {
   #main {
     max-width: 1020px;
+    background-color: transparent !important;
   }
 }
 

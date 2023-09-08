@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../../styles/experiences.css";
 
 export const Experiences = () => {
-  const [experiences, setExperiences] = useState([]); // Almacenar experiencias publicadas
+  const [experiences, setExperiences] = useState([]); // Store published experiences
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
@@ -27,28 +27,28 @@ export const Experiences = () => {
     } else {
       likedExperiences.add(id);
     }
-    setLikedExperiences(new Set(likedExperiences)); // Actualizar para desencadenar una renderización
+    setLikedExperiences(new Set(likedExperiences)); // Update to trigger a re-render
   };
 
   const handleSubmit = () => {
-    // Validación básica: asegurarse de que se haya ingresado un título y una descripción
+    // Basic validation: make sure a title and description are entered
     if (!title || !description) {
-      alert("Por favor, complete el título y la descripción.");
+      alert("Please complete the title and description.");
       return;
     }
 
-    // Crear un objeto experiencia
+    // Create an experience object
     const newExperience = {
-      id: Date.now(), // Se puede usar una biblioteca de generación de IDs única
+      id: Date.now(), // You can use a unique ID generation library
       title,
       description,
       image: image ? URL.createObjectURL(image) : null,
     };
 
-    // Agregar la nueva experiencia al array de experiencias
+    // Add the new experience to the array of experiences
     setExperiences([...experiences, newExperience]);
 
-    // Restablecer el formulario
+    // Reset the form
     setTitle("");
     setDescription("");
     setImage(null);
@@ -57,58 +57,53 @@ export const Experiences = () => {
   return (
     <div className="container">
       <div className="experiences-container">
-      <div className="experience-post">
-        <h2>Publicar una Experiencia</h2>
-        <div className="image-upload">
-          {image ? (
-            <img src={URL.createObjectURL(image)} alt="Imagen seleccionada" />
-          ) : (
-            <label htmlFor="image-input">
-              Arrastra y suelta una imagen o haz clic para seleccionar una.
-            </label>
-          )}
-          <input
-            type="file"
-            id="image-input"
-            accept="image/*"
-            onChange={handleImageChange}
-          />
+        <div className="experience-post">
+          <h2><b>Publish an Experience</b></h2>
+          <div className="image-upload">
+            {image ? (
+              <img src={URL.createObjectURL(image)} alt="Selected Image" />
+            ) : (
+              <input
+                type="file"
+                id="image-input"
+                accept="image/*"
+                onChange={handleImageChange}
+              />
+            )}
+          </div>
+          <div className="input-fields">
+            <input
+              type="text"
+              placeholder="Title"
+              value={title}
+              onChange={handleTitleChange}
+            />
+            <textarea
+              placeholder="Description"
+              value={description}
+              onChange={handleDescriptionChange}
+            ></textarea>
+          </div>
+          <button onClick={handleSubmit} id="post">Post</button>
         </div>
-        <div className="input-fields">
-          <input
-            type="text"
-            placeholder="Título"
-            value={title}
-            onChange={handleTitleChange}
-          />
-          <textarea
-            placeholder="Descripción"
-            value={description}
-            onChange={handleDescriptionChange}
-          ></textarea>
-        </div>
-        <button onClick={handleSubmit}>Publicar</button>
-      </div>
-      <div className="experiences-feed">
+        <div className="experiences-feed">
           {experiences.map((experience) => (
-            <div key={experience.id} className="experience">
-              {experience.image && (
-                <img src={experience.image} alt="Imagen de la experiencia" />
-              )}
-              <h3>{experience.title}</h3>
-              <p>{experience.description}</p>
-              <button
-                onClick={() => handleLikeClick(experience.id)}
-                className={`like-button ${
-                  likedExperiences.has(experience.id) ? "liked" : ""
-                }`}
-              >
-                <i
-                  className={`fas fa-heart ${
-                    likedExperiences.has(experience.id) ? "liked-icon" : ""
-                  }`}
-                ></i>
-              </button>
+            <div className="row-container">
+              <div key={experience.id} className="experience">
+                <div className="experience-image">
+                  {experience.image && (
+                    <img src={experience.image} alt="Experience Image" />
+                  )}
+                </div>
+              </div>
+              <br />
+                <div className="experience-details">
+                  <button onClick={() => handleLikeClick(experience.id)} className={`like-button ${likedExperiences.has(experience.id) ? "liked" : ""}`}>
+                    <i className={`fas fa-heart ${likedExperiences.has(experience.id) ? "liked-icon" : ""}`}></i>
+                  </button>
+                  <h3>{experience.title}</h3>
+                  <p>{experience.description}</p>
+                </div>
             </div>
           ))}
         </div>
