@@ -1,5 +1,6 @@
 body {
-    background-color: rgb(223 255 236);
+    /* background-color: rgb(223 255 236); */
+    background-color: white;
 }
 
 /* Estilos generales */
@@ -16,7 +17,7 @@ body {
 
 /* Estilos adicionales para la navbar */
 .navbar {
-    background: #000000; 
+    background: rgba(0,0,0,.2); 
 }
 
 /* BOTONES */

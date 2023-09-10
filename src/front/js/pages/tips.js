@@ -16,7 +16,7 @@ export const Tips = () => {
     <div className="container">
       <div className="row">
         <div className="col-md-auto">
-          <div className="sidebar" id="sidebartips">
+          <div className="sidebar animate__animated animate__backInUp" id="sidebartips">
             <h2>Tips Navigation</h2>
             <ul className="nav flex-column">
               <li className="nav-item">
@@ -40,10 +40,11 @@ export const Tips = () => {
             </ul>
           </div>
         </div>
-        <div className="col-md-11">
+        <div className="col-md-11" id="main1">
           <div className="container text-center">
-            <h1>Tips for Pet Adoption</h1>
-
+            <div className=" animate__animated animate__bounceInRight">
+              <h1>Tips for Pet Adoption</h1>
+            </div>          
             <div className="card text-center" id="tip1">
               <h3 className="card-title">Tip for peaceful coexistence</h3>
               <img src={tip_1} alt="Tip 1" className="Foto tip1" />

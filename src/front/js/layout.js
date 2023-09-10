@@ -7,6 +7,8 @@ import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Tips } from "./pages/tips";
 import { Lostanimals } from "./pages/lostanimals";
+import { VoluntaryForm } from "./pages/voluntaryform";
+import { Experiences } from "./pages/experiences";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
@@ -36,6 +38,8 @@ const Layout = () => {
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<Tips />} path="/tips" />                        
                         <Route element={<Lostanimals />} path="/lostanimals" />
+                        <Route element={<VoluntaryForm />} path="/voluntaryform" /> 
+                        <Route element={<Experiences />} path="/experiences" />   
                         <Route element={<Single />} path="/single" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
