@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { useContext } from "react";
@@ -44,7 +44,7 @@ export const Navbar = () => {
         closeSearch();
     };
 
-    const user_email = localStorage.getItem("user_email");
+    const user_email = store.user_email || localStorage.getItem("user_email")
 
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -147,12 +147,17 @@ export const Navbar = () => {
                                 id="userDropdown"
                                 data-bs-toggle="dropdown" // Agregamos esta línea para activar el dropdown de Bootstrap
                             >
-                                {`Wellcome ${localStorage.getItem("user_email") || "Login"}`}
+                                  {`Welcome ${user_email}`}
                             </button>
                             <ul className="dropdown-menu dropdown-menu-lg-end" aria-labelledby="userDropdown">
                                 <li>
                                     <Link to="/" onClick={() => actions.logout()} className="dropdown-item">
                                         Logout
+                                    </Link>
+                                </li>
+                                <li>
+                                     <Link to="/profile"  className="dropdown-item">
+                                        My profile
                                     </Link>
                                 </li>
                             </ul>

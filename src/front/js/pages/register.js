@@ -19,8 +19,17 @@ const Register = () => {
   const [zipCode, setZipCode] = useState("");
   const [web, setWeb] = useState("");
   
+  
+    
+    
 
   const handleRegister = async () => {
+
+    if (!isActive) {
+      alert("You must accept the terms and conditions to be able to register on our page.");
+      return;
+    }
+
     console.log("Datos que se enviarán:", {
       email,
       password,
@@ -51,14 +60,6 @@ const Register = () => {
       <div>
         <label className="me-3 mt-3">Contraseña:</label>
         <input className="me-5" type="password" onChange={(e) => setPassword(e.target.value)} />
-      </div>
-      <div>
-        <label className="mt-3 me-3">Active: </label>
-        <input
-          type="checkbox"
-          checked={isActive}
-          onChange={(e) => setIsActive(e.target.checked)}
-        />
       </div>
       <div>
         <label className="me-3 mt-3">Tipo de usuario:</label>
@@ -93,6 +94,17 @@ const Register = () => {
             <label className="me-3 mt-3">Web:</label>
             <input maxLength={100} type="text" name="web" onChange={(e) => setWeb(e.target.value)} required />
           </div>
+          <div>
+            <label className="mt-3 me-3">
+              I have read and accept the terms and conditions and declare that I am
+              of legal age.
+            </label>
+            <input
+              type="checkbox"
+              checked={isActive}
+              onChange={() => setIsActive(!isActive)} // Cambia el estado de isActive cuando se hace clic en el checkbox
+            />
+          </div>
         </>
       )}
       {userType === "Person" && (
@@ -104,6 +116,17 @@ const Register = () => {
           <div>
             <label className="me-3 mt-3">Last Name:</label>
             <input maxLength={20} type="text" onChange={(e) => setLastname(e.target.value)} required />
+          </div>
+          <div>
+            <label className="mt-3 me-3">
+              I have read and accept the terms and conditions and declare that I am
+              of legal age.
+            </label>
+            <input
+              type="checkbox"
+              checked={isActive}
+              onChange={() => setIsActive(!isActive)} // Cambia el estado de isActive cuando se hace clic en el checkbox
+            />
           </div>
         </>
       )}

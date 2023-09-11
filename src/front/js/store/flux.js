@@ -3,6 +3,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			token: null,
 			message: null,
+			user_id: null,
+			user_mail: null,
 			demo: [
 				{
 					title: "FIRST",
@@ -75,10 +77,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 					alert("There has been some error")
 					return false
 					}
-					const data = await resp.json()
-					console.log("This came from the backend", data)
+					const data = await resp.json()		
+					console.log("User ID:", data.user_id); // Imprime el ID del usuario
+					console.log("User Email:", data.user_email); 
 					localStorage.setItem("token", data.access_token)
-					setStore({token: data.access_token})
+					setStore({ token: data.access_token, user_id: data.user_id, user_email: data.user_email }); // Almacena el ID del usuario en el store
+					console.log("This came from the backend", data)
+					console.log("Token:", data.access_token);
 					return true
 				}
 				catch(error){console.error("There has been an error login in")}	
@@ -91,8 +96,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 			logout: () => {
 				setStore({ message: "" })
 				const token = localStorage.removeItem("token")
+				localStorage.removeItem("user_data")
+				localStorage.removeItem("user_email")
 				console.log("APlication just loaded synching the local Storage Token")
-				setStore({token: null}) //mimimi
+				setStore({token: null}) 
+			},
+			get_profile: async (userId) => {
+				console.log('getUserProfile llamado con userId:', userId);
+				const token = getStore().token;
+			
+				if (!token || !userId) {
+					// Manejar el caso en el que el token o el userId no estén disponibles
+					return null;
+				}
+			
+				const requestOptions = {
+					method: 'GET',
+					headers: {
+						'Authorization': `Bearer ${token}`
+					}
+				};
+			
+				try {
+					const response = await fetch(process.env.BACKEND_URL + `/api/users/${userId}`, requestOptions);
+					if (response.status === 200) {
+						const data = await response.json();
+						return data.results; // Devuelve los datos del perfil del usuario
+					} else {
+						// Manejar el caso en el que la solicitud no sea exitosa
+						return null;
+					}
+				} catch (error) {
+					// Manejar errores de red u otros errores
+					console.error('Error fetching user profile:', error);
+					return null;
+				}
 			},
 			getMessage: async () => {
 				try{

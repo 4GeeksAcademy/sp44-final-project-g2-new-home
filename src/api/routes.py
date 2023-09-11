@@ -89,35 +89,49 @@ def handle_users():
 
 
 @api.route('/users/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+@jwt_required()
 def handle_user(id):
-  if request.method == 'GET': 
-    user = db.get_or_404(User, id) # De la base de datos user estoy obteniendo el id definido en el argumento de la funcion.
-    print(user)
-    response_body = {
-        "status": "ok",
-        "results": user.serialize()
-    }
-    return response_body, 200
-  if request.method == 'PUT':
-    request_body = request.get_json()
-    user = db.get_or_404(User, id)
-    user.email = request_body["email"]
-    user.password = request_body["password"]
-    db.session.commit() 
-    response_body = {"message": "Updated user",
-                     "status": "ok",
-                     "user": request_body
-                     }
-    return response_body, 200
-  if request.method == 'DELETE':  
-    user = db.get_or_404(User, id)
-    db.session.delete(user) 
-    db.session.commit()
-    response_body = {"message": "DELETED user",
-                     "status": "ok",
-                     "user_deleting": id,
-                     }
-    return response_body, 200
+   if request.method == 'GET': 
+    user_with_details = db.session.query(User, People, AnimalShelter).\
+        join(People, User.id == People.user_id, isouter=True).\
+        join(AnimalShelter, User.id == AnimalShelter.user_id, isouter=True).\
+        filter(User.id == id).\
+        first()
+
+    if user_with_details:
+        user, person, shelter = user_with_details
+        response_body = {
+            "status": "ok",
+            "results": {
+                **user.serialize(),
+                "details": person.serialize() if user.role == 'Person' else shelter.serialize() if user.role == 'AnimalShelter' else {}
+            }
+        }
+        print(response_body)
+        return response_body, 200
+    else:
+        response_body = {"message": "User not found", "status": "error"}
+        return response_body, 404
+   if request.method == 'PUT':
+      request_body = request.get_json()
+      user = db.get_or_404(User, id)
+      user.email = request_body["email"]
+      user.password = request_body["password"]
+      db.session.commit() 
+      response_body = {"message": "Updated user",
+                        "status": "ok",
+                        "user": request_body
+                        }
+      return response_body, 200
+   if request.method == 'DELETE':  
+      user = db.get_or_404(User, id)
+      db.session.delete(user) 
+      db.session.commit()
+      response_body = {"message": "DELETED user",
+                        "status": "ok",
+                        "user_deleting": id,
+                        }
+      return response_body, 200
 
 
 def update_vote_stars(user_id):

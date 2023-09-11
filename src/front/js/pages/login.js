@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
@@ -8,17 +8,26 @@ export const Login = () => {
 	const { store, actions } = useContext(Context);
     const [email, setEmail] = useState("");    
     const [password, setPassword] = useState("");
+    const [welcomeMessage, setWelcomeMessage] = useState("");
     // const token = localStorage.getItem("token");
     console.log("This is your token", store.token);
     const navigate = useNavigate()
-    
+
+   
     const handleClick = async  () => {
         await  actions.login(email, password);
         if(store.token && store.token != "" && store.token != undefined)  {
-            localStorage.setItem("user_email", email);
+            localStorage.setItem("user_email", store.user_email);
+            setWelcomeMessage(`Welcome ${store.user_email}`);
             navigate("/");
         }
     }
+
+    useEffect(() => {
+        if (store.token && store.token !== "" && store.token !== undefined) {
+            setWelcomeMessage(`Welcome ${email}`);
+        }
+    }, [store.token]);
     
 
 	return (
