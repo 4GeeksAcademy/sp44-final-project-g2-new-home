@@ -58,7 +58,7 @@ fetch(url, requestOptions)
         
             <div key={id} className="card m-3 rounded" style={{ width: "23rem" }}>
               {/* <img src={item.url || imgDefault} alt={item.name} onError={handleOnErrorImg} /> */}
-              <img src={'https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/' + id } onError={handleOnErrorImg} />
+              {/* <img src={`https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/${id}/1/`} onError={handleOnErrorImg} /> */}
               <div className="card-body">
                 <h5 className="card-title">{petsDetails.name}</h5>
                 <div className="d-flex justify-content-between">

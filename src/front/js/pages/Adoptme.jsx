@@ -22,7 +22,7 @@ export const Adoptme = () => {
     // });
 
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0M0swTkpSS3hCUmZJcVBEcEh0OWJ1QTUwSDZOcERraVpFdzV5eUVuc1BvNW5RdjJyaSIsImp0aSI6IjFjODJlYTUyN2VmMjQ1YjVmYWQ5ZjhlN2FjZmUxMzI5ZDYwYTRhODA2ZWRkMTA0MDE3OGZkZmQzODI0YmRjYWY5NzcwZjY5MzVlZDcxOTAyIiwiaWF0IjoxNjk0NTE1Nzc3LCJuYmYiOjE2OTQ1MTU3NzcsImV4cCI6MTY5NDUxOTM3Nywic3ViIjoiIiwic2NvcGVzIjpbXX0.jOy4sEbbCK_AwaaNxLiuGGAMQrAhjTeWN1Ja0Au0KOcqlFsBHwVIT9Tw7feYgMKSSQG7dFwLk7N2KL5fHFvsRqGudvyfjw86SHhMmMquMZsC66e7vE0dwiH9-1F-C8iOmE-Yj19sgHub3c0MQixN3AHPeiqo3OIWjxR5lhBKv29sCzwZcJvUSuZXdnf6r9zKzcCM9_tKEmtj8qQ7PGQTGNqsCAA723hQsSaTfXA4btPT7qN8LRPqbN_AyLNno-_OG3jErrTSzS2EvMOm3hwNm2EDghpKLyIaOVTmsIqqVPVS6UpNWWAwGxq4A_Uu-FHNElLV3xa5HyeeXiIdvFnY0A");
+    myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0M0swTkpSS3hCUmZJcVBEcEh0OWJ1QTUwSDZOcERraVpFdzV5eUVuc1BvNW5RdjJyaSIsImp0aSI6ImY3OGZmNmJmMjA2OTU5Yjc1YzQzMDRjMjMyMTkyMWY4ZDU3NThhN2UwZDEyYTk3N2RlNDg2NzFjZWMzODVjZDIxNDQ1NTQxN2Y3MDE3YjI1IiwiaWF0IjoxNjk0NTUxNzIxLCJuYmYiOjE2OTQ1NTE3MjEsImV4cCI6MTY5NDU1NTMyMSwic3ViIjoiIiwic2NvcGVzIjpbXX0.vG8EuVL8aRM_kefg6BWrpPxTC5wfbwURiN1Xunmb8xMDADeYr4-Fw2IlL4ImyF5_2DA2LTOewmNN5JrKfQnJ62iphQ6iJ5b7IBLQETP57zv0pt5QtrKrmGoVCC-iraNg2FIx_7NyPOv2KxVcAYHwMFY51YZk-bdVNrK784yAsIoCr0NG2h4gRQf_0vtUhLVnR3_J6-CzGVcUcR0E-s-wPNqUYi5DoIUuEN-mttJRJ5iFSML1nv4uStiZsextAL5DBcbu7hHK1CxcexHqd0ueXkcPsSctn0iayyah5XKvVDlqKeCEAeDo5_JJhDQ2-VyT89xBr6D2lrgx1eyisNBBlA");
 
     var requestOptions = {
       method: 'GET',
@@ -52,11 +52,15 @@ export const Adoptme = () => {
         {pets.map((item, id) => (
           <div key={id} className="card m-3 rounded" style={{ width: "23rem" }}>
             {/* <img src={item.url || imgDefault} alt={item.name} onError={handleOnErrorImg} /> */}
-            <img src={'https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/' + id + '/1/'} alt={item.name} onError={handleOnErrorImg} />
+            <img src={`https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/${item.id}/1/`} alt={item.name} onError={handleOnErrorImg} />
             <div className="card-body">
               <h5 className="card-title">{item.name}</h5>
               <div className="d-flex justify-content-between">
-              <Link to={`/adoptme/${id + 1}`}>
+              {/* <Link to={`/characters/${id}`} className="btn btn-secondary"
+                      onClick={() => actions.getCharacter({ id, urlImage, item })}>
+                        Details
+                    </Link> */}
+              <Link to={`/adoptme/${id}`}>
                   <span className="navbar-brand mb-0 h1 btn btn-outline-secondary me-2">Details</span>
               </Link>
                 <div className="text-end">
@@ -72,3 +76,6 @@ export const Adoptme = () => {
     </div>
   )
 }
+
+// getCharacter: (character) => { setStore({ selectCharacter: character, })},
+// 			
