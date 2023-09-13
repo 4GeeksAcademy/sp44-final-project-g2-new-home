@@ -8,6 +8,7 @@ from sqlalchemy import func
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
+from flask_jwt_extended import decode_token
 
 api = Blueprint('api', __name__)
 
@@ -89,35 +90,79 @@ def handle_users():
 
 
 @api.route('/users/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+@jwt_required()
 def handle_user(id):
-  if request.method == 'GET': 
-    user = db.get_or_404(User, id) # De la base de datos user estoy obteniendo el id definido en el argumento de la funcion.
-    print(user)
-    response_body = {
-        "status": "ok",
-        "results": user.serialize()
-    }
-    return response_body, 200
-  if request.method == 'PUT':
-    request_body = request.get_json()
-    user = db.get_or_404(User, id)
-    user.email = request_body["email"]
-    user.password = request_body["password"]
-    db.session.commit() 
-    response_body = {"message": "Updated user",
-                     "status": "ok",
-                     "user": request_body
-                     }
-    return response_body, 200
-  if request.method == 'DELETE':  
-    user = db.get_or_404(User, id)
-    db.session.delete(user) 
+   if request.method == 'GET': 
+    user_with_details = db.session.query(User, People, AnimalShelter).\
+        join(People, User.id == People.user_id, isouter=True).\
+        join(AnimalShelter, User.id == AnimalShelter.user_id, isouter=True).\
+        filter(User.id == id).\
+        first() 
+
+    if user_with_details:
+        user, person, shelter = user_with_details
+        response_body = {
+            "status": "ok",
+            "results": {
+                **user.serialize(),
+                "details": person.serialize() if user.role == 'Person' else shelter.serialize() if user.role == 'AnimalShelter' else {}
+            }
+        }
+        print(response_body)
+        return response_body, 200
+    else:
+        response_body = {"message": "User not found", "status": "error"}
+        return response_body, 404
+   if request.method == 'PUT':
+    # Obtener el usuario actual desde la base de datos
+    user = User.query.get(id)
+    
+    # Verificar si el usuario existe
+    if not user:
+        return {"message": "User not found", "status": "error"}, 404
+
+    # Obtener los datos de la solicitud PUT
+    data = request.json
+    
+    # Verificar si el usuario tiene el rol correcto
+    if user.role == 'Person' and 'details' in data:
+        # Actualizar los datos en la tabla People
+        person_data = data['details']
+        person = People.query.filter_by(user_id=id).first()
+        if person:
+            # Actualizar los campos de la tabla People
+            person.name = person_data.get('name', person.name)
+            person.lastname = person_data.get('lastname', person.lastname)
+        
+    elif user.role == 'AnimalShelter' and 'details' in data:
+        # Actualizar los datos en la tabla AnimalShelter
+        shelter_data = data['details']
+        shelter = AnimalShelter.query.filter_by(user_id=id).first()
+        if shelter:
+            # Actualizar los campos de la tabla AnimalShelter
+            shelter.address = shelter_data.get('address', shelter.address)
+            shelter.cif = shelter_data.get('cif', shelter.cif)
+            shelter.city = shelter_data.get('city', shelter.city)
+            shelter.name = shelter_data.get('name', shelter.name)
+            shelter.web = shelter_data.get('web', shelter.web)
+            shelter.zip_code = shelter_data.get('zip_code', shelter.zip_code)
+    
+    # Actualizar el correo electrónico en la tabla User si se proporciona
+    if 'email' in data:
+        user.email = data['email']
+
+    # Guardar los cambios en la base de datos
     db.session.commit()
-    response_body = {"message": "DELETED user",
-                     "status": "ok",
-                     "user_deleting": id,
-                     }
-    return response_body, 200
+    return {"message": "User data updated successfully", "status": "ok"}, 200
+   if request.method == 'DELETE':  
+      user = db.get_or_404(User, id)
+      db.session.delete(user) 
+      db.session.commit()
+      response_body = {"message": "DELETED user",
+                        "status": "ok",
+                        "user_deleting": id,
+                        }
+      return response_body, 200
 
 
 def update_vote_stars(user_id):
@@ -704,7 +749,7 @@ def create_token():
     if not user:
         return jsonify({"msg": "Credenciales incorrectas"}), 401
 
-    access_token = create_access_token(identity=email)
+    access_token = create_access_token(identity=user.id)
      # Incluye información del usuario en la respuesta
     user_info = {
         "access_token": access_token,

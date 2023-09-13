@@ -10,7 +10,7 @@ export const Home = () => {
     return (
         <div className="text-center mt-5">
             <div className="position-relative">
-                <div className="portada-container">
+                <div className="portada-container">    
                     <img src={portada} alt="Portada" className="portada-image" />
                 </div>
                 <img src={logo} alt="Logo" className="logo-overlay animate__animated animate__heartBeat" />

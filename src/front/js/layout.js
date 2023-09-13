@@ -6,6 +6,9 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Tips } from "./pages/tips";
+import { Login } from "./pages/login";
+import  Register   from "./pages/register";
+import { Profile } from "./pages/profile";
 import { Lostanimals } from "./pages/lostanimals";
 import { VoluntaryForm } from "./pages/voluntaryform";
 import { Experiences } from "./pages/experiences";
@@ -14,8 +17,7 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
-import { Login } from "./pages/login";
-import  Register   from "./pages/register";
+
 
 //create your first component
 const Layout = () => {
@@ -35,6 +37,7 @@ const Layout = () => {
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Register />} path="/register" />
+                        <Route element={<Profile />} path="/profile" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<Tips />} path="/tips" />                        
                         <Route element={<Lostanimals />} path="/lostanimals" />
