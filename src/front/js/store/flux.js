@@ -1,10 +1,10 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			token: null,
+			token: localStorage.getItem("token"),
 			message: null,
 			user_id: null,
-			user_mail: null,
+			user_email: localStorage.getItem("user_email"),
 			demo: [
 				{
 					title: "FIRST",
@@ -95,9 +95,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			logout: () => {
 				setStore({ message: "" })
-				const token = localStorage.removeItem("token")
-				localStorage.removeItem("user_data")
-				localStorage.removeItem("user_email")
+				localStorage.clear()
 				console.log("APlication just loaded synching the local Storage Token")
 				setStore({token: null}) 
 			},
@@ -130,6 +128,43 @@ const getState = ({ getStore, getActions, setStore }) => {
 					// Manejar errores de red u otros errores
 					console.error('Error fetching user profile:', error);
 					return null;
+				}
+			},
+			update_profile: async (userData) => {
+				console.log('update_profile llamado con userData:', userData);
+				let token = localStorage.getItem("token");
+				console.log('user_id en userData:', userData.user_id);
+
+				if (!token) {
+				  // Manejar el caso en que el token no esté disponible
+				  return { success: false, message: "Token de autenticación no disponible" };
+				}
+			  
+				const requestOptions = {
+				  method: 'PUT',
+				  headers: {
+					'Authorization': `Bearer ${token}`,
+					'Content-Type': 'application/json', // Agregar el encabezado de tipo de contenido JSON
+				  },
+				  body: JSON.stringify(userData), // Envía todo el objeto userData
+				};
+				console.log("ESTE ES EL BODY",userData)
+				try {
+				  const response = await fetch(process.env.BACKEND_URL + `/api/users/${userData.id}`, requestOptions);
+				  if (response.status === 200) {
+					const data = await response.json();
+					console.log("ESTO ES EL DATA EL RESPJSON", data)
+					setStore({ user_email : userData.email });
+					localStorage.setItem("user_email", userData.email);
+					return { success: true, message: "Perfil actualizado exitosamente", data };
+				  } else {
+					// Manejar el caso en que la solicitud no sea exitosa
+					return { success: false, message: "No se pudo actualizar el perfil" };
+				  }
+				} catch (error) {
+				  // Manejar errores de red u otros errores
+				  console.error('Error updating user profile:', error);
+				  return { success: false, message: "Error al actualizar el perfil" };
 				}
 			},
 			getMessage: async () => {

@@ -9,7 +9,6 @@ export const Login = () => {
     const [email, setEmail] = useState("");    
     const [password, setPassword] = useState("");
     const [welcomeMessage, setWelcomeMessage] = useState("");
-    // const token = localStorage.getItem("token");
     console.log("This is your token", store.token);
     const navigate = useNavigate()
 
@@ -19,6 +18,9 @@ export const Login = () => {
         if(store.token && store.token != "" && store.token != undefined)  {
             localStorage.setItem("user_email", store.user_email);
             setWelcomeMessage(`Welcome ${store.user_email}`);
+            localStorage.setItem("user_id", store.user_id);
+            localStorage.setItem("token", store.token);
+            // setStore({ user_email : email });
             navigate("/");
         }
     }
