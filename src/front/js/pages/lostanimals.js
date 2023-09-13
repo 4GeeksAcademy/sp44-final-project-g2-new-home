@@ -17,7 +17,7 @@ export const Lostanimals = () => {
       color: "",
       animalType: "gato",
       date: "",
-      contact: "",
+      email: "",
       description: "",
       size: "small",
     };
@@ -27,6 +27,7 @@ export const Lostanimals = () => {
   const [animalListFound, setAnimalListFound] = useState([]);
   const [publishedAnimalsLost, setPublishedAnimalsLost] = useState([]);
   const [publishedAnimalsFound, setPublishedAnimalsFound] = useState([]);
+  const [emailError, setEmailError] = useState(null); // Variable de estado para el error de email
 
   useEffect(() => {
     // Guarda los datos del formulario en el almacenamiento local cada vez que cambian
@@ -47,7 +48,21 @@ export const Lostanimals = () => {
     setSelectedFile(file);
   };
 
+  const validateEmail = (email) => {
+    // Expresión regular para validar direcciones de correo electrónico
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  };
+
   const handleFormSubmit = () => {
+    // Validar el campo de email
+    if (!validateEmail(formData.email)) {
+      setEmailError("Please enter a valid email address.");
+      return; // No envíes el formulario si el email no es válido
+    } else {
+      setEmailError(null); // Restablecer el error si el email es válido
+    }
+
     const newAnimal = {
       ...formData,
       image: selectedFile ? URL.createObjectURL(selectedFile) : null,
@@ -69,7 +84,7 @@ export const Lostanimals = () => {
       color: "",
       animalType: "gato",
       date: "",
-      contact: "",
+      email: "",
       description: "",
       size: "small",
     });
@@ -159,22 +174,25 @@ export const Lostanimals = () => {
                 </select>
               </div>
               <div className="col-md-3">
+                <label>Email:</label>
+                <input
+                  type="email"
+                  className={`form-control ${emailError ? "is-invalid" : ""}`}
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                />
+                {emailError && (
+                  <div className="invalid-feedback">{emailError}</div>
+                )}
+              </div>
+              <div className="col-md-3">
                 <label>Date:</label>
                 <input
                   type="date"
                   className="form-control"
                   name="date"
                   value={formData.date}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="col-md-3">
-                <label>Contact:</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="contact"
-                  value={formData.contact}
                   onChange={handleInputChange}
                 />
               </div>
@@ -218,19 +236,10 @@ export const Lostanimals = () => {
           </button>
         </div>
         <div className="card-body">
-          <h5 className="card-title">Example Content for {activeTab === "lost" ? "Lost" : "Found"} Animals</h5>
-          <p className="card-text">This is the content of {activeTab === "lost" ? "lost" : "found"} animals.</p>
           {activeTab === "lost" ? (
             publishedAnimalsLost.map((animal, index) => (
               <div key={index}>
                 <p>{generateIntroText(animal)}</p>
-                {/* <p>Name: {animal.name}</p>
-                <p>City: {animal.city}</p> */}
-                {/* <p>Phone: {animal.phone}</p> */}
-                {/* <p>Color: {animal.color}</p>
-                <p>Type of Animal: {animal.animalType}</p> */}
-                {/* <p>Date: {animal.date}</p> */}
-                {/* <p>Contact: {animal.contact}</p> */}
                 <p>Description: {animal.description}</p>
                 {animal.image && <img src={animal.image} alt={`Animal ${index}`} />}
                 <hr />
@@ -246,7 +255,6 @@ export const Lostanimals = () => {
                 <p>Color: {animal.color}</p>
                 <p>Type of Animal: {animal.animalType}</p>
                 <p>Date: {animal.date}</p>
-                <p>Contact: {animal.contact}</p>
                 <p>Description: {animal.description}</p>
                 {animal.image && <img src={animal.image} alt={`Animal ${index}`} />}
                 <hr />

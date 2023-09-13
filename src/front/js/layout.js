@@ -6,15 +6,22 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Tips } from "./pages/tips";
+
 import { Adoptme } from "./pages/Adoptme.jsx";
+
+import { Login } from "./pages/login";
+import  Register   from "./pages/register";
+import { Profile } from "./pages/profile";
+
 import { Lostanimals } from "./pages/lostanimals";
+import { VoluntaryForm } from "./pages/voluntaryform";
+import { Experiences } from "./pages/experiences";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
-import { Login } from "./pages/login";
-import  Register   from "./pages/register";
+
 import { DetailsPets } from "./pages/DetailsPets.jsx";
 
 //create your first component
@@ -35,9 +42,12 @@ const Layout = () => {
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Register />} path="/register" />
+                        <Route element={<Profile />} path="/profile" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<Tips />} path="/tips" />                        
                         <Route element={<Lostanimals />} path="/lostanimals" />
+                        <Route element={<VoluntaryForm />} path="/voluntaryform" /> 
+                        <Route element={<Experiences />} path="/experiences" />   
                         <Route element={<Single />} path="/single" />
                         <Route element={<Adoptme />} path="/adoptme" />
                         <Route element={<DetailsPets />} path="/adoptme/:id" />

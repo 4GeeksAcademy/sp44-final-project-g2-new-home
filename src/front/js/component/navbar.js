@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { useContext } from "react";
@@ -45,20 +45,20 @@ export const Navbar = () => {
         closeSearch();
     };
 
-    const user_email = localStorage.getItem("user_email");
+    // const user_email = store.user_email 
 
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
             <div className="container-fluid text-center justify-content-center">
                 <div className="container d-flex justify-content-between align-items-center">
                     <div className="nav-links">
-                        <Link to="/" className="navbar-brand custom-link">Home</Link>
-                        <Link to="/protectors" className="navbar-brand custom-link">Protectors</Link>
-                        <Link to="/tips" className="navbar-brand custom-link">Tips</Link>
-                        <Link to="/lostanimals" className="navbar-brand custom-link">Lost animals</Link>
-                        <Link to="/voluntaryform" className="navbar-brand custom-link">Voluntary form</Link>
-                        <Link to="/experiences" className="navbar-brand custom-link">Experiences</Link>
-                        <Link to="/adoptme" className="navbar-brand custom-link">Adoptme</Link>
+                       <Link to="/protectors" className="navbar-brand custom-link">Protectors</Link>
+                       <Link to="/adoptme" className="navbar-brand custom-link">Adoptme</Lin                 <Link to="/" className="navbar-brand custom-link"><b>Home</b></Link>
+                        <Link to="/animalshelter" className="navbar-brand custom-link"><b>Animal Shelter</b></Link>
+                        <Link to="/tips" className="navbar-brand custom-link"><b>Tips</b></Link>
+                        <Link to="/lostanimals" className="navbar-brand custom-link"><b>Lost animals</b></Link>
+                        <Link to="/voluntaryform" className="navbar-brand custom-link"><b>Voluntary form</b></Link>
+                        <Link to="/experiences" className="navbar-brand custom-link"><b>Experiences</b></Link>
                     </div>
                     <button className="btn btn-outline-success" id="openSearchButton" onClick={toggleSearch}>
                         Open Search
@@ -149,12 +149,17 @@ export const Navbar = () => {
                                 id="userDropdown"
                                 data-bs-toggle="dropdown" // Agregamos esta línea para activar el dropdown de Bootstrap
                             >
-                                {`Wellcome ${localStorage.getItem("user_email") || "Login"}`}
+                                  {`Welcome ${store.user_email}`}
                             </button>
                             <ul className="dropdown-menu dropdown-menu-lg-end" aria-labelledby="userDropdown">
                                 <li>
                                     <Link to="/" onClick={() => actions.logout()} className="dropdown-item">
                                         Logout
+                                    </Link>
+                                </li>
+                                <li>
+                                     <Link to="/profile"  className="dropdown-item">
+                                        My profile
                                     </Link>
                                 </li>
                             </ul>
