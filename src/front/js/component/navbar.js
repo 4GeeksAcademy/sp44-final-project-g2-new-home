@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { useContext } from "react";
 
+
 export const Navbar = () => {
     const { store, actions } = useContext(Context);
     const [searchVisible, setSearchVisible] = useState(false);
@@ -51,7 +52,8 @@ export const Navbar = () => {
             <div className="container-fluid text-center justify-content-center">
                 <div className="container d-flex justify-content-between align-items-center">
                     <div className="nav-links">
-                        <Link to="/" className="navbar-brand custom-link"><b>Home</b></Link>
+                       <Link to="/protectors" className="navbar-brand custom-link">Protectors</Link>
+                       <Link to="/adoptme" className="navbar-brand custom-link">Adoptme</Lin                 <Link to="/" className="navbar-brand custom-link"><b>Home</b></Link>
                         <Link to="/animalshelter" className="navbar-brand custom-link"><b>Animal Shelter</b></Link>
                         <Link to="/tips" className="navbar-brand custom-link"><b>Tips</b></Link>
                         <Link to="/lostanimals" className="navbar-brand custom-link"><b>Lost animals</b></Link>
