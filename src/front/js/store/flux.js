@@ -169,6 +169,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  return { success: false, message: "Error al actualizar el perfil" };
 				}
 			},
+			volunteer: async (address, city, zipCode, phone, email, description, availability, peopleId) =>{
+							const volunteerData = {
+								address: address,
+								city: city,
+								zipCode: zipCode,
+								phone: phone,
+								email: email,
+								description: description,
+								availability: availability,
+								peopleId: peopleId
+							};
+							const opts = {
+								method: 'POST',
+								headers: {
+									"Content-Type": "application/json"
+								},
+								body: JSON.stringify(volunteerData)
+							};
+							try {
+								const resp = await fetch(process.env.BACKEND_URL + "/api/volunteer", opts);
+								if (resp.status !== 200) {
+								  alert("There has been some error");
+								  return false;
+								}
+								const data = await resp.json();
+								console.log("Volunteer registration successfully completed", data);
+								// Aquí redirijo a login
+								return true;
+							  } catch (error) {
+								console.error("Error during volunteer registration", error);
+								return false;
+							  }
+			},
+
+
 			getMessage: async () => {
 				try{
 					// fetching data from the backend

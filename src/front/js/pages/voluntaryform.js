@@ -1,6 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { Context } from '../store/appContext';
+
 
 export const VoluntaryForm = () => {
+  const { actions, store } = useContext(Context);
+  const [isActive, setIsActive] = useState(false);
   const initialFormData = {
     name: "",
     address: "",
@@ -10,6 +14,7 @@ export const VoluntaryForm = () => {
     email: "",
     date: "",
     description: "",
+    availability: ""
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -31,7 +36,8 @@ export const VoluntaryForm = () => {
     return emailRegex.test(email);
   };
 
-  const handleFormSubmit = () => {
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
     // Validar el campo de email
     if (!validateEmail(formData.email)) {
       setEmailError("Please enter a valid email address.");
@@ -41,7 +47,17 @@ export const VoluntaryForm = () => {
     }
 
     // Aquí puedes agregar la lógica para enviar el formulario
-
+    await actions.volunteer(
+      formData.address, 
+      formData.city,    
+      formData.zipCode, 
+      formData.phone,   
+      formData.email,   
+      formData.description,
+      formData.availability,
+               // Asegúrate de que peopleId esté definido y disponible
+    );
+    navigate("/");
     // Limpiar el formulario después de enviar
     setFormData(initialFormData);
   };
@@ -139,6 +155,11 @@ export const VoluntaryForm = () => {
               onChange={handleInputChange}
             ></textarea>
           </div>
+          <input
+              type="checkbox"
+              checked={isActive}
+              onChange={() => setIsActive(!isActive)} // Cambia el estado de isActive cuando se hace clic en el checkbox
+            />
           <button className="btn btn-primary" onClick={handleFormSubmit}>
             Submit
           </button>

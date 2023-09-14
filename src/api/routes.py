@@ -261,6 +261,7 @@ def handle_ratings():
 
   
 @api.route('/volunteers', methods=['POST', 'GET'])
+@jwt_required()
 def handle_volunteers():
    if request.method == 'GET':
       # response_body = {"message": "Esto devuelve el get del endpooint volunteers"}
@@ -275,15 +276,26 @@ def handle_volunteers():
       request_body = request.get_json()
       print(request_body)
       volunteer = Volunteer (
-         address = request_body["address"],
-         city = request_body["city"],
-         zip_code = request_body["zip_code"],
-         phone = request_body["phone"],
-         email = request_body["email"],
-         description = request_body["description"],
-         availability = request_body["availability"])
+                                 email = request_body["email"],
+                                 address = request_body["address"],
+                                 city = request_body["city"],
+                                 zip_code = request_body["zip_code"],
+                                 phone = request_body["phone"],
+                                 description = request_body["description"],
+                                 availability = request_body["availability"],
+                                 people_id = request_body["people_id"])
+                                 
       db.session.add(volunteer)
       db.session.commit()
+       # Obtén el ID del usuario 
+      # user_id = user.id
+
+      # user = Users (
+      #    email = request_body["email"],
+      # )
+      # db.session.add(user)
+      # db.session.commit()
+
       response_body = {
          "message": "adding new volunteer",
          "status": "ok",
@@ -292,6 +304,7 @@ def handle_volunteers():
       return response_body, 200
    
 @api.route('/volunteers/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+@jwt_required()
 def handle_volunteer(id):
    if request.method == 'GET': 
       volunteer = db.get_or_404(Volunteer, id) 
