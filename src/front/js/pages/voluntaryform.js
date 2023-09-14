@@ -47,9 +47,10 @@ export const VoluntaryForm = () => {
     } else {
       setEmailError(null); // Restablecer el error si el email es válido
     }
-    if(formData.time == ""){
+    if(formData.availability == ""){
       console.log(formData)
-      return
+      formData.availability = "Morning"
+      
     }
     // Aquí puedes agregar la lógica para enviar el formulario
     await actions.volunteer(
