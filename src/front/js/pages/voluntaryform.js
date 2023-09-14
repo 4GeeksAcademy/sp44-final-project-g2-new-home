@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from '../store/appContext';
+import { useNavigate } from "react-router-dom";
 
 
 export const VoluntaryForm = () => {
   const { actions, store } = useContext(Context);
   const [isActive, setIsActive] = useState(false);
+  const navigate = useNavigate()
   const initialFormData = {
     name: "",
     address: "",
@@ -12,7 +14,7 @@ export const VoluntaryForm = () => {
     zipCode: "",
     phone: "",
     email: "",
-    date: "",
+    time: "",
     description: "",
     availability: ""
   };
@@ -30,7 +32,7 @@ export const VoluntaryForm = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const validateEmail = (email) => {
+  const valitimeEmail = (email) => {
     // Expresión regular para validar direcciones de correo electrónico
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(email);
@@ -39,29 +41,38 @@ export const VoluntaryForm = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     // Validar el campo de email
-    if (!validateEmail(formData.email)) {
+    if (!valitimeEmail(formData.email)) {
       setEmailError("Please enter a valid email address.");
       return; // No envíes el formulario si el email no es válido
     } else {
       setEmailError(null); // Restablecer el error si el email es válido
     }
-
+    if(formData.time == ""){
+      console.log(formData)
+      return
+    }
     // Aquí puedes agregar la lógica para enviar el formulario
     await actions.volunteer(
-      formData.address, 
-      formData.city,    
-      formData.zipCode, 
-      formData.phone,   
-      formData.email,   
+      formData.address,
+      formData.city,
+      formData.zipCode,
+      formData.phone,
+      formData.email,
       formData.description,
       formData.availability,
-               // Asegúrate de que peopleId esté definido y disponible
+      store.user_id
+      // Asegúrate de que peopleId esté definido y disponible
     );
     navigate("/");
     // Limpiar el formulario después de enviar
     setFormData(initialFormData);
   };
 
+  const handleSelectChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+  
   return (
     <div className="container">
       <div className="card text-center">
@@ -136,14 +147,16 @@ export const VoluntaryForm = () => {
               )}
             </div>
             <div className="col-md-3">
-              <label>Date:</label>
-              <input
-                type="date"
+            <label>Availability:</label>
+              <select
                 className="form-control"
-                name="date"
-                value={formData.date}
-                onChange={handleInputChange}
-              />
+                name="availability"
+                value={formData.availability}
+                onChange={handleSelectChange}
+              >
+                <option value="Morning">Morning</option>
+                <option value="Afternoon">Afternoon</option>
+              </select>
             </div>
           </div>
           <div className="form-group">
@@ -155,12 +168,7 @@ export const VoluntaryForm = () => {
               onChange={handleInputChange}
             ></textarea>
           </div>
-          <input
-              type="checkbox"
-              checked={isActive}
-              onChange={() => setIsActive(!isActive)} // Cambia el estado de isActive cuando se hace clic en el checkbox
-            />
-          <button className="btn btn-primary" onClick={handleFormSubmit}>
+            <button className="btn btn-primary" onClick={handleFormSubmit}>
             Submit
           </button>
         </div>
