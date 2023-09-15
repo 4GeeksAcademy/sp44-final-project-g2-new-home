@@ -6,11 +6,15 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Tips } from "./pages/tips";
+
+import { Adoptme } from "./pages/Adoptme.jsx";
+
 import { Login } from "./pages/login";
 import  Register   from "./pages/register";
 import { Profile } from "./pages/profile";
+
 import { Lostanimals } from "./pages/lostanimals";
-import { VoluntaryForm } from "./pages/voluntaryform";
+import { VoluntaryForm } from "./pages/voluntaryform.js";
 import { Experiences } from "./pages/experiences";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
@@ -18,6 +22,7 @@ import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
+import { DetailsPets } from "./pages/DetailsPets.jsx";
 
 //create your first component
 const Layout = () => {
@@ -44,6 +49,8 @@ const Layout = () => {
                         <Route element={<VoluntaryForm />} path="/voluntaryform" /> 
                         <Route element={<Experiences />} path="/experiences" />   
                         <Route element={<Single />} path="/single" />
+                        <Route element={<Adoptme />} path="/adoptme" />
+                        {/* <Route element={<DetailsPets />} path="/adoptme/:id" /> */}
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

@@ -88,7 +88,7 @@ class Volunteer(db.Model):
     phone = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(50), unique=True, nullable=False)
     description = db.Column(db.String(1000), nullable=False)
-    availability = db.Column(db.Boolean)
+    availability = db.Column(db.Enum('Morning ', 'Afternoon', name='availability'), nullable=False)
     people_id = db.Column(db.Integer, db.ForeignKey('people.id'), unique=True)
     user = db.relationship('People')
 
