@@ -1,28 +1,63 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import imgDefault from "../../img/404.png";
-// import axios from 'axios';
-// import cheerio from 'cheerio';
+// import imgDefault from "../../img/404.png";
+import { Imagen1 } from "../../img/imgError/1.jpg";
+import { Imagen2 } from "../../img/imgError/2.jpg";
+import { Imagen3 } from "../../img/imgError/3.jpg";
+import { Imagen4 } from "../../img/imgError/4.jpg";
+import { Imagen5 } from "../../img/imgError/5.jpg";
+import { Imagen6 } from "../../img/imgError/6.jpg";
+import { Imagen7 } from "../../img/imgError/7.jpg";
+import { Imagen8 } from "../../img/imgError/8.jpg";
+import { Imagen9 } from "../../img/imgError/9.jpg";
+import { Imagen10 } from "../../img/imgError/10.jpg";
+import { Imagen11 } from "../../img/imgError/11.jpg";
+import { Imagen12 } from "../../img/imgError/12.jpg";
+import { Imagen13 } from "../../img/imgError/13.jpg";
+import { Imagen14 } from "../../img/imgError/14.jpg";
+import { Imagen15 } from "../../img/imgError/15.jpg";
+import { Imagen16 } from "../../img/imgError/16.jpg";
+import { Imagen17 } from "../../img/imgError/17.jpg";
+import { Imagen18 } from "../../img/imgError/18.jpg";
+import { Imagen19 } from "../../img/imgError/19.jpg";
+import { Imagen20 } from "../../img/imgError/20.jpg";
+
 
 
 export const Adoptme = () => {
   const [pets, setPets] = useState([]);
-  // const { store, actions } = useContext(Context);
-  const apiKey = '43K0NJRKxBRfIqPDpHt9buA50H6NpDkiZEw5yyEnsPo5nQv2ri';
-  const apiSecret = 'jswVOs8TwvJn9QUnMY8Ukad0xmrrr3A4rqrtkkUF';
+
   const hostPetfinder = 'https://api.petfinder.com/v2/';
   const url = hostPetfinder + 'animal?type=dog&page=1';
-  // const [imagenUrl, setImagenUrl] = useState('');
-  // const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0M0swTkpSS3hCUmZJcVBEcEh0OWJ1QTUwSDZOcERraVpFdzV5eUVuc1BvNW5RdjJyaSIsImp0aSI6ImNlNjE0MzFiOTFhMzI0YzA2ZTYzNDU2NjA4ODE1ZDJhZTFjMjU4NTZhMmFiMzljNDliMzVjODJhMjk4NjQwOGMzN2UxZmJiYzM3N2ExZjBjIiwiaWF0IjoxNjk0NDU1NTcxLCJuYmYiOjE2OTQ0NTU1NzEsImV4cCI6MTY5NDQ1OTE3MSwic3ViIjoiIiwic2NvcGVzIjpbXX0.oy0eVa44TIy99vXyUTINXtS9SOzKbJtUqjHo5YzNoFurp2CPNCo0UonXo6DGi9MxYIIZKD8-lvvGI-HoA29slDWSw--lEXM5HTEaNVo_Lf2QrSAoti4lyrhqRFrMgKSfyvu_q_BnUaaOxaqS0_3h0uBJqfnDgtxm8KITm1QQk5Jvr3TXzzqGnpL7ufuD0vQapgxkX9WGaTiO1VtjZyVFOy6ZiNwg0bZHctRg56ByL63En61etE_NWCUXxKoaTVzL0CfqR2lnjetvgf3gyPGjhTOF9CIrYX1go9EIy5LT-T8nXMzp8CYeQXkgpRbh2c8FdgvvR6WRBaxh6Fz_hy2Qww'
+ const backupImages = [
+    require("../../img/imgError/1.jpg"),
+    require("../../img/imgError/2.jpg"),
+    require("../../img/imgError/3.jpg"),
+    require("../../img/imgError/4.jpg"),
+    require("../../img/imgError/5.jpg"),
+    require("../../img/imgError/6.jpg"),
+    require("../../img/imgError/7.jpg"),
+    require("../../img/imgError/8.jpg"),
+    require("../../img/imgError/9.jpg"),
+    require("../../img/imgError/10.jpg"),
+    require("../../img/imgError/11.jpg"),
+    require("../../img/imgError/12.jpg"),
+    require("../../img/imgError/13.jpg"),
+    require("../../img/imgError/14.jpg"),
+    require("../../img/imgError/15.jpg"),
+    require("../../img/imgError/16.jpg"),
+    require("../../img/imgError/17.jpg"),
+    require("../../img/imgError/18.jpg"),
+    require("../../img/imgError/19.jpg"),
+    require("../../img/imgError/20.jpg")
+ ]
+
+  const [backupImageIndex, setBackupImageIndex] = useState(0);
 
   useEffect(() => {
-    // const params = new URLSearchParams({
-    //   type: 'dog',
-    //   limit: 10
-    // });
 
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0M0swTkpSS3hCUmZJcVBEcEh0OWJ1QTUwSDZOcERraVpFdzV5eUVuc1BvNW5RdjJyaSIsImp0aSI6IjZiOTVhNDBhYWFkYzY5OGNlM2U4ZGZlZjhmMjc2YWQ4NWRmNzYxNzJlZjk3NGUzODdhZjdmZWU2MzdhYzQ3NDMzZjlhNmNmZmIxNDc0NDRhIiwiaWF0IjoxNjk0NjI3MzU2LCJuYmYiOjE2OTQ2MjczNTYsImV4cCI6MTY5NDYzMDk1NSwic3ViIjoiIiwic2NvcGVzIjpbXX0.ipINVpSvR45N1NXQFDj2SOPuvTULtaBWjmADWC9ROAftHL7K8_koWV7NOUtxlQJWWVa6TM-1laI9GcaxjyN-t_YsQA8T06ef5_dHJ-5Ns-eyWBAKqsSx5Q3R-iyOZJKzPNhhJ8ZAGxnpKTCXXVlYYWdlbUpSCdUU0epTdkTASxPNtatzdFEfTuUSLkWlw4N2sx4Be-fOp8628NqGWhlmxZE2xe0cd0hcJraIO1mseJry3bIQfYlAxFmsnyO9vXzbh5ZZ5EtVQ8MllDgxjZEx-RWOypVaqiLFgQ1tiLcZcTTuoG6U3VVFWDHqX_ISyAHrAaiEILo8aX1WDHuYLkYoAQ");
+    myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0M0swTkpSS3hCUmZJcVBEcEh0OWJ1QTUwSDZOcERraVpFdzV5eUVuc1BvNW5RdjJyaSIsImp0aSI6IjdhM2QxZjZjM2VmYTVhYjVjNDkwNDEyZDVjM2Y5YTJlY2E0Y2NkNzdhZDgwZjEzZDBkN2Y3ZDRkYTY0YWJjNWU4ZDczZDhiMWNjMDVjNjViIiwiaWF0IjoxNjk0ODAzODAwLCJuYmYiOjE2OTQ4MDM4MDAsImV4cCI6MTY5NDgwNzQwMCwic3ViIjoiIiwic2NvcGVzIjpbXX0.o6SvBpAj7gslxNm98KZQ296T9SV-IwIfQ4xrOrgtwVMOBPswZ2dV6T8tUZcWau1XjWTa4bkQWF0Bt4iuzDsIYZ-9stbjNdPR4F7fckRm3Nl-j_kQgfx2L3Pg2_7QFh-tooe69wPJ2nfLSXrsiq22Hgvjy8p9ZTyG7SYDjyNSyHZfmnxZK5xk8_VAbXv-LJLRsCqoPi95PSdqNY5Qmyma6OYKcNbbeAbE90qhQzz4BGHNvpaVL-gZOa0VtLuJJHcGfhlu4UrO73SJCy1N4K8OyO7xNyed2S7bGdhRw9ZP36uXcnRXMHpU9oljRYVQZMs3jaHUFR2FTxwzVaktgth3Lg");
 
     var requestOptions = {
       method: 'GET',
@@ -41,7 +76,11 @@ export const Adoptme = () => {
       .catch(error => console.log('error', error));
   }, []); // El segundo argumento [] indica que este efecto solo se ejecuta una vez al montar el componente.
 
-  const handleOnErrorImg = (e) => { e.target.src = imgDefault }
+  const handleOnErrorImg = (e) => {
+    const newBackupIndex = (backupImageIndex + 1) % backupImages.length;
+    setBackupImageIndex(newBackupIndex);
+    e.target.src = backupImages[newBackupIndex].default; // Usa .default para obtener la ruta de la imagen importada
+  };
 
 
   return (
@@ -52,7 +91,7 @@ export const Adoptme = () => {
         {pets.map((item, id) => (
           <div key={id} className="card m-3 rounded" style={{ width: "23rem" }}>
             {/* <img src={item.url || imgDefault} alt={item.name} onError={handleOnErrorImg} /> */}
-            <img src={`https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/${item.id}/1/`} alt={item.name} onError={handleOnErrorImg} />
+            <img src={`https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/${item.id}/1/`} onError={handleOnErrorImg} />
             <div className="card-body">
               <h5 className="card-title">{item.name}</h5>
               <div className="d-flex justify-content-between">
