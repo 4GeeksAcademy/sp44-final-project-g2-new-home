@@ -3,8 +3,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			token: localStorage.getItem("token"),
 			message: null,
-			user_id: null,
+			experiences: localStorage.getItem("experiences"),
+			user_id: localStorage.getItem("user_id"),
 			user_email: localStorage.getItem("user_email"),
+			peopleId: localStorage.getItem("peopleId"),
+			experienceId:localStorage.getItem("experienceId"),
 			demo: [
 				{
 					title: "FIRST",
@@ -77,13 +80,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 					alert("There has been some error")
 					return false
 					}
-					const data = await resp.json()		
+					const data = await resp.json()
+					const peopleId = data.people_id;
+					console.log("This is the resp.json: ", data)	
 					console.log("User ID:", data.user_id); // Imprime el ID del usuario
 					console.log("User Email:", data.user_email); 
 					localStorage.setItem("token", data.access_token)
-					setStore({ token: data.access_token, user_id: data.user_id, user_email: data.user_email }); // Almacena el ID del usuario en el store
+					localStorage.setItem("peopleId", peopleId);
+					localStorage.setItem("experienceId", data.experience_id); // Actualiza el peopleId en localStorage
+					//determinar el role...y guardar su correspondiente id en el store
+					setStore({ token: data.access_token, user_id: data.user_id, user_email: data.user_email, peopleId: peopleId, experienceId: data.experience_id }); // Almacena el ID del usuario en el store
 					console.log("This came from the backend", data)
 					console.log("Token:", data.access_token);
+					console.log("User ID:", data.user_id);
+					console.log("User Email:", data.user_email);
+					console.log("People ID:", peopleId);
+					console.log("Experience ID:", data.experience_id);
+
 					return true
 				}
 				catch(error){console.error("There has been an error login in")}	
@@ -165,6 +178,124 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  // Manejar errores de red u otros errores
 				  console.error('Error updating user profile:', error);
 				  return { success: false, message: "Error al actualizar el perfil" };
+				}
+			},
+			unsubscribe_user: async (userId) => {
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/users/${userId}`, {
+						method: 'DELETE',
+						headers: {
+							'Authorization': `Bearer ${localStorage.getItem('token')}`,
+						},
+					});
+			
+					if (response.status === 200) {
+						localStorage.clear();
+						// Puedes realizar alguna acción adicional después de que el usuario se haya dado de baja, como redirigirlo a una página de despedida.
+						// Por ejemplo:
+						// window.location.href = '/goodbye';
+					} else {
+						console.error('No se pudo dar de baja al usuario.');
+						// Puedes mostrar un mensaje de error al usuario o tomar otra acción adecuada.
+					}
+				} catch (error) {
+					console.error('Error al intentar dar de baja al usuario:', error);
+					// Manejar errores de red u otros errores
+				}
+			},
+			get_experiences: async () => {
+				const opts = {
+				  method: 'GET',
+				  headers: {
+					'Authorization': `Bearer ${localStorage.getItem("token")}`,
+					'Content-Type': 'application/json', // Establece el encabezado JSON si es necesario
+				  },
+				};
+			  
+				try {
+				  const resp = await fetch(`${process.env.BACKEND_URL}/api/experiences`, opts);
+			  
+				  if (resp.status !== 200) {
+					console.error("Error fetching experiences");
+					return;
+				  }
+			  
+				  const data = await resp.json();
+			  
+				  // Despacha una acción con los resultados de las experiencias
+				  setStore({ experiences: data.results });
+				} catch (error) {
+				  console.error("Error during experiences fetch", error);
+				  // Puedes despachar una acción de error si lo deseas
+				}
+			},
+			publishExperience: async (title, body, photo) => {
+				const peopleId = getStore().peopleId;
+				const experienceData = {
+					title: title,
+					body: body,
+					photo: photo,
+				};
+				console.log("A VER LA EXPERIENCIAAA: ",experienceData)
+				const opts = {
+					method: 'POST',
+					headers: {
+						'Authorization': `Bearer ${localStorage.getItem("token")}`,
+						'Content-Type': 'application/json', // Establece el encabezado JSON
+					},
+					body: JSON.stringify(experienceData)
+				};
+			
+				try {
+					const resp = await fetch(`${process.env.BACKEND_URL}/api/experiences/${peopleId}`, opts);
+				
+					if (resp.status !== 200) {
+						alert("There has been some error");
+						return false;
+					  }
+					  const data = await resp.json();
+					  console.log("Experiencie registration successfully completed", data);
+					  return true;
+					} catch (error) {
+					  console.error("Error during experience update", error);
+					  return false;
+					}
+  			},
+			update_experience: async (id, data) => {
+				try {
+				  const token = localStorage.getItem('token');
+				  const opts = {
+					method: 'PUT',
+					headers: {
+					  'Content-Type': 'application/json',
+					  'Authorization': `Bearer ${token}` // Agrega el token de acceso a las cabeceras
+					},
+					body: JSON.stringify(data)
+				  };
+			  
+				  const resp = await fetch(`${process.env.BACKEND_URL}/api/experiences/${id}`, opts);
+				  const responseData = await resp.json();
+			  
+				  if (resp.status === 200) {
+					// Actualiza la experiencia en el store con la nueva información
+					experiences.update(existingExperiences => {
+					  const updatedExperiences = existingExperiences.map(experience => {
+						if (experience.id === id) {
+						  return { ...experience, ...data };
+						} else {
+						  return experience;
+						}
+					  });
+					  return updatedExperiences;
+					});
+			  
+					return { success: true, message: 'Experiencia actualizada exitosamente' };
+				  } else {
+					return { success: false, message: responseData.message };
+				  }
+				} catch (error) {
+				  console.error('Error al actualizar la experiencia:', error);
+				  return { success: false, message: 'Ha ocurrido un error al actualizar la experiencia' };
 				}
 			},
 			getMessage: async () => {

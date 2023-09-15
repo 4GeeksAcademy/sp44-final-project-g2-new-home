@@ -1,25 +1,73 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "../../styles/experiences.css";
+import { Context } from "../store/appContext";
+
 
 export const Experiences = () => {
+  const { actions, store } = useContext(Context);
   const [experiences, setExperiences] = useState([]); // Store published experiences
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [image, setImage] = useState(null);
+  const [body, setBody] = useState("");
+  const [photolist, setPhotolist] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const[file, setFile]= useState("");
+  const[fileUrl, setFileUrl]= useState("");
+
+  
+
+
   const [likedExperiences, setLikedExperiences] = useState(new Set());
 
+  const peopleId = store.user_id; 
+
+  const handleShowForm = () => {
+    setShowForm(true); // Mostrar el formulario cuando se hace clic en el botón
+  };
+  
+  const handleBackToPosts = () => {
+    setShowForm(false); // Volver a las vistas de todas las publicaciones
+  };
+  
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
   };
 
   const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
+    setBody(e.target.value);
   };
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setImage(file);
+    if (e.target.files.length){
+      setFile(e.target.files[0]);
+      console.log("evento imagen: ", e.target.files);
+    }
+    
+    
+    // if (file) {
+    //   // Crear una URL para el archivo seleccionado
+    //   const fileURL = URL.createObjectURL(file);
+
+    //   // Agregar el archivo a la lista de fotos solo si no se excede el límite
+    //   if (photolist.length < 5) {
+    //     setPhotolist([...photolist, fileURL]);
+    //   }
+    // }
   };
+  
+  const handleEdit = () => {
+  if (isEditing) {
+    // Si estamos en modo de edición, desactiva la edición
+    setIsEditing(false);
+    // También podrías restablecer los valores de los campos aquí si lo deseas
+  } else {
+    // Si no estamos en modo de edición, activa la edición
+    setIsEditing(true);
+    // Aquí puedes cargar los detalles de la experiencia actual en los campos de entrada
+    // Por ejemplo, puedes buscar la experiencia en 'experiences' por su ID y establecer 'title' y 'body' en los estados correspondientes
+  }
+};
+
 
   const handleLikeClick = (id) => {
     if (likedExperiences.has(id)) {
@@ -30,84 +78,153 @@ export const Experiences = () => {
     setLikedExperiences(new Set(likedExperiences)); // Update to trigger a re-render
   };
 
-  const handleSubmit = () => {
-    // Basic validation: make sure a title and description are entered
-    if (!title || !description) {
-      alert("Please complete the title and description.");
-      return;
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!file) {
+    alert("Please select a file.");
+    return;
+  }
+
+  try {
+    const form = new FormData();
+    form.append("img", file);
+
+    const response = await fetch("https://studious-engine-vxqg75jjggw2xjvw-3001.app.github.dev/api/img", {
+      method: "POST",
+      body: form
+    });
+
+    const data = await response.json();
+    const imageUrl = data["img_url: "];
+
+    console.log("data fetch img: ", data);
+    console.log("imageUUUUUUUUURL: ", imageUrl)
+
+    const success = await actions.publishExperience(title, body, imageUrl, peopleId); // Pasa imageUrl en lugar de photolist
+    if (success) {
+      actions.get_experiences();
     }
 
-    // Create an experience object
-    const newExperience = {
-      id: Date.now(), // You can use a unique ID generation library
-      title,
-      description,
-      image: image ? URL.createObjectURL(image) : null,
-    };
-
-    // Add the new experience to the array of experiences
-    setExperiences([...experiences, newExperience]);
-
-    // Reset the form
+    setShowForm(false);
     setTitle("");
-    setDescription("");
-    setImage(null);
-  };
-
+    setBody("");
+    setPhotolist([]);
+    setFileUrl(""); // Limpia la URL de la imagen después de usarla
+  } catch (e) {
+    console.error("ERROR IMAGEN", e);
+  }
+};
+  useEffect(() => {
+    actions.get_experiences();
+  }, []);
+  {store.experiences ? (
+    store.experiences.forEach((experience) => {
+      // Agrega un console.log para verificar la URL de la imagen
+      console.log("experience.imagen:", experience.image);
+    })
+  ) : (
+    <p>No hay experiencias disponibles.</p>
+  )}
   return (
     <div className="container">
-      <div className="experiences-container">
-        <div className="experience-post">
-          <h2><b>Publish an Experience</b></h2>
-          <div className="image-upload">
-            {image ? (
-              <img src={URL.createObjectURL(image)} alt="Selected Image" />
-            ) : (
-              <input
-                type="file"
-                id="image-input"
-                accept="image/*"
-                onChange={handleImageChange}
-              />
-            )}
+      {showForm ? (
+        // Mostrar el formulario
+        <div className="container">
+          <div className="experiences-container">
+            <div className="experience-post">
+              <h2>
+                <b>Publish an Experience</b>
+              </h2>
+              {/* <div className="image-upload">
+                {photolist.map((photo, index) => (
+                  <img key={index} src={photo} alt={`Selected Image ${index}`} />
+                ))}
+                {photolist.length < 5 && (
+                  <input
+                    type="file"
+                    id="image-input"
+                    accept="image/jpg"
+                    onChange={handleImageChange}
+                  />
+                )}
+              </div> */}
+              <div className="image-upload">
+                  <input
+                    type="file"
+                    id="image-input"
+                    accept="image/jpeg"
+                    // multiple
+                    onChange={handleImageChange}
+                  />
+              </div>
+              <div className="input-fields">
+                <input
+                  type="text"
+                  placeholder="Title"
+                  value={title}
+                  onChange={handleTitleChange}
+                />
+                <textarea
+                  placeholder="Description"
+                  value={body}
+                  onChange={handleDescriptionChange}
+                ></textarea>
+              </div>
+              <button className="me-3"  style={{ width: '80px' }} onClick={handleBackToPosts} id="post">
+                Cancel
+              </button>
+              <button onClick={handleSubmit} id="post">
+                Post
+              </button>
+              { 
+                fileUrl !== ""  ? <img src={fileUrl} className="img-fluid"/> : null
+              }
+            </div>
           </div>
-          <div className="input-fields">
-            <input
-              type="text"
-              placeholder="Title"
-              value={title}
-              onChange={handleTitleChange}
-            />
-            <textarea
-              placeholder="Description"
-              value={description}
-              onChange={handleDescriptionChange}
-            ></textarea>
-          </div>
-          <button onClick={handleSubmit} id="post">Post</button>
         </div>
-        <div className="experiences-feed">
-          {experiences.map((experience) => (
-            <div className="row-container">
-              <div key={experience.id} className="experience">
-                <div className="experience-image">
-                  {experience.image && (
-                    <img src={experience.image} alt="Experience Image" />
+      ) : (
+        // Mostrar las vistas de todas las publicaciones
+        <div className="row">
+          <h2 className="mt-4 mb-4">These have been some of the experiences of our users...</h2>
+          {store.experiences ? (
+            store.experiences.map((experience) => (
+              <div className="col-md-4 mb-4" key={experience.id}>
+                <div className="card">
+                  {experience.photo ? (
+                    <img
+                      src={experience.photo}
+                      alt={`Image for ${experience.title}`}
+                      className="card-img-top"
+                    />
+                  ) : (
+                    <img
+                      src="/placeholder-image.jpg"
+                      alt="Image not available"
+                      className="card-img-top"
+                    />
                   )}
+                  <div className="card-body">
+                    <h4 className="card-text">Posted by: {experience.name}</h4>
+                    <h5 className="card-title">{experience.title}</h5>
+                    <p className="card-text">{experience.body}</p>
+                  </div>
                 </div>
               </div>
-              <br />
-                <div className="experience-details">
-                  <button onClick={() => handleLikeClick(experience.id)} className={`like-button ${likedExperiences.has(experience.id) ? "liked" : ""}`}>
-                    <i className={`fas fa-heart ${likedExperiences.has(experience.id) ? "liked-icon" : ""}`}></i>
-                  </button>
-                  <h3>{experience.title}</h3>
-                  <p>{experience.description}</p>
-                </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p>No hay experiencias disponibles.</p>
+          )}
         </div>
-      </div>
+      )}
+      {/* Botón para mostrar el formulario */}
+      {!showForm && (
+        <button onClick={handleShowForm} className="btn btn-primary">
+          Comparte con nosotros tu experiencia
+        </button>
+      )}
     </div>
   );
+  
+
+  
 };

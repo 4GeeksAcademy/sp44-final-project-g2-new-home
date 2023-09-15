@@ -12,6 +12,9 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
+import cloudinary
+import cloudinary.uploader
+
 
 #from models import Person
 
@@ -19,6 +22,17 @@ ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
 app.url_map.strict_slashes = False
+app.config['CLOUD_NAME']= os.getenv("CLOUD_NAME")
+app.config['CLOUD_API_SECRET']= os.getenv("CLOUD_API_SECRET")
+app.config['CLOUD_KEY']= os.getenv("CLOUD_KEY")
+
+cloudinary.config( 
+  cloud_name = app.config['CLOUD_NAME'], 
+  api_key = app.config['CLOUD_KEY'], 
+  api_secret = app.config['CLOUD_API_SECRET'],
+  secure = True
+)
+
 
 app.config["JWT_SECRET_KEY"] = "ajkhfjskdshfjkhasdfhkjahsdfkjhsdfkjakjsdhfjks"  # Change this!
 jwt = JWTManager(app)

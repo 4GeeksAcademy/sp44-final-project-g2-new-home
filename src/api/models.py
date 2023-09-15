@@ -215,9 +215,9 @@ class ExperiencesBlog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80), unique=False, nullable=False)
     body = db.Column(db.String(1000), unique=False, nullable=False)
-    photo = db.Column(db.String(250), unique=False, nullable=False)
-    user_id =  db.Column(db.Integer, db.ForeignKey('user.id'))
-    user = db.relationship('User')
+    photo = db.Column(db.String(1250), unique=False, nullable=True)
+    people_id = db.Column(db.Integer, db.ForeignKey('people.id'), unique=True)
+    user = db.relationship('People')
 
     def __repr__(self):
         return f'<Report {self.title}>'
@@ -228,5 +228,5 @@ class ExperiencesBlog(db.Model):
             "title": self.title,
             "body": self.body,
             "photo": self.photo,
-            "user_id": self.user_id
+            "people_id": self.people_id
         }
