@@ -92,9 +92,21 @@ export const Lostanimals = () => {
   };
 
   const generateIntroText = (animal) => {
-    return `Greetings, my name is ${animal.name}. I reside in ${animal.city} and I am a ${animal.size} ${animal.color} ${animal.animalType}. I am in need of your assistance! You can reach me at ${animal.phone}, and here's my description: ${animal.description}. The date when I got lost is ${animal.date}. Please take a look at my photo below.`;
+    return `Greetings,
+  
+  My name is ${animal.name}, and I currently reside in ${animal.city}.
+  I am a ${animal.size}, ${animal.color} ${animal.animalType} in need of assistance. I can be reached at ${animal.phone}.
+  
+  ${animal.description}
+  
+  I went missing on ${animal.date}, and I kindly request your help in reuniting me with my family. Below, you can find a photo of me.
+  
+  Thank you for your attention and support.
+  
+  Sincerely,
+  ${animal.name}`;
   };
-
+ 
   return (
     <div id="lostanimals-container" className="container text-center">
       <h1 id="lostanimals">{activeTab === "lost" ? "Lost Animals" : "Found Animals"}</h1>
@@ -107,7 +119,7 @@ export const Lostanimals = () => {
             <h5 className="card-title">Animal {activeTab === "lost" ? "Lost" : "Found"} Form</h5>
             <div className="form-group row">
               <div className="col-md-3">
-                <label>Name:</label>
+                <label>Pet´s name:</label>
                 <input
                   type="text"
                   className="form-control"

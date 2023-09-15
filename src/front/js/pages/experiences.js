@@ -97,13 +97,25 @@ export const Experiences = () => {
                 </div>
               </div>
               <br />
-                <div className="experience-details">
-                  <button onClick={() => handleLikeClick(experience.id)} className={`like-button ${likedExperiences.has(experience.id) ? "liked" : ""}`}>
-                    <i className={`fas fa-heart ${likedExperiences.has(experience.id) ? "liked-icon" : ""}`}></i>
-                  </button>
-                  <h3>{experience.title}</h3>
+              <div className="experience-details">
+                <div className="row">
+                  <div className="col-md-1" id="col-1">
+                    <div className="like-button-container">
+                      <button onClick={() => handleLikeClick(experience.id)} className={`like-button ${likedExperiences.has(experience.id) ? "liked" : ""}`}>
+                        <i className={`fas fa-heart ${likedExperiences.has(experience.id) ? "liked-icon" : ""}`}></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div className="col-md-11" id="col-11">
+                    <div className="title-container">
+                      <h3>{experience.title}</h3>
+                    </div>
+                  </div>
+                </div>
+                <div className="description-container">
                   <p>{experience.description}</p>
                 </div>
+              </div>
             </div>
           ))}
         </div>
