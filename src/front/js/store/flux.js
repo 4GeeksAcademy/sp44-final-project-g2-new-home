@@ -108,6 +108,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				catch(error){console.error("There has been an error login in")}	
 			},
+			sync_token_from_local_storage: () => {
+				const token = localStorage.getItem("token")
+				console.log("You are login out successfully!!!!!!!!")
+				if (token && token != "" && token != undefined) setStore({ token: token })
+			},
 			logout: () => {
 				setStore({ message: "" })
 				localStorage.clear()
@@ -219,7 +224,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
-      unsubscribe_user: async (userId) => {
+      		unsubscribe_user: async (userId) => {
 				try {
 					const response = await fetch(`${process.env.BACKEND_URL}/api/users/${userId}`, {
 						method: 'DELETE',
