@@ -7,7 +7,7 @@ from api.utils import generate_sitemap, APIException
 from sqlalchemy import func
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, current_user
 from flask_jwt_extended import decode_token
 import cloudinary
 import cloudinary.uploader
@@ -279,6 +279,7 @@ def handle_ratings():
 
   
 @api.route('/volunteers', methods=['POST', 'GET'])
+@jwt_required()
 def handle_volunteers():
    if request.method == 'GET':
       # response_body = {"message": "Esto devuelve el get del endpooint volunteers"}
@@ -293,15 +294,26 @@ def handle_volunteers():
       request_body = request.get_json()
       print(request_body)
       volunteer = Volunteer (
-         address = request_body["address"],
-         city = request_body["city"],
-         zip_code = request_body["zip_code"],
-         phone = request_body["phone"],
-         email = request_body["email"],
-         description = request_body["description"],
-         availability = request_body["availability"])
+                                 email = request_body["email"],
+                                 address = request_body["address"],
+                                 city = request_body["city"],
+                                 zip_code = request_body["zip_code"],
+                                 phone = request_body["phone"],
+                                 description = request_body["description"],
+                                 availability = request_body["availability"],
+                                 people_id = request_body["people_id"])
+                                 
       db.session.add(volunteer)
       db.session.commit()
+       # Obtén el ID del usuario 
+      # user_id = user.id
+
+      # user = Users (
+      #    email = request_body["email"],
+      # )
+      # db.session.add(user)
+      # db.session.commit()
+
       response_body = {
          "message": "adding new volunteer",
          "status": "ok",
@@ -309,7 +321,8 @@ def handle_volunteers():
       # response_body = {"message": "Esto devuelve el POST del endpooint volunteers"}
       return response_body, 200
    
-@api.route('/volunteers/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+@api.route('/volunteers/<int:id>', methods=['GET', 'PUT', 'POST', 'DELETE'])
+@jwt_required()
 def handle_volunteer(id):
    if request.method == 'GET': 
       volunteer = db.get_or_404(Volunteer, id) 
@@ -321,7 +334,7 @@ def handle_volunteer(id):
       return response_body, 200
    if request.method == 'PUT':
       request_body = request.get_json()
-      volunteer = db.get_or_404(Volunteer, id)
+      volunteer = Volunteer.query.get_or_404(id)
       volunteer.address = request_body["address"],
       volunteer.city = request_body["city"],
       volunteer.zip_code = request_body["zip_code"],
@@ -332,8 +345,28 @@ def handle_volunteer(id):
       db.session.commit() 
       response_body = {"message": "Update volunteer",
                        "status": "ok",
-                       "volunteer": request_body
                         }
+      return response_body, 200
+   if request.method =='POST':
+      request_body = request.get_json()
+      print(request_body)
+      people = People.query.get(id)
+      # user_id = user.id
+      volunteer = Volunteer (
+                                 email = request_body["email"],
+                                 address = request_body["address"],
+                                 city = request_body["city"],
+                                 zip_code = request_body["zip_code"],
+                                 phone = request_body["phone"],
+                                 description = request_body["description"],
+                                 availability = request_body["availability"],
+                                 people_id = people.id ) 
+      db.session.add(volunteer)
+      db.session.commit()
+      response_body = {"message": "Adding volunteer",
+                       "status": "ok",
+                       "volunter_adding": id,         
+                       }
       return response_body, 200
    if request.method == 'DELETE': 
       volunteer = db.get_or_404(Volunteer, id)

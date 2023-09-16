@@ -3,6 +3,22 @@ body {
     background-color: white;
 }
 
+/* Estilo para el contenedor principal */
+/* .main-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Mínima altura de la ventana gráfica */
+/* } */
+
+/* Estilo para el Footer */
+/* .footer {
+    background-color: #f8f8f8;
+    padding: 20px;
+    text-align: center;
+    position: sticky;
+    bottom: 0;
+} */ */
+
 /* Estilos generales */
 .navbar-brand {
     padding: 10px 20px;

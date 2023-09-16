@@ -21,6 +21,12 @@ class CustomReportModelView(ModelView):
 # class CustomAnimalModelView(ModelView):
 #     column_list = ['name', 'city', 'rating']
 
+class CustomPeopleModelView(ModelView):
+    column_list = ['id', 'name', 'lastname', 'trophy']
+
+class CustomVolunteersModelView(ModelView):
+    column_list = ['id', 'address', 'city', 'zip_code', 'phone', 'email', 'description', 'availability']
+
 def setup_admin(app):
     app.secret_key = os.environ.get('FLASK_APP_KEY', 'sample key')
     app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
@@ -31,11 +37,11 @@ def setup_admin(app):
     admin.add_view(CustomUsersModelView(User, db.session))
     admin.add_view(CustomRatingModelView(Rating, db.session))
     admin.add_view(CustomReportModelView(Report, db.session))
-    admin.add_view(CustomPeopleModelView(People, db.session))
-    admin.add_view(ModelView(Volunteer, db.session))
     admin.add_view(CustomExperiencesModelView(ExperiencesBlog, db.session))
     admin.add_view(ModelView(AnimalShelter, db.session))
     admin.add_view(ModelView(TipsPets, db.session))
     admin.add_view(ModelView(Animal, db.session))
+    admin.add_view(CustomPeopleModelView(People, db.session))
+    admin.add_view(CustomVolunteersModelView(Volunteer, db.session))
     # You can duplicate that line to add mew models
     # admin.add_view(ModelView(YourModelName, db.session))

@@ -1,7 +1,8 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { useContext } from "react";
+
 
 export const Navbar = () => {
     const { store, actions } = useContext(Context);
@@ -9,13 +10,58 @@ export const Navbar = () => {
     const [cityFilter, setCityFilter] = useState("");
     const [petType, setPetType] = useState(""); // Nuevo estado para el tipo de mascota
     const cities = [
-        "Madrid",
+        "Álava",
+        "Albacete",
+        "Alicante",
+        "Almería",
+        "Asturias",
+        "Ávila",
+        "Badajoz",
         "Barcelona",
-        "Valencia",
+        "Burgos",
+        "Cáceres",
+        "Cádiz",
+        "Cantabria",
+        "Castellón",
+        "Ceuta",
+        "Ciudad Real",
+        "Córdoba",
+        "Cuenca",
+        "Girona",
+        "Granada",
+        "Guadalajara",
+        "Guipúzcoa",
+        "Huelva",
+        "Huesca",
+        "Illes Balears",
+        "Jaén",
+        "La Coruña",
+        "La Rioja",
+        "Las Palmas",
+        "León",
+        "Lérida",
+        "Lugo",
+        "Madrid",
+        "Málaga",
+        "Melilla",
+        "Murcia",
+        "Navarra",
+        "Orense",
+        "Palencia",
+        "Pontevedra",
+        "Salamanca",
+        "Santa Cruz de Tenerife",
+        "Segovia",
         "Sevilla",
-        "Zaragoza",
-        "Bilbao",
-        // Agrega más ciudades según tus necesidades
+        "Soria",
+        "Tarragona",
+        "Teruel",
+        "Toledo",
+        "Valencia",
+        "Valladolid",
+        "Vizcaya",
+        "Zamora",
+        "Zaragoza"
     ];
 
     const [searchHistory, setSearchHistory] = useState([]); // Historial de búsquedas
@@ -52,6 +98,8 @@ export const Navbar = () => {
                 <div className="container d-flex justify-content-between align-items-center">
                     <div className="nav-links">
                         <Link to="/" className="navbar-brand custom-link"><b>Home</b></Link>
+                        <Link to="/protectors" className="navbar-brand custom-link">Protectors</Link>
+                        <Link to="/adoptme" className="navbar-brand custom-link">Adoptme</Link>
                         <Link to="/animalshelter" className="navbar-brand custom-link"><b>Animal Shelter</b></Link>
                         <Link to="/tips" className="navbar-brand custom-link"><b>Tips</b></Link>
                         <Link to="/lostanimals" className="navbar-brand custom-link"><b>Lost animals</b></Link>
@@ -83,7 +131,7 @@ export const Navbar = () => {
                                                 name="City"
                                                 className="form-control"
                                                 placeholder="Enter a city"
-                                                list="citySuggestions" 
+                                                list="citySuggestions"
                                                 value={cityFilter}
                                                 onChange={(e) => {
                                                     setCityFilter(e.target.value);
@@ -138,34 +186,34 @@ export const Navbar = () => {
                             <button className="btn btn-dark">Register</button>
                         </Link>
                     </div>
-                ) : (
-                    <div className="d-flex me-3">
-                        <div className="dropdown">
-                            <button
-                                className="btn btn-success"
-                                type="button"
-                                id="userDropdown"
-                                data-bs-toggle="dropdown" // Agregamos esta línea para activar el dropdown de Bootstrap
-                            >
-                                  {`Welcome ${store.user_email}`}
-                            </button>
-                            <ul className="dropdown-menu dropdown-menu-lg-end" aria-labelledby="userDropdown">
-                                <li>
-                                    <Link to="/" onClick={() => actions.logout()} className="dropdown-item">
-                                        Logout
-                                    </Link>
-                                </li>
-                                <li>
-                                     <Link to="/profile"  className="dropdown-item">
-                                        My profile
-                                    </Link>
-                                </li>
-                            </ul>
+                    ) : (
+                        <div className="d-flex me-3">
+                            <div className="dropdown">
+                                <button
+                                    className="btn btn-success"
+                                    type="button"
+                                    id="userDropdown"
+                                    data-bs-toggle="dropdown" // Agregamos esta línea para activar el dropdown de Bootstrap
+                                >
+                                    {`Welcome ${store.user_email}`}
+                                </button>
+                                <ul className="dropdown-menu dropdown-menu-lg-end" aria-labelledby="userDropdown">
+                                    <li>
+                                        <Link to="/" onClick={() => actions.logout()} className="dropdown-item">
+                                            Logout
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/profile" className="dropdown-item">
+                                            My profile
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
                     )
                 }
-			</div>
+            </div>
         </nav>
     );
 };
