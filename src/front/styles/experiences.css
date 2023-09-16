@@ -87,17 +87,24 @@
 
 /* Estilo de cada experiencia individual */
 .experience {
+  display: flex; /* Usar flexbox para alinear elementos horizontalmente */
+  align-items: center; /* Centrar verticalmente los elementos */
   padding: 20px;
   border-bottom: 1px solid #ddd;
   position: relative;
-  display: flex; /* Cambio para usar flexbox */
-  justify-content: center;
 }
 
 .experience img {
   max-width: 100%;
   height: auto;
-  margin-right: 10px; /* Espacio entre la imagen y el corazón */
+}
+
+/* Estilo del botón "Me gusta" y el título */
+.like-button,
+.experience h3 {
+  display: inline-block; /* Hacer que ocupen el mismo renglón */
+  vertical-align: middle; /* Alinear verticalmente en el medio */
+  margin-right: 10px; /* Agregar un espacio entre el botón y el título */
 }
 
 .experience h3 {
@@ -111,7 +118,7 @@
 }
 
 /* Estilo del botón "Me gusta" */
-.experience button {
+.like-button {
   background-color: transparent;
   border: none;
   font-size: 24px;
@@ -120,22 +127,12 @@
   transition: color 0.3s;
 }
 
-/* Estilo del botón "Me gusta" */
-.like-button {
-  background-color: transparent;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.liked-icon {
+/* Estilo del botón "Me gusta" cuando está "liked" */
+.like-button.liked {
   color: #e74c3c; /* Color rojo cuando está "liked" */
 }
 
-/* Estilo para el ícono de "Me gusta" */
-.experience button span {
-  vertical-align: middle;
-}
+/* ... (otros estilos) ... */
 
 #post {
   background-color: #007bff;
@@ -147,4 +144,12 @@
   margin-top: 10px;
   font-size: 16px;
 }
-/* hola */
+
+#col-1 {
+  padding-left: 30px;
+}
+
+#col-11 {
+  text-align: start;
+  padding-left: 30px;
+}

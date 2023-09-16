@@ -11,21 +11,31 @@ export const Footer = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // You can add the logic here to send the email
-    alert(`Email sent to: ${email}`);
+    // Puedes agregar aquí la lógica para enviar el correo
+    alert(`Email enviado a: ${email}`);
   };
+
+  const googleMapsLink = "https://www.google.com/maps/place/4+Erizas+Road,+Málaga,+29011";
 
   return (
     <footer className="footer mt-auto py-4 text-center">
       <div className="container" id="main">
+        
         <div className="row">
           <div className="col-md-4">
             <div className="contact">
               <h4>Contact Us</h4>
               <ul className="contact-list">
-                <li>4 Erizas Road</li>
-                <li>Málaga, 29011</li>
-                <li>Phone: 951 946 977</li>
+                <li>
+                  Calle:{" "}
+                  <a
+                    href="https://www.google.com/maps/place/C.+Pina+Dom%C3%ADnguez,+5,+29017+M%C3%A1laga/@36.7227046,-4.3814044,17z/data=!3m1!4b1!4m6!3m5!1s0xd725815304d098f:0xd2475e8a286e56c1!8m2!3d36.7227046!4d-4.3788295!16s%2Fg%2F11c5l4jwhm?entry=ttu"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Pina Domínguez, 5, 29017 Málaga
+                  </a>
+                </li>
                 <li>
                   Email:{" "}
                   <a
@@ -35,10 +45,10 @@ export const Footer = () => {
                     contact@protectoramalaga.com
                   </a>
                 </li>
+                <li>Phone: 951 946 977</li>
               </ul>
             </div>
           </div>
-
           <div className="col-md-4">
             <div className="newsletter">
               <h4>Newsletter</h4>
@@ -68,13 +78,13 @@ export const Footer = () => {
           <div className="col-md-4">
             <div className="social-icons">
               <h4>Follow Us</h4>
-              <a href="https://www.facebook.com/yourpage" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
                 <i className="fab fa-facebook fa-2x"></i>
               </a>
-              <a href="https://twitter.com/yourpage" target="_blank" rel="noopener noreferrer">
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
                 <i className="fab fa-twitter fa-2x"></i>
               </a>
-              <a href="https://www.instagram.com/yourpage" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
                 <i className="fab fa-instagram fa-2x"></i>
               </a>
             </div>
@@ -91,7 +101,7 @@ export const Footer = () => {
               target="_blank"
               className="custom-link"
             >
-              Private Area
+              {" "} Private Area
             </a>{" "}
             |{" "}
             <a href="legal-notice.html" className="custom-link">
