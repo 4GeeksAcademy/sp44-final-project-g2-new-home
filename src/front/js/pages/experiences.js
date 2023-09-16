@@ -133,6 +133,23 @@ export const Experiences = () => {
     console.error("ERROR IMAGEN", e);
   }
 };
+  const handleDelete = async () => {
+    if (window.confirm("Are you sure you want to delete this experience?")) {
+      // La confirmación del usuario es requerida para evitar eliminaciones accidentales
+      const success = await actions.delete_experience(store.experienceId);
+      if (success) {
+        actions.get_experiences(); // Vuelve a cargar las experiencias después de eliminar
+        setShowForm(false); // Oculta el formulario después de eliminar
+        setTitle("");
+        setBody("");
+        setPhotolist([]);
+        setFileUrl(""); // Limpia la URL de la imagen después de usarla
+      } else {
+        alert("Failed to delete the experience. Please try again later.");
+      }
+    }
+  };
+
   useEffect(() => {
     actions.get_experiences();
   }, []);
@@ -176,12 +193,28 @@ export const Experiences = () => {
                   onChange={handleDescriptionChange}
                 ></textarea>
               </div>
-              <button className="me-3"  style={{ width: '80px' }} onClick={handleBackToPosts} id="post">
-                Cancel
-              </button>
-              <button onClick={handleSubmit} style={{ width: '80px' }} id="post">
-                {store.experienceId ? "Update" : "Post"}
-              </button>
+              {store.experienceId ? (
+              <div>
+                <button onClick={handleBackToPosts} className="me-3"  style={{ width: "80px" }} id="post">
+                  Cancel
+                </button>
+                <button onClick={handleDelete} className="me-3"  style={{ width: "80px" }} id="post">
+                  Delete
+                </button>
+                <button onClick={handleSubmit} style={{ width: "80px" }} id="post">
+                  Update
+                </button>
+              </div>
+            ) : (
+              <div>
+                <button onClick={handleBackToPosts} className="me-3"  style={{ width: "80px" }} id="post">
+                  Cancel
+                </button>
+                <button onClick={handleSubmit} style={{ width: "80px" }} id="post">
+                  Post
+                </button>
+              </div>
+            )}
               { 
                 fileUrl !== ""  ? <img src={fileUrl} className="img-fluid"/> : null
               }

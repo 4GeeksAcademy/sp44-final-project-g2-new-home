@@ -309,6 +309,40 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  return { success: false, message: 'Ha ocurrido un error al actualizar la experiencia' };
 				}
 			},
+			delete_experience: async (id) => {
+				try {
+					const token = localStorage.getItem('token');
+					const opts = {
+					method: 'DELETE',
+					headers: {
+						'Authorization': `Bearer ${token}`,
+						'Content-Type': 'application/json',
+					},
+					};
+				
+				
+				  const resp = await fetch(`${process.env.BACKEND_URL}/api/experiences/${id}`, opts);
+				
+				  if (resp.status === 200) {
+					// Obtén el estado actual de experiences utilizando getStore()
+					const currentExperiences = getStore().experiences;
+				
+					// Filtra las experiencias para eliminar la que coincida con el ID
+					const updatedExperiences = currentExperiences.filter(experience => experience.id !== id);
+				
+					// Establece el nuevo estado de experiences utilizando setStore()
+					setStore({ experiences: updatedExperiences });
+				
+					return { success: true, message: 'Experiencia eliminada exitosamente' };
+				  } else {
+					const responseData = await resp.json();
+					return { success: false, message: responseData.message };
+				  }
+				} catch (error) {
+				  console.error('Error al eliminar la experiencia:', error);
+				  return { success: false, message: 'Ha ocurrido un error al eliminar la experiencia' };
+				}
+			}, 
 			getMessage: async () => {
 				try{
 					// fetching data from the backend
