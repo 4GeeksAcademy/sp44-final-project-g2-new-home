@@ -7,6 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			user_id: localStorage.getItem("user_id"),
 			user_email: localStorage.getItem("user_email"),
 			peopleId: localStorage.getItem("peopleId"),
+			animalshelterId: localStorage.getItem("animalshelterId"),
 			experienceId:localStorage.getItem("experienceId"),
 			demo: [
 				{
@@ -77,25 +78,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try{
 					const resp = await fetch(process.env.BACKEND_URL + "/api/token", opts)
 					if(resp.status !== 200) {
-					alert("There has been some error")
+					alert("Incorrect username or password")
 					return false
 					}
 					const data = await resp.json()
 					const peopleId = data.people_id;
-					console.log("This is the resp.json: ", data)	
-					console.log("User ID:", data.user_id); // Imprime el ID del usuario
-					console.log("User Email:", data.user_email); 
+					const animalshelterId = data.animalshelter_id; 
+    				const userRole = data.user_role;
+
 					localStorage.setItem("token", data.access_token)
+					localStorage.setItem("user_id", data.user_id);
+					localStorage.setItem("user_email", data.user_email);
 					localStorage.setItem("peopleId", peopleId);
-					localStorage.setItem("experienceId", data.experience_id); // Actualiza el peopleId en localStorage
-					//determinar el role...y guardar su correspondiente id en el store
-					setStore({ token: data.access_token, user_id: data.user_id, user_email: data.user_email, peopleId: peopleId, experienceId: data.experience_id }); // Almacena el ID del usuario en el store
-					console.log("This came from the backend", data)
+					localStorage.setItem("animalshelterId", animalshelterId);
+					localStorage.setItem("experienceId", data.experience_id); 
+					
+					setStore({ token: data.access_token, user_id: data.user_id, user_email: data.user_email, peopleId: peopleId, experienceId: data.experience_id, animalshelterId: animalshelterId }); // Almacena el ID del usuario en el store
+					console.log("This came the resp.json: ", data)
 					console.log("Token:", data.access_token);
 					console.log("User ID:", data.user_id);
 					console.log("User Email:", data.user_email);
+					console.log("Role:", userRole); 
 					console.log("People ID:", peopleId);
-					console.log("Experience ID:", data.experience_id);
+					console.log("Animal Shelter ID:", animalshelterId);
+    				console.log("Experience ID:", data.experience_id);
 
 					return true
 				}

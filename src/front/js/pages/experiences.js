@@ -19,15 +19,16 @@ export const Experiences = () => {
 
   const [likedExperiences, setLikedExperiences] = useState(new Set());
 
-  const peopleId = store.user_id; 
+  const peopleId = store.peopleId; 
+  const userId = store.user_id;
 
   const handleShowForm = () => {
     if (peopleId) {
       setShowForm(true); // Mostrar el formulario solo si el usuario está autenticado
-    } else {
+    } if(!userId) {
       // Mostrar un alert si el usuario no está autenticado
       alert("You need to log in to post your experience.");
-    }
+    } else (alert ("You do not have permission to publish"))
   };
   
   const handleBackToPosts = () => {

@@ -16,11 +16,8 @@ export const Login = () => {
     const handleClick = async  () => {
         await  actions.login(email, password);
         if(store.token && store.token != "" && store.token != undefined)  {
-            localStorage.setItem("user_email", store.user_email);
+            // localStorage.setItem("user_email", store.user_email);
             setWelcomeMessage(`Welcome ${store.user_email}`);
-            localStorage.setItem("user_id", store.user_id);
-            localStorage.setItem("token", store.token);
-            // setStore({ user_email : email });
             navigate("/");
         }
     }

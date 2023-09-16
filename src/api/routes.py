@@ -795,27 +795,55 @@ def create_token():
 
     # Obtén el user_id del usuario autenticado
     user_id = user.id
-    # Consulta la base de datos para obtener el People relacionado con el user_id
-    people = People.query.filter_by(user_id=user_id).first()
-    people_id = people.id
+
+    # Determina el rol del usuario (por ejemplo, a partir de un campo 'role' en la tabla User)
+    user_role = user.role
+
+    # Inicializa variables para los IDs de tablas correspondientes a cada rol
+    people_id = None
+    animalshelter_id = None
+
+    # Asigna los IDs de tablas según el rol del usuario
+    if user_role == 'Person':
+        # Consulta la base de datos para obtener el People relacionado con el user_id
+        people = People.query.filter_by(user_id=user_id).first()
+        if people:
+            people_id = people.id
+
+    elif user_role == 'AnimalShelter':
+        # Consulta la base de datos para obtener el AnimalShelter relacionado con el user_id
+        animalshelter = AnimalShelter.query.filter_by(user_id=user_id).first()
+        if animalshelter:
+            animalshelter_id = animalshelter.id
+
     # Consulta la base de datos para obtener la experiencia del usuario (si existe)
-    experience = ExperiencesBlog.query.filter_by(people_id=people_id).first()
+    experience = ExperiencesBlog.query.filter_by(people_id=people_id).first() if people_id else None
     experience_id = experience.id if experience else None
 
-    # Crear el token de acceso y agregar 'user_id' y 'people_id' al contenido del token
-    access_token = create_access_token(identity=user.id, additional_claims={"user_id": user_id, "people_id": people_id})
+    # Crear el token de acceso y agregar 'user_id' y 'people_id' al contenido del token según el rol
+    additional_claims = {"user_id": user_id}
+    if user_role != 'Admin':
+        # Si el usuario no tiene el rol "Admin", agrega el ID correspondiente al rol
+        if people_id:
+            additional_claims["people_id"] = people_id
+        elif animalshelter_id:
+            additional_claims["animalshelter_id"] = animalshelter_id
 
-    # Incluir información del usuario en la respuesta, incluyendo 'user_id' y 'people_id'
+    access_token = create_access_token(identity=user.id, additional_claims=additional_claims)
+
+    # Incluir información del usuario en la respuesta, incluyendo 'user_id' y el ID correspondiente al rol
     user_info = {
         "access_token": access_token,
         "user_id": user.id,
         "user_email": user.email,
-        "user_role": user.role,
+        "user_role": user_role,
         "user_id": user_id,
         "people_id": people_id,
+        "animalshelter_id": animalshelter_id,
         "experience_id": experience_id
     }
     return jsonify(user_info)
+
 
 
 
