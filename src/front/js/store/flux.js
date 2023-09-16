@@ -111,6 +111,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				localStorage.clear()
 				console.log("APlication just loaded synching the local Storage Token")
 				setStore({token: null}) 
+				setStore({experienceId: null})
+				setStore({user_id: null})
 			},
 			get_profile: async (userId) => {
 				console.log('getUserProfile llamado con userId:', userId);
@@ -261,38 +263,47 @@ const getState = ({ getStore, getActions, setStore }) => {
 					  return false;
 					}
   			},
-			update_experience: async (id, data) => {
+			update_experience: async (id, title, body, photo) => {
 				try {
-				  const token = localStorage.getItem('token');
-				  const opts = {
+					const token = localStorage.getItem('token');
+					const data = {
+					title: title,
+					body: body,
+					photo: photo,
+					};
+				
+					const opts = {
 					method: 'PUT',
 					headers: {
-					  'Content-Type': 'application/json',
-					  'Authorization': `Bearer ${token}` // Agrega el token de acceso a las cabeceras
+						'Authorization': `Bearer ${token}`,
+						'Content-Type': 'application/json'					
 					},
 					body: JSON.stringify(data)
-				  };
-			  
-				  const resp = await fetch(`${process.env.BACKEND_URL}/api/experiences/${id}`, opts);
-				  const responseData = await resp.json();
-			  
-				  if (resp.status === 200) {
-					// Actualiza la experiencia en el store con la nueva información
-					experiences.update(existingExperiences => {
-					  const updatedExperiences = existingExperiences.map(experience => {
-						if (experience.id === id) {
-						  return { ...experience, ...data };
-						} else {
-						  return experience;
-						}
-					  });
-					  return updatedExperiences;
-					});
-			  
-					return { success: true, message: 'Experiencia actualizada exitosamente' };
-				  } else {
-					return { success: false, message: responseData.message };
-				  }
+					};
+			  	
+					const resp = await fetch(`${process.env.BACKEND_URL}/api/experiences/${id}`, opts);
+					const responseData = await resp.json();
+				
+					if (resp.status === 200) {
+						// Obtén el estado actual de experiences utilizando getStore()
+						const currentExperiences = getStore().experiences;
+				  
+						// Actualiza la experiencia en el store con la nueva información
+						const updatedExperiences = currentExperiences.map(experience => {
+						  if (experience.id === id) {
+							return { ...experience, ...data };
+						  } else {
+							return experience;
+						  }
+						});
+				  
+						// Establece el nuevo estado de experiences utilizando setStore()
+						setStore({ experiences: updatedExperiences });
+				
+						return { success: true, message: 'Experiencia actualizada exitosamente' };
+					} else {
+						return { success: false, message: responseData.message };
+					}
 				} catch (error) {
 				  console.error('Error al actualizar la experiencia:', error);
 				  return { success: false, message: 'Ha ocurrido un error al actualizar la experiencia' };

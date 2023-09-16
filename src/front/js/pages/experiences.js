@@ -22,7 +22,12 @@ export const Experiences = () => {
   const peopleId = store.user_id; 
 
   const handleShowForm = () => {
-    setShowForm(true); // Mostrar el formulario cuando se hace clic en el botón
+    if (peopleId) {
+      setShowForm(true); // Mostrar el formulario solo si el usuario está autenticado
+    } else {
+      // Mostrar un alert si el usuario no está autenticado
+      alert("You need to log in to post your experience.");
+    }
   };
   
   const handleBackToPosts = () => {
@@ -100,10 +105,24 @@ export const Experiences = () => {
     console.log("data fetch img: ", data);
     console.log("imageUUUUUUUUURL: ", imageUrl)
 
-    const success = await actions.publishExperience(title, body, imageUrl, peopleId); // Pasa imageUrl en lugar de photolist
-    if (success) {
-      actions.get_experiences();
+    if (store.experienceId) {
+      // Llama a la función de actualizar
+      const success = await actions.update_experience(store.experienceId, title, body, imageUrl);
+      if (success) {
+        actions.get_experiences();
+      }
+    } else {
+      // Llama a la función de publicar si no hay experiencia ID
+      const success = await actions.publishExperience(title, body, imageUrl, peopleId);
+      if (success) {
+        actions.get_experiences();
+      }
     }
+
+    // const success = await actions.publishExperience(title, body, imageUrl, peopleId); // Pasa imageUrl en lugar de photolist
+    // if (success) {
+    //   actions.get_experiences();
+    // }
 
     setShowForm(false);
     setTitle("");
@@ -117,14 +136,14 @@ export const Experiences = () => {
   useEffect(() => {
     actions.get_experiences();
   }, []);
-  {store.experiences ? (
-    store.experiences.forEach((experience) => {
-      // Agrega un console.log para verificar la URL de la imagen
-      console.log("experience.imagen:", experience.image);
-    })
-  ) : (
-    <p>No hay experiencias disponibles.</p>
-  )}
+  // {store.experiences ? (
+  //   store.experiences.forEach((experience) => {
+  //     // Agrega un console.log para verificar la URL de la imagen
+  //     console.log("experience.imagen:", experience.image);
+  //   })
+  // ) : (
+  //   <p>No hay experiencias disponibles.</p>
+  // )}
   return (
     <div className="container">
       {showForm ? (
@@ -133,21 +152,8 @@ export const Experiences = () => {
           <div className="experiences-container">
             <div className="experience-post">
               <h2>
-                <b>Publish an Experience</b>
+                <b>{store.experienceId ? "Update" : "Publish"} an Experience</b>
               </h2>
-              {/* <div className="image-upload">
-                {photolist.map((photo, index) => (
-                  <img key={index} src={photo} alt={`Selected Image ${index}`} />
-                ))}
-                {photolist.length < 5 && (
-                  <input
-                    type="file"
-                    id="image-input"
-                    accept="image/jpg"
-                    onChange={handleImageChange}
-                  />
-                )}
-              </div> */}
               <div className="image-upload">
                   <input
                     type="file"
@@ -173,8 +179,8 @@ export const Experiences = () => {
               <button className="me-3"  style={{ width: '80px' }} onClick={handleBackToPosts} id="post">
                 Cancel
               </button>
-              <button onClick={handleSubmit} id="post">
-                Post
+              <button onClick={handleSubmit} style={{ width: '80px' }} id="post">
+                {store.experienceId ? "Update" : "Post"}
               </button>
               { 
                 fileUrl !== ""  ? <img src={fileUrl} className="img-fluid"/> : null
@@ -216,15 +222,12 @@ export const Experiences = () => {
           )}
         </div>
       )}
-      {/* Botón para mostrar el formulario */}
+      
       {!showForm && (
         <button onClick={handleShowForm} className="btn btn-primary">
-          Comparte con nosotros tu experiencia
+          {store.experienceId ? "Update us" : "Share your experience with us"} 
         </button>
       )}
     </div>
   );
-  
-
-  
 };
