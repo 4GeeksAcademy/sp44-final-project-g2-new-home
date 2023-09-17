@@ -307,7 +307,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   			},
 			update_experience: async (id, title, body, photo) => {
 				try {
-					const token = localStorage.getItem('token');
+					const token = getStore().token;
 					const data = {
 					title: title,
 					body: body,
