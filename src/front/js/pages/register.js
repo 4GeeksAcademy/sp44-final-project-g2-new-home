@@ -44,8 +44,7 @@ const Register = () => {
       web
     });
     
-    await actions.register(email, password, isActive, userType, name, lastname, cif, address, city, zipCode, web);
-    console.log("Valor de 'website' después de:", web); 
+    await actions.register(email, password, isActive, userType, name, lastname, cif, address, city, zipCode, web); 
     navigate("/login");
   };     
   

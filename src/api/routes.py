@@ -9,18 +9,19 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required, current_user
 from flask_jwt_extended import decode_token
+import cloudinary
+import cloudinary.uploader
 
 api = Blueprint('api', __name__)
 
 
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
+@api.route('/img', methods=['POST', 'GET'])
+def upload_image():
+   img = request.files["img"]
+   print(img)
+   img_url = cloudinary.uploader.upload(img)
 
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-    }
-
-    return jsonify(response_body), 200
+   return jsonify({"img_url: ": img_url["url"]}), 200
 
 
 @api.route('/users', methods=['POST', 'GET'])
@@ -128,7 +129,7 @@ def handle_user(id):
     if user.role == 'Person' and 'details' in data:
         # Actualizar los datos en la tabla People
         person_data = data['details']
-        person = People.query.filter_by(user_id=id).first()
+        person = People.query.filter_by(user_id=id).first() # aqui buscas el primer registro en people que coincida como usuario o user en la tabla user...
         if person:
             # Actualizar los campos de la tabla People
             person.name = person_data.get('name', person.name)
@@ -154,15 +155,32 @@ def handle_user(id):
     # Guardar los cambios en la base de datos
     db.session.commit()
     return {"message": "User data updated successfully", "status": "ok"}, 200
-   if request.method == 'DELETE':  
-      user = db.get_or_404(User, id)
-      db.session.delete(user) 
-      db.session.commit()
-      response_body = {"message": "DELETED user",
-                        "status": "ok",
-                        "user_deleting": id,
-                        }
-      return response_body, 200
+   if request.method == 'DELETE':
+      user = User.query.get(id)
+      # Verificar el rol del usuario
+      if user.role == 'Person':
+         # Si el usuario tiene el rol 'Person', también debemos eliminar los datos en la tabla 'People'
+         person = People.query.filter_by(user_id=id).first()
+         if person:
+               db.session.delete(person)  # Eliminar datos en la tabla 'People'
+
+   elif user.role == 'AnimalShelter':
+      # Si el usuario tiene el rol 'AnimalShelter', también debemos eliminar los datos en la tabla 'AnimalShelter'
+      shelter = AnimalShelter.query.filter_by(user_id=id).first()
+      if shelter:
+            db.session.delete(shelter)  # Eliminar datos en la tabla 'AnimalShelter'
+
+   # Ahora, eliminamos el usuario de la tabla 'User'
+   db.session.delete(user)
+   db.session.commit()
+   # user = db.get_or_404(User, id)
+   db.session.delete(user) 
+   db.session.commit()
+   response_body = {"message": "DELETED user",
+                     "status": "ok",
+                     "user_deleting": id,
+                     }
+   return response_body, 200
 
 
 def update_vote_stars(user_id):
@@ -362,14 +380,24 @@ def handle_volunteer(id):
 
 @api.route('/experiences', methods=['POST', 'GET'])
 def handle_experiences():
-   if request.method =='GET':
-      # response_body = {"message": "Esto devuelve el get del endpooint experiences"}
-      experiences = db.session.execute(db.select(ExperiencesBlog).order_by(ExperiencesBlog.title)).scalars()
-      results = [item.serialize() for item in experiences]
-      response_body ={
-            "message":"Esto devuelve el endpoint de experiences el GET",
-            "results": results,
-            "status": "ok" }
+   if request.method == 'GET':
+      # Realiza una unión (join) con la tabla "People" para obtener el nombre del usuario
+      experiences = db.session.query(ExperiencesBlog, People).join(People).order_by(ExperiencesBlog.title).all()
+      results = [
+         {
+               "id": exp[0].id,
+               "title": exp[0].title,
+               "body": exp[0].body,
+               "photo": exp[0].photo,
+               "name": exp[1].name  # Obtiene el nombre del usuario de la tabla "People"
+         }
+         for exp in experiences
+      ]
+      response_body = {
+         "message": "Esto devuelve el endpoint de experiences el GET",
+         "results": results,
+         "status": "ok"
+      }
       return response_body, 200
    if request.method =='POST':
       request_body = request.get_json()
@@ -387,7 +415,8 @@ def handle_experiences():
       # response_body = {"message": "Esto devuelve el POST del endpooint experiences"}
       return response_body, 200
 
-@api.route('/experiences/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+@api.route('/experiences/<int:id>', methods=['GET', 'PUT', 'POST', 'DELETE'])
+@jwt_required()
 def handle_experience(id):
    if request.method == 'GET': 
       experience = db.get_or_404(ExperiencesBlog, id)
@@ -397,18 +426,33 @@ def handle_experience(id):
           "results": experience.serialize()
       }
       return response_body, 200
+   if request.method == 'POST':
+        request_body = request.get_json()
+        people = People.query.get(id)
+        experiences = ExperiencesBlog (
+                     title = request_body["title"],
+                     body = request_body["body"],
+                     photo = request_body["photo"],
+                     people_id = people.id )
+
+        db.session.add(experiences)
+        db.session.commit()
+
+        response_body = {"message": "Experience published successfully", "status": "ok"}
+        return response_body, 200
    if request.method == 'PUT':
-      request_body = request.get_json()
-      experience = db.get_or_404(ExperiencesBlog, id)
-      experience.title = request_body["title"]
-      experience.body = request_body["body"]
-      experience.photo = request_body["photo"]
-      db.session.commit() 
-      response_body = {"message" : "Update experience",
-                       "status": "ok",
-                       "experience": request_body
-                       }
-      return response_body, 200
+    request_body = request.get_json()
+    experience = db.get_or_404(ExperiencesBlog, id)
+    experience.title = request_body["title"]
+    experience.body = request_body["body"]
+    experience.photo = request_body["photo"]
+    db.session.commit() 
+    response_body = {"message" : "Update experience",
+                     "status": "ok",
+                     "experience": request_body
+                    }
+    return response_body, 200
+
    if request.method == 'DELETE':  
       experience = db.get_or_404(ExperiencesBlog, id)
       db.session.delete(experience)
@@ -776,18 +820,65 @@ def create_token():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
     
-    # Consulta la base de datos para verificar las credenciales
+    # Consulta la base de datos para verificar las credenciales del usuario
     user = User.query.filter_by(email=email, password=password).first()
 
     if not user:
         return jsonify({"msg": "Credenciales incorrectas"}), 401
 
-    access_token = create_access_token(identity=user.id)
-     # Incluye información del usuario en la respuesta
+    # Obtén el user_id del usuario autenticado
+    user_id = user.id
+
+    # Determina el rol del usuario (por ejemplo, a partir de un campo 'role' en la tabla User)
+    user_role = user.role
+
+    # Inicializa variables para los IDs de tablas correspondientes a cada rol
+    people_id = None
+    animalshelter_id = None
+
+    # Asigna los IDs de tablas según el rol del usuario
+    if user_role == 'Person':
+        # Consulta la base de datos para obtener el People relacionado con el user_id
+        people = People.query.filter_by(user_id=user_id).first()
+        if people:
+            people_id = people.id
+
+    elif user_role == 'AnimalShelter':
+        # Consulta la base de datos para obtener el AnimalShelter relacionado con el user_id
+        animalshelter = AnimalShelter.query.filter_by(user_id=user_id).first()
+        if animalshelter:
+            animalshelter_id = animalshelter.id
+
+    # Consulta la base de datos para obtener la experiencia del usuario (si existe)
+    experience = ExperiencesBlog.query.filter_by(people_id=people_id).first() if people_id else None
+    experience_id = experience.id if experience else None
+
+    # Crear el token de acceso y agregar 'user_id' y 'people_id' al contenido del token según el rol
+    additional_claims = {"user_id": user_id}
+    if user_role != 'Admin':
+        # Si el usuario no tiene el rol "Admin", agrega el ID correspondiente al rol
+        if people_id:
+            additional_claims["people_id"] = people_id
+        elif animalshelter_id:
+            additional_claims["animalshelter_id"] = animalshelter_id
+
+    access_token = create_access_token(identity=user.id, additional_claims=additional_claims)
+
+    # Incluir información del usuario en la respuesta, incluyendo 'user_id' y el ID correspondiente al rol
     user_info = {
         "access_token": access_token,
         "user_id": user.id,
         "user_email": user.email,
-        "user_role": user.role
+        "user_role": user_role,
+        "user_id": user_id,
+        "people_id": people_id,
+        "animalshelter_id": animalshelter_id,
+        "experience_id": experience_id
     }
     return jsonify(user_info)
+
+
+
+
+
+

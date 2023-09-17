@@ -3,10 +3,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			token: localStorage.getItem("token"),
 			message: null,
-			favorite: [],
+			experiences: localStorage.getItem("experiences"),
 			user_id: localStorage.getItem("user_id"),
 			user_email: localStorage.getItem("user_email"),
-
+			peopleId: localStorage.getItem("peopleId"),
+			animalshelterId: localStorage.getItem("animalshelterId"),
+			experienceId:localStorage.getItem("experienceId"),
+			favorite: [],
 			demo: [
 				{
 					title: "FIRST",
@@ -65,30 +68,45 @@ const getState = ({ getStore, getActions, setStore }) => {
 			login: async (email, password) => {
 				const opts = {
 					method: 'POST',
-					headers: {
+					headers:{
 						"Content-Type": "application/json"
 					},
 					body: JSON.stringify({
 						"email": email,
 						"password": password
 					})
-				}
-				try {
+				} 
+				try{
 					const resp = await fetch(process.env.BACKEND_URL + "/api/token", opts)
-					if (resp.status !== 200) {
-						alert("There has been some error")
-						return false
+					if(resp.status !== 200) {
+					alert("Incorrect username or password")
+					return false
 					}
 					const data = await resp.json()
-					console.log("User ID:", data.user_id); // Imprime el ID del usuario
-					console.log("User Email:", data.user_email);
+					const peopleId = data.people_id;
+					const animalshelterId = data.animalshelter_id; 
+    				const userRole = data.user_role;
+
 					localStorage.setItem("token", data.access_token)
-					setStore({ token: data.access_token, user_id: data.user_id, user_email: data.user_email }); // Almacena el ID del usuario en el store
-					console.log("This came from the backend", data)
+					localStorage.setItem("user_id", data.user_id);
+					localStorage.setItem("user_email", data.user_email);
+					localStorage.setItem("peopleId", peopleId);
+					localStorage.setItem("animalshelterId", animalshelterId);
+					localStorage.setItem("experienceId", data.experience_id); 
+					
+					setStore({ token: data.access_token, user_id: data.user_id, user_email: data.user_email, peopleId: peopleId, experienceId: data.experience_id, animalshelterId: animalshelterId }); // Almacena el ID del usuario en el store
+					console.log("This came the resp.json: ", data)
 					console.log("Token:", data.access_token);
+					console.log("User ID:", data.user_id);
+					console.log("User Email:", data.user_email);
+					console.log("Role:", userRole); 
+					console.log("People ID:", peopleId);
+					console.log("Animal Shelter ID:", animalshelterId);
+    				console.log("Experience ID:", data.experience_id);
+
 					return true
 				}
-				catch (error) { console.error("There has been an error login in") }
+				catch(error){console.error("There has been an error login in")}	
 			},
 			sync_token_from_local_storage: () => {
 				const token = localStorage.getItem("token")
@@ -99,7 +117,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ message: "" })
 				localStorage.clear()
 				console.log("APlication just loaded synching the local Storage Token")
-				setStore({ token: null })
+
+				setStore({token: null}) 
+				setStore({experienceId: null})
+				setStore({user_id: null})
 			},
 			get_profile: async (userId) => {
 				console.log('getUserProfile llamado con userId:', userId);
@@ -203,8 +224,167 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
-
-
+      		unsubscribe_user: async (userId) => {
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/users/${userId}`, {
+						method: 'DELETE',
+						headers: {
+							'Authorization': `Bearer ${localStorage.getItem('token')}`,
+						},
+					});
+			
+					if (response.status === 200) {
+						localStorage.clear();
+						// Puedes realizar alguna acción adicional después de que el usuario se haya dado de baja, como redirigirlo a una página de despedida.
+						// Por ejemplo:
+						// window.location.href = '/goodbye';
+					} else {
+						console.error('No se pudo dar de baja al usuario.');
+						// Puedes mostrar un mensaje de error al usuario o tomar otra acción adecuada.
+					}
+				} catch (error) {
+					console.error('Error al intentar dar de baja al usuario:', error);
+					// Manejar errores de red u otros errores
+				}
+			},
+			get_experiences: async () => {
+				const opts = {
+				  method: 'GET',
+				  headers: {
+					'Authorization': `Bearer ${localStorage.getItem("token")}`,
+					'Content-Type': 'application/json', // Establece el encabezado JSON si es necesario
+				  },
+				};
+			  
+				try {
+				  const resp = await fetch(`${process.env.BACKEND_URL}/api/experiences`, opts);
+			  
+				  if (resp.status !== 200) {
+					console.error("Error fetching experiences");
+					return;
+				  }
+			  
+				  const data = await resp.json();
+			  
+				  // Despacha una acción con los resultados de las experiencias
+				  setStore({ experiences: data.results });
+				} catch (error) {
+				  console.error("Error during experiences fetch", error);
+				  // Puedes despachar una acción de error si lo deseas
+				}
+			},
+			publishExperience: async (title, body, photo) => {
+				const peopleId = getStore().peopleId;
+				const experienceData = {
+					title: title,
+					body: body,
+					photo: photo,
+				};
+				console.log("A VER LA EXPERIENCIAAA: ",experienceData)
+				const opts = {
+					method: 'POST',
+					headers: {
+						'Authorization': `Bearer ${localStorage.getItem("token")}`,
+						'Content-Type': 'application/json', // Establece el encabezado JSON
+					},
+					body: JSON.stringify(experienceData)
+				};
+			
+				try {
+					const resp = await fetch(`${process.env.BACKEND_URL}/api/experiences/${peopleId}`, opts);
+				
+					if (resp.status !== 200) {
+						alert("There has been some error");
+						return false;
+					  }
+					  const data = await resp.json();
+					  console.log("Experiencie registration successfully completed", data);
+					  return true;
+					} catch (error) {
+					  console.error("Error during experience update", error);
+					  return false;
+					}
+  			},
+			update_experience: async (id, title, body, photo) => {
+				try {
+					const token = getStore().token;
+					const data = {
+					title: title,
+					body: body,
+					photo: photo,
+					};
+				
+					const opts = {
+					method: 'PUT',
+					headers: {
+						'Authorization': `Bearer ${token}`,
+						'Content-Type': 'application/json'					
+					},
+					body: JSON.stringify(data)
+					};
+			  	
+					const resp = await fetch(`${process.env.BACKEND_URL}/api/experiences/${id}`, opts);
+					const responseData = await resp.json();
+				
+					if (resp.status === 200) {
+						// Obtén el estado actual de experiences utilizando getStore()
+						const currentExperiences = getStore().experiences;
+				  
+						// Actualiza la experiencia en el store con la nueva información
+						const updatedExperiences = currentExperiences.map(experience => {
+						  if (experience.id === id) {
+							return { ...experience, ...data };
+						  } else {
+							return experience;
+						  }
+						});
+				  
+						// Establece el nuevo estado de experiences utilizando setStore()
+						setStore({ experiences: updatedExperiences });
+				
+						return { success: true, message: 'Experiencia actualizada exitosamente' };
+					} else {
+						return { success: false, message: responseData.message };
+					}
+				} catch (error) {
+				  console.error('Error al actualizar la experiencia:', error);
+				  return { success: false, message: 'Ha ocurrido un error al actualizar la experiencia' };
+				}
+			},
+			delete_experience: async (id) => {
+				try {
+					const token = localStorage.getItem('token');
+					const opts = {
+					method: 'DELETE',
+					headers: {
+						'Authorization': `Bearer ${token}`,
+						'Content-Type': 'application/json',
+					},
+					};
+				
+				
+				  const resp = await fetch(`${process.env.BACKEND_URL}/api/experiences/${id}`, opts);
+				
+				  if (resp.status === 200) {
+					// Obtén el estado actual de experiences utilizando getStore()
+					const currentExperiences = getStore().experiences;
+				
+					// Filtra las experiencias para eliminar la que coincida con el ID
+					const updatedExperiences = currentExperiences.filter(experience => experience.id !== id);
+				
+					// Establece el nuevo estado de experiences utilizando setStore()
+					setStore({ experiences: updatedExperiences });
+				
+					return { success: true, message: 'Experiencia eliminada exitosamente' };
+				  } else {
+					const responseData = await resp.json();
+					return { success: false, message: responseData.message };
+				  }
+				} catch (error) {
+				  console.error('Error al eliminar la experiencia:', error);
+				  return { success: false, message: 'Ha ocurrido un error al eliminar la experiencia' };
+				}
+			}, 
 			getMessage: async () => {
 				try {
 					// fetching data from the backend

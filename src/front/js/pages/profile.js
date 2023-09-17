@@ -49,20 +49,27 @@ export const Profile = () => {
         setIsEditing(false);
     };
 
+    const handleUnsubscribe = () => {
+        const confirmDelete = window.confirm("¿Seguro que desea darse de baja? Esta acción no se puede deshacer.");
+        if (confirmDelete) {
+            actions.unsubscribe_user(store.user_id); // Llama a la función que eliminará al usuario
+        }
+    };
+
     useEffect(() => {
         const userDataFromLocalStorage = JSON.parse(localStorage.getItem("user_data"));
-        let a = localStorage.getItem("user_id")
-        let b = localStorage.getItem("token")
-        if (!a && !b){
-            a = store.user_id
-            b = store.token
+        let user_id = localStorage.getItem("user_id")
+        let token = localStorage.getItem("token")
+        if (!user_id && !token){
+            user_id = store.user_id
+            token = store.token
         }
         console.log("Valor de store.user_id:", store.user_id);
         console.log("Valor de store.token:", store.token);
         if (userDataFromLocalStorage) {
             setUserData(userDataFromLocalStorage);
         } else {
-            actions.get_profile(a, b)
+            actions.get_profile(user_id, token)
                 .then(data => {
                     if (data) {
                         setUserData({ ...data }); // Asegúrate de que estás propagando todos los datos, incluidos los detalles de People
@@ -227,7 +234,8 @@ export const Profile = () => {
                                 Trophy: <i className="fas fa-award"></i>
                             </p>
                         )}
-                        <button onClick={handleEditClick} className="btn btn-primary">Editar Perfil</button>
+                        <button onClick={handleEditClick} className="btn btn-primary">Edit Profile</button>
+                        <button onClick={handleUnsubscribe} className="btn btn-primary ms-3">Unsubscribe</button>
                     </div>
                 )}
             </div>
