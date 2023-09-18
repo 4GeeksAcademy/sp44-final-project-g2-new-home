@@ -57,7 +57,7 @@ export const Adoptme = () => {
   useEffect(() => {
 
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0M0swTkpSS3hCUmZJcVBEcEh0OWJ1QTUwSDZOcERraVpFdzV5eUVuc1BvNW5RdjJyaSIsImp0aSI6IjdhM2QxZjZjM2VmYTVhYjVjNDkwNDEyZDVjM2Y5YTJlY2E0Y2NkNzdhZDgwZjEzZDBkN2Y3ZDRkYTY0YWJjNWU4ZDczZDhiMWNjMDVjNjViIiwiaWF0IjoxNjk0ODAzODAwLCJuYmYiOjE2OTQ4MDM4MDAsImV4cCI6MTY5NDgwNzQwMCwic3ViIjoiIiwic2NvcGVzIjpbXX0.o6SvBpAj7gslxNm98KZQ296T9SV-IwIfQ4xrOrgtwVMOBPswZ2dV6T8tUZcWau1XjWTa4bkQWF0Bt4iuzDsIYZ-9stbjNdPR4F7fckRm3Nl-j_kQgfx2L3Pg2_7QFh-tooe69wPJ2nfLSXrsiq22Hgvjy8p9ZTyG7SYDjyNSyHZfmnxZK5xk8_VAbXv-LJLRsCqoPi95PSdqNY5Qmyma6OYKcNbbeAbE90qhQzz4BGHNvpaVL-gZOa0VtLuJJHcGfhlu4UrO73SJCy1N4K8OyO7xNyed2S7bGdhRw9ZP36uXcnRXMHpU9oljRYVQZMs3jaHUFR2FTxwzVaktgth3Lg");
+    myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0M0swTkpSS3hCUmZJcVBEcEh0OWJ1QTUwSDZOcERraVpFdzV5eUVuc1BvNW5RdjJyaSIsImp0aSI6IjA2M2E0ZjdhYjg2OGM2ZmY1NWI2ODYwZjE2NTI1NjI1MGZlZThiMDQ0NTAwNDEwZDBhMjRmNmVmZDJkNDcwOTVlZWRkOThmODEyZWIxOTVlIiwiaWF0IjoxNjk1MDQ0MzgyLCJuYmYiOjE2OTUwNDQzODIsImV4cCI6MTY5NTA0Nzk4Miwic3ViIjoiIiwic2NvcGVzIjpbXX0.PEC0hLYY71UmK2D5t4SiNR6NyZgD5gzxYWH1THVoE3nS6hgGlbyKJ4abpGJUQUUTd8c7EjNbmImxASKU2Th_8tqo8DAIlVfKP-yDg_DAzDllDswOuMizfWAWMT2riNRF0a_uorC8g_kDf8Jf7K1cJBxlRdwZWqi9A-iXiCeyQXfzq39nEXDgbvEMDK-fdAdO196KMa0VIRl-ZGyfPYouaKgFikVnipnh_TK5FhLAevJSXWWAmZ0EALB7YBdLCOhZbsvLWbSWFayJFIo9jlrYgjvR_BU6impSzvCR5alYl2equsbFL4fIeztfPBIzlTfVhgMZ9J8TBqnkGkw25vECiw");
 
     var requestOptions = {
       method: 'GET',
@@ -94,20 +94,14 @@ export const Adoptme = () => {
             <img src={`https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/${item.id}/1/`} onError={handleOnErrorImg} />
             <div className="card-body">
               <h5 className="card-title">{item.name}</h5>
-              <div className="d-flex justify-content-between">
-              {/* <Link to={`/characters/${id}`} className="btn btn-secondary"
-                      onClick={() => actions.getCharacter({ id, urlImage, item })}>
-                        Details
-                    </Link> */}
-              <Link to={`/adoptme/${id}`}>
-                  <span className="navbar-brand mb-0 h1 btn btn-outline-secondary me-2">Details</span>
-              </Link>
-                <div className="text-end">
-                  <button className="btn btn-danger">
-                    <i className="fas fa-heart"></i>
-                  </button>
-                </div>
-              </div>
+              <p><strong>Breed mixture: </strong>{item.breeds.primary}</p> 
+              <p><strong>Age: </strong>{item.age}</p>
+              <p><strong>Gender: </strong>{item.gender}</p>
+              <p><strong>Size: </strong>{item.size}</p>
+              <p><strong>Descriptions: </strong>{item.description}</p>
+              <p><strong>City: </strong>{item.city}</p>
+              <p><strong>Contact: </strong>{item.contact.phone}</p>
+           
             </div>
           </div>
         ))}
