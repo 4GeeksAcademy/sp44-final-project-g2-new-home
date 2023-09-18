@@ -24,7 +24,7 @@ export const Footer = () => {
         <div className="row">
           <div className="col-md-4">
             <div className="contact">
-              <h4>Contact Us</h4>
+              <h4><b>Contact Us</b></h4>
               <ul className="contact-list">
                 <li>
                   Calle:{" "}
@@ -51,7 +51,7 @@ export const Footer = () => {
           </div>
           <div className="col-md-4">
             <div className="newsletter">
-              <h4>Newsletter</h4>
+              <h4><b>Newsletter</b></h4>
               <p>Receive our latest updates in your email</p>
               <form className="form-inline" onSubmit={handleSubmit}>
                 <div className="input-group">
@@ -77,7 +77,7 @@ export const Footer = () => {
           </div>
           <div className="col-md-4">
             <div className="social-icons">
-              <h4>Follow Us</h4>
+              <h4><b>Follow Us</b></h4>
               <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
                 <i className="fab fa-facebook fa-2x"></i>
               </a>
@@ -96,25 +96,22 @@ export const Footer = () => {
         <div className="row">
           <div className="col-lg-12 text-center">
             &copy; 2023 New home. All rights reserved.
-            <a
+            <a id="privatearea"
               href="https://sites.google.com/view/privatearea"
               target="_blank"
               className="custom-link"
             >
-              {" "} Private Area
-            </a>{" "}
-            |{" "}
+            Private Area
+            </a>
             <a href="legal-notice.html" className="custom-link">
               Legal Notice
-            </a>{" "}
-            |{" "}
+            </a>
             <a
               href="privacy-policy.html"
               className="custom-link"
             >
               Privacy Policy
-            </a>{" "}
-            |{" "}
+            </a>
             <a href="cookie-policy.html" className="custom-link">
               Cookie Policy
             </a>

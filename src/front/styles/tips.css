@@ -5,6 +5,8 @@
 
 #main1 {
   background-color: white !important;
+  margin-left: 25%; /* Ajusta el margen izquierdo para dar espacio al sidebar */
+  padding: 20px;
 }
 
 h1 {
@@ -77,60 +79,6 @@ h1 {
   padding: 20px;
 }
 
-@media screen and (max-width: 768px) {
-  /* Estilos para cuando la pantalla es más pequeña */
-  #a1, #a2, #a3, #a4, #a5, #a6 {
-    padding: 10px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .container {
-    padding: 10px;
-  }
-
-  h1 {
-    font-size: 30px;
-  }
-
-  .card-title {
-    font-size: 20px;
-  }
-
-  .card-text {
-    font-size: 16px;
-  }
-
-  .Foto.tip1 {
-    width: 150px;
-    height: 150px;
-  }
-}
-
-/* Estilos para pantallas más pequeñas (menos de 768px) */
-@media (max-width: 767.98px) {
-  #main {
-    max-width: 300px;
-    background-color: transparent !important;
-  }
-}
-
-/* Estilos para pantallas medianas (entre 768px y 1399.98px) */
-@media (min-width: 768px) and (max-width: 1399.98px) {
-  #main {
-    max-width: 580px;
-    background-color: transparent !important;
-  }
-}
-
-/* Estilos para pantallas más grandes (1400px o más) */
-@media (min-width: 1400px) {
-  #main {
-    max-width: 1020px;
-    background-color: transparent !important;
-  }
-}
-
 #tip1,
 #tip2,
 #tip3,
@@ -141,3 +89,18 @@ h1 {
   box-shadow: 0 4px 8px rgba(63 153 125 / 60%);
   border-radius: 20px;
 }
+
+@media screen and (max-width: 768px) {
+  #sidebartips {
+    width: 100%; 
+    margin-top: 0; 
+    position: relative;
+    left: 0; 
+    margin-bottom: 20px; 
+  }
+
+  #main1 {
+    margin-left: 0; 
+  }
+}
+
