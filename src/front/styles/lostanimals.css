@@ -6,7 +6,7 @@
   
 /* Estilos para el título con id "lostanimals" */
 #lostanimals {
-    color: rgba(213, 143, 34); /* Cambiar el color según tus preferencias */
+    color: rgb(86 117 235);
     font-weight: bold; /* Cambiar el peso de fuente según tus preferencias */
     margin-bottom: 20px; /* Espacio inferior para separar del contenido */
 }
@@ -67,6 +67,10 @@
     color: #333; /* Cambiar el color del texto según tus preferencias */
 }
   
-
+#cuerpo {
+    background-color: rgb(86 117 235 / 10%);
+    box-shadow: 4px 8px 10px rgb(86 117 235 / 60%);
+    border-radius: 20px;
+}
 
 

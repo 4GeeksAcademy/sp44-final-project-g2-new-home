@@ -256,7 +256,7 @@ export const Experiences = () => {
               </div>
             ))
           ) : (
-            <p>No hay experiencias disponibles.</p>
+            <p>No experiences available.</p>
           )}
         </div>
       )}

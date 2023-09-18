@@ -1,0 +1,9 @@
+#voluntaryform {
+    color: #a9880a;
+}
+
+#formcomplete {
+    background-color: rgb(169 136 10 / 10%);
+    box-shadow: 4px 8px 10px rgb(169 136 10 / 60%);
+    border-radius: 20px;
+}

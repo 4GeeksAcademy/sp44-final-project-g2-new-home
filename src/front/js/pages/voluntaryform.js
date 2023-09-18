@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from '../store/appContext';
 import { useNavigate } from "react-router-dom";
+import "../../styles/voluntaryform.css"
 
 
 export const VoluntaryForm = () => {
@@ -76,11 +77,11 @@ export const VoluntaryForm = () => {
   
   return (
     <div className="container">
-      <div className="card text-center">
+      <div className="card text-center" id="formcomplete">
         <div className="card-body">
-          <h5 className="card-title">
+          <h2 className="card-title" id="voluntaryform">
             <b>Voluntary Form</b>
-          </h5>
+          </h2>
           <div className="form-group row">
             <div className="col-md-4">
               <label>Name:</label>

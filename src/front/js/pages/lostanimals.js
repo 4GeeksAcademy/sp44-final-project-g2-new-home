@@ -114,9 +114,8 @@ export const Lostanimals = () => {
         {showForm ? "Hide Form" : "Add Animal"}
       </button>
       {showForm && (
-        <div className="card text-center">
+        <div className="card text-center" id="cuerpo">
           <div className="card-body">
-            <h5 className="card-title">Animal {activeTab === "lost" ? "Lost" : "Found"} Form</h5>
             <div className="form-group row">
               <div className="col-md-3">
                 <label>Pet´s name:</label>
@@ -232,7 +231,7 @@ export const Lostanimals = () => {
           </div>
         </div>
       )}
-      <div className="card text-center">
+      <div className="card text-center" id="cuerpo">
         <div className="card-header">
           <button
             className={`btn ${activeTab === "lost" ? "btn-primary" : "btn-secondary"}`}
