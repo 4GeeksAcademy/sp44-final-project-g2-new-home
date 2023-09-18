@@ -1,28 +1,10 @@
 body {
-    /* background-color: rgb(223 255 236); */
     background-color: white;
 }
-
-/* Estilo para el contenedor principal */
-/* .main-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* Mínima altura de la ventana gráfica */
-/* } */
-
-/* Estilo para el Footer */
-/* .footer {
-    background-color: #f8f8f8;
-    padding: 20px;
-    text-align: center;
-    position: sticky;
-    bottom: 0;
-} */ */
 
 /* Estilos generales */
 .navbar-brand {
     padding: 10px 20px;
-    margin: 10px 20px;
 }
 
 #openSearchButton {
@@ -72,14 +54,24 @@ body {
     filter: hue-rotate(20deg); 
 }
 
+.navbar-brand:nth-child(7) {
+    filter: hue-rotate(200deg); 
+}
+
+.navbar-brand:nth-child(8) {
+    filter: hue-rotate(220deg); 
+}
+
 .navbar-brand:nth-child(1),
 .navbar-brand:nth-child(2),
 .navbar-brand:nth-child(3),
 .navbar-brand:nth-child(4),
 .navbar-brand:nth-child(5),
-.navbar-brand:nth-child(6) {
+.navbar-brand:nth-child(6),
+.navbar-brand:nth-child(7),
+.navbar-brand:nth-child(8) {
     padding: 5px 10px;
-    margin: 40px 40px;
+    margin-right: 20px;
 }
 
 /* Estilos para el modal de búsqueda */
@@ -228,8 +220,8 @@ body {
 /* Media query para la navbar en pantallas grandes (1400px en adelante) */
 @media (min-width: 1400px) {
     .navbar-brand {
-        padding: 20px 20px;
-        margin: 20px 20px;
+        padding: 20px 20px;   
+        margin-right: 20px;
     }
 }
 
@@ -239,4 +231,8 @@ body {
         padding: 15px 20px;
         margin: 15px 20px;
     }
+}
+
+.ml-auto {
+    margin-right: 70px;
 }
