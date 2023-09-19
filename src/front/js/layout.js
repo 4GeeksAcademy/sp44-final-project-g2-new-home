@@ -8,6 +8,7 @@ import { Demo } from "./pages/demo";
 import { Tips } from "./pages/tips";
 
 import { Adoptme } from "./pages/Adoptme.jsx";
+import { Animalshelter } from "./pages/Animalshelter.jsx";
 
 import { Login } from "./pages/login";
 import  Register   from "./pages/register";
@@ -50,6 +51,7 @@ const Layout = () => {
                         <Route element={<Experiences />} path="/experiences" />   
                         <Route element={<Single />} path="/single" />
                         <Route element={<Adoptme />} path="/adoptme" />
+                        <Route element={<Animalshelter />} path="/animalshelter" />
                         {/* <Route element={<DetailsPets />} path="/adoptme/:id" /> */}
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
