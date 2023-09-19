@@ -73,9 +73,11 @@
 		]
 	},
 	"dependencies": {
-		"font-awesome": "^4.7.0",
 		"axios": "^1.5.0",
 		"cheerio": "^1.0.0-rc.12",
+		"cloudinary": "^1.40.0",
+		"date-fns": "^2.30.0",
+		"font-awesome": "^4.7.0",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
 		"react-dom": "^16.8.4",

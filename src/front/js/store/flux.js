@@ -463,7 +463,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					// Puedes despachar una acción de error si lo deseas
 				}
 			},
-			update_animal: async (id, name, city, phone, size, date, color, typeOfAnimal, description, animalStatus, contact, photo, isActive) => {
+			update_animal: async (id, name, city, phone, size, date, color, type, description, status, contact, photo, isActive) => {
 				try {
 					const token = getStore().token;
 					const data = {
@@ -473,9 +473,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 						size: size,
 						date: date,
 						color: color,
-						typeOfAnimal: typeOfAnimal,
+						typeOfAnimal: type,
 						description: description,
-						animalStatus: animalStatus,
+						animalStatus: status,
 						contact: contact,
 						photo: photo,
 						id: id,

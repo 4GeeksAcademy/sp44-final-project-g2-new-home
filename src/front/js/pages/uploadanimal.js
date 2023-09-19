@@ -10,9 +10,9 @@ const UploadAnimal = () => {
   const [phone, setPhone] = useState("");
   const [size, setSize] = useState("");
   const [color, setColor] = useState("");
-  const [typeAnimal, setTypeAnimal] = useState("");
+  const [type, setType] = useState("");
   const [description, setDescription] = useState("");
-  const [animalStatus, setAnimalStatus] = useState("");
+  const [status, setStatus] = useState("");
   const [date, setDate] = useState("");
   const [contact, setContact] = useState("");
   const [photo, setPhoto] = useState("");
@@ -58,7 +58,7 @@ const UploadAnimal = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
      
-    if (!name || !city || !phone || !typeAnimal || !description || !animalStatus || !contact || !file) {
+    if (!name || !city || !phone || !type || !description || !status || !contact || !file) {
       alert("Please fill in all required fields.");
       return;
     }
@@ -67,7 +67,7 @@ const UploadAnimal = () => {
       const form = new FormData();
       form.append("img", file);
   
-      const response = await fetch("https://studious-engine-vxqg75jjggw2xjvw-3001.app.github.dev/api/img", {
+      const response = await fetch(process.env.BACKEND_URL + "/api/img", {
         method: "POST",
         body: form
       });
@@ -86,9 +86,9 @@ const UploadAnimal = () => {
         phone,
         size: size,
         color,
-        typeAnimal,
+        type,
         description,
-        animalStatus,
+        status,
         date: currentDate,
         contact,
         photo: imageUrl, 
@@ -108,9 +108,9 @@ const UploadAnimal = () => {
         setPhone(""); 
         setSize(""); 
         setColor(""); 
-        setTypeAnimal(""); 
+        setType(""); 
         setDescription(""); 
-        setAnimalStatus("");
+        setStatus("");
         setDate(""); 
         setContact(""); 
         setPhoto("");
@@ -137,12 +137,12 @@ const UploadAnimal = () => {
     setSize(animal.size);
     console.log("size: ", animal.size)
     setColor(animal.color);
-    setTypeAnimal(animal.typeAnimal);
-    console.log("typeAnimal: ", typeAnimal)
+    setType(animal.type_of_animal);
+    console.log("type: ", type)
     setDescription(animal.description);
     console.log("description: ", animal.description)
-    setAnimalStatus(animal.animalStatus);
-    console.log("animalStatus: ", animal.animalStatus)
+    setStatus(animal.animal_status);
+    console.log("status: ", animal.animal_status)
     setContact(animal.contact);
     console.log("animal.contact: ", animal.contact)
     setPhoto(animal.photo);
@@ -174,7 +174,7 @@ const UploadAnimal = () => {
       form.append("img", file);
       console.log("Este es el form:", form)
 
-      const response = await fetch("https://studious-engine-vxqg75jjggw2xjvw-3001.app.github.dev/api/img", {
+      const response = await fetch(process.env.BACKEND_URL + "/api/img", {
         method: "POST",
         body: form
       });
@@ -187,7 +187,7 @@ const UploadAnimal = () => {
       console.log("imageUUUUUUUUURL: ", imageUrl)
       
 
-      const success = await actions.update_animal(animalId, name, city, phone, size, currentDate, color, typeAnimal, description, animalStatus, contact, imageUrl, isActive);
+      const success = await actions.update_animal(animalId, name, city, phone, size, currentDate, color, type, description, status, contact, imageUrl, isActive);
       if (success) {
 
         actions.get_shelter_animals();
@@ -270,8 +270,8 @@ const UploadAnimal = () => {
                 />
                 <select
                   className="form-control mb-3"
-                  value={typeAnimal}
-                  onChange={(e) => setTypeAnimal(e.target.value)}
+                  value={type}
+                  onChange={(e) => setType(e.target.value)}
                 >
                   <option value="Dog">Dog</option>
                   <option value="Cat">Cat</option>
@@ -283,8 +283,8 @@ const UploadAnimal = () => {
                 ></textarea>
                 <select
                   className="form-control mb-3"
-                  value={animalStatus}
-                  onChange={(e) => setAnimalStatus(e.target.value)}
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
                 >
                   <option value="Lost">Lost</option>
                   <option value="Found">Found</option>
@@ -393,12 +393,12 @@ const UploadAnimal = () => {
                           onChange={(e) => setColor(e.target.value)}
                         />
 
-                        <label htmlFor="typeAnimal">Type of Animal:</label>
+                        <label htmlFor="type">Type of Animal:</label>
                         <select
-                          id="typeAnimal"
+                          id="type"
                           className="form-control mb-3"
-                          value={typeAnimal}
-                          onChange={(e) => setTypeAnimal(e.target.value)}
+                          value={type}
+                          onChange={(e) => setType(e.target.value)}
                         >
                           <option value="" disabled>Select a type of animal</option> 
                           <option value="Dog">Dog</option>
@@ -413,12 +413,12 @@ const UploadAnimal = () => {
                           onChange={(e) => setDescription(e.target.value)}
                         ></textarea>
 
-                        <label htmlFor="animalStatus">Animal Status:</label>
+                        <label htmlFor="status">Animal Status:</label>
                         <select
-                          id="animalStatus"
+                          id="status"
                           className="form-control mb-3"
-                          value={animalStatus}
-                          onChange={(e) => setAnimalStatus(e.target.value)}
+                          value={status}
+                          onChange={(e) => setStatus(e.target.value)}
                         >
                           <option value="" disabled>Select the status of animal</option> 
                           <option value="Lost">Lost</option>

@@ -85,16 +85,16 @@ export const Experiences = () => {
 
   const handleSubmit = async (e) => {
   e.preventDefault();
-  if (!file) {
-    alert("Please select a file.");
-    return;
-  }
+  // if (!file) {
+  //   alert("Please select a file.");
+  //   return;
+  // }
 
   try {
     const form = new FormData();
     form.append("img", file);
 
-    const response = await fetch("https://studious-engine-vxqg75jjggw2xjvw-3001.app.github.dev/api/img", {
+    const response = await fetch(process.env.BACKEND_URL + "/api/img", {
       method: "POST",
       body: form
     });
@@ -137,7 +137,7 @@ export const Experiences = () => {
         setTitle("");
         setBody("");
         setPhotolist([]);
-        setFileUrl(""); // Limpia la URL de la imagen después de usarla
+        setFileUrl(""); 
       } else {
         alert("Failed to delete the experience. Please try again later.");
       }

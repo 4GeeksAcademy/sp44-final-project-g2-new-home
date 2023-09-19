@@ -12,6 +12,7 @@ import { Adoptme } from "./pages/Adoptme.jsx";
 import { Login } from "./pages/login";
 import  Register   from "./pages/register";
 import { Profile } from "./pages/profile";
+import UploadAnimal from "./pages/uploadanimal";
 
 import { Lostanimals } from "./pages/lostanimals";
 import { VoluntaryForm } from "./pages/voluntaryform.js";
@@ -44,7 +45,8 @@ const Layout = () => {
                         <Route element={<Register />} path="/register" />
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<Single />} path="/single/:theid" />
-                        <Route element={<Tips />} path="/tips" />                        
+                        <Route element={<Tips />} path="/tips" />
+                        <Route element={<UploadAnimal />} path="/animals" />                        
                         <Route element={<Lostanimals />} path="/lostanimals" />
                         <Route element={<VoluntaryForm />} path="/voluntaryform" /> 
                         <Route element={<Experiences />} path="/experiences" />   
