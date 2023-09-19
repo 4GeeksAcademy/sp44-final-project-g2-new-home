@@ -45,7 +45,7 @@ export const Tips = () => {
             <div className=" animate__animated animate__bounceInRight">
               <h1>Tips for Pet Adoption</h1>
             </div>          
-            <div className="card text-center" id="tip1">
+            <div className="card text-center animate__animated animate__bounceInUp" id="tip1">
               <h3 className="card-title">Tip for peaceful coexistence</h3>
               <img src={tip_1} alt="Tip 1" className="Foto tip1" />
               <div className="card-body">

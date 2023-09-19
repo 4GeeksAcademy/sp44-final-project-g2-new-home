@@ -5,7 +5,11 @@
 
 #main1 {
   background-color: white !important;
-  margin-left: 25%;
+
+ 
+
+  margin-left: 25%; /* Ajusta el margen izquierdo para dar espacio al sidebar */
+
   padding: 20px;
 }
 
@@ -79,6 +83,7 @@ h1 {
   padding: 20px;
 }
 
+
 @media screen and (max-width: 768px) {
   /* Estilos para cuando la pantalla es más pequeña */
   #a1, #a2, #a3, #a4, #a5, #a6 {
@@ -125,6 +130,7 @@ h1 {
 }
 
 
+
 #tip1,
 #tip2,
 #tip3,
@@ -135,3 +141,18 @@ h1 {
   box-shadow: 0 4px 8px rgba(63 153 125 / 60%);
   border-radius: 20px;
 }
+
+@media screen and (max-width: 768px) {
+  #sidebartips {
+    width: 100%; 
+    margin-top: 0; 
+    position: relative;
+    left: 0; 
+    margin-bottom: 20px; 
+  }
+
+  #main1 {
+    margin-left: 0; 
+  }
+}
+

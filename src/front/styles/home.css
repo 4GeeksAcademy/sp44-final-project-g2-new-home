@@ -5,12 +5,12 @@ body {
 /* Estilos generales */
 .navbar-brand {
     padding: 10px 20px;
+    margin-right: 20px;
 }
 
 #openSearchButton {
-    margin-left: 10px;
-    margin-right: 10px;
-    float: right;
+    margin-left: 50px;
+    margin-right: 0px;
 }
 
 /* Estilos adicionales para la navbar */
@@ -215,24 +215,32 @@ body {
     .navbar-brand:last-child {
         border: none; /* Elimina el borde inferior del último elemento */
     }
-}
 
-/* Media query para la navbar en pantallas grandes (1400px en adelante) */
-@media (min-width: 1400px) {
-    .navbar-brand {
-        padding: 20px 20px;   
-        margin-right: 20px;
+    .ml-auto {
+        margin-right: 0; /* Elimina el margen derecho en pantallas pequeñas */
     }
 }
 
-/* Media query para la navbar en pantallas medianas (768px a 1399.98px) */
 @media (min-width: 768px) and (max-width: 1399.98px) {
     .navbar-brand {
         padding: 15px 20px;
         margin: 15px 20px;
     }
+
+    .ml-auto {
+        margin-right: 0; /* Elimina el margen derecho en pantallas medianas */
+    }
 }
 
-.ml-auto {
-    margin-right: 70px;
+/* Estilos adicionales para la barra de navegación en pantallas grandes (1400px en adelante) */
+@media (min-width: 1400px) {
+    .navbar-brand {
+        padding: 20px 20px;
+        margin-right: 20px;
+    }
+}
+
+.nav-links {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
 }

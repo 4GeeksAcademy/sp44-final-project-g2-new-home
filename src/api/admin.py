@@ -18,8 +18,8 @@ class CustomExperiencesModelView(ModelView):
 class CustomReportModelView(ModelView):
     column_list = ['id', 'user_id', 'title', 'body']
 
-# class CustomAnimalModelView(ModelView):
-#     column_list = ['name', 'city', 'rating']
+class CustomAnimalModelView(ModelView):
+    column_list = ['id', 'user', 'name', 'city', 'phone', 'size', 'color', 'type_of_animal', 'description', 'animal_status', 'date', 'contact', 'photo', 'is_active']
 
 class CustomPeopleModelView(ModelView):
     column_list = ['id', 'name', 'lastname', 'trophy']
@@ -40,7 +40,7 @@ def setup_admin(app):
     admin.add_view(CustomExperiencesModelView(ExperiencesBlog, db.session))
     admin.add_view(ModelView(AnimalShelter, db.session))
     admin.add_view(ModelView(TipsPets, db.session))
-    admin.add_view(ModelView(Animal, db.session))
+    admin.add_view(CustomAnimalModelView(Animal, db.session))
     admin.add_view(CustomPeopleModelView(People, db.session))
     admin.add_view(CustomVolunteersModelView(Volunteer, db.session))
     # You can duplicate that line to add mew models
