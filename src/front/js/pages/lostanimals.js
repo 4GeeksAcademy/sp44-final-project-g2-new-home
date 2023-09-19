@@ -109,8 +109,8 @@ export const Lostanimals = () => {
  
   return (
     <div id="lostanimals-container" className="container text-center">
-      <h1 id="lostanimals">{activeTab === "lost" ? "Lost Animals" : "Found Animals"}</h1>
-      <button id="add-button" className="btn btn-primary" onClick={toggleForm}>
+      <h1 className=" animate__animated animate__flip" id="lostanimals">{activeTab === "lost" ? "Lost Animals" : "Found Animals"}</h1>
+      <button id="add-button" className="btn btn-primary animate__animated animate__flip" onClick={toggleForm}>
         {showForm ? "Hide Form" : "Add Animal"}
       </button>
       {showForm && (
@@ -231,7 +231,7 @@ export const Lostanimals = () => {
           </div>
         </div>
       )}
-      <div className="card text-center" id="cuerpo">
+      <div className="card text-center animate__animated animate__flip" id="cuerpo">
         <div className="card-header">
           <button
             className={`btn ${activeTab === "lost" ? "btn-primary" : "btn-secondary"}`}

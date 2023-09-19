@@ -76,8 +76,8 @@ export const VoluntaryForm = () => {
   };
   
   return (
-    <div className="container">
-      <div className="card text-center" id="formcomplete">
+      <div className="container">
+        <div className="card text-center animate__animated animate__bounceInUp" id="formcomplete">
         <div className="card-body">
           <h2 className="card-title" id="voluntaryform">
             <b>Voluntary Form</b>
