@@ -25,6 +25,7 @@ import { Imagen20 } from "../../img/imgError/20.jpg";
 
 
 
+
 export const Adoptme = () => {
 
   const { store, actions } = useContext(Context);
@@ -69,6 +70,7 @@ export const Adoptme = () => {
     //   redirect: 'follow'
     // };
 
+
     // fetch("https://api.petfinder.com/v2/animals?type=dog&page=1", requestOptions)
     //   .then(response => response.json())
     //   .then(result => {
@@ -77,6 +79,26 @@ export const Adoptme = () => {
     //   }
     //   )
     //   .catch(error => console.log('error', error));
+
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0M0swTkpSS3hCUmZJcVBEcEh0OWJ1QTUwSDZOcERraVpFdzV5eUVuc1BvNW5RdjJyaSIsImp0aSI6IjA4MGM4ODI3NjIxNzZkY2M0YTVlZGRmYWJkODdjZjgzMGM1N2E2NzQ3YmZmOTBmZjIzNWZjY2Y1YjQ0M2Y3YWMyMzc1Yjg3YTZmZGU4MzI0IiwiaWF0IjoxNjk1MTMxMjM3LCJuYmYiOjE2OTUxMzEyMzcsImV4cCI6MTY5NTEzNDgzNywic3ViIjoiIiwic2NvcGVzIjpbXX0.dbDl2pZLgks54kY5sUkaI6nznnnNKbvmirWsq4muGR5gA9cSqYbpzb9WVwN28KU5J-EIzBlS3InddS2lWNkT2ZBzsdctWlavYfQdPV2dGUFMnvVCr29qID3Hl1cYyr5f0WThGlIvFleRwn2vHKddHeOfwTeB3gOpu6kMnvbXKJS4hFvii0fVYd0TV7RZCgj7eev6MtehXEs4AAQp-rvtYwYSbZ0uQmqJH4q_DaQVj8h4nhj1nXZ4BBSvWOOZhSYOAcgb8pdr22af4aDrUPv-jC7F415xZ8v0OaZRurIFaGhO1_m4Wc3jvijSQ9PHQZG0YxF5jfevLGFxuJKZFRlObg");
+
+    var requestOptions = {
+      method: 'GET',
+      mode: 'cors',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+
+    fetch("https://api.petfinder.com/v2/animals?type=dog&page=1", requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        setPets(result.animals);
+        console.log(result)
+      }
+      )
+      .catch(error => console.log('error', error));
+
   }, []); // El segundo argumento [] indica que este efecto solo se ejecuta una vez al montar el componente.
 
   const handleOnErrorImg = (e) => {
@@ -138,5 +160,7 @@ export const Adoptme = () => {
 
 
 
+
 // getCharacter: (character) => { setStore({ selectCharacter: character, })},
 // 			
+
