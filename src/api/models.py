@@ -177,14 +177,14 @@ class Animal(db.Model):
     name = db.Column(db.String(20), unique=False, nullable=False)
     city = db.Column(db.String(80), unique=False, nullable=False)
     phone = db.Column(db.String(20), nullable=False)
-    size = db.Column(db.String(15), unique=False, nullable=False)
+    size = db.Column(db.Enum('Large', 'Medium', 'Small', name='size'), nullable=False)
     color = db.Column(db.String(20), nullable=False)
     type_of_animal = db.Column(db.Enum('Dog', 'Cat', name='type_of_animal'), nullable=False)
     description = db.Column(db.String(1000), nullable=False)
     animal_status = db.Column(db.Enum('Lost', 'Found', name='animal_status'), nullable=False)
-    date = db.Column(DateTime, default=datetime.utcnow, nullable=False)
+    date = db.Column(DateTime, default=datetime.utcnow, nullable=True)
     contact = db.Column(db.String(1000),  nullable=False)
-    photo = db.Column(db.String(250), nullable=False)
+    photo = db.Column(db.String(1250), nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     user_id =  db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship('User')
@@ -204,6 +204,7 @@ class Animal(db.Model):
             "description": self.description,
             "photo": self.photo,
             "is_active": self.is_active,
+            "date":self.date,
             "contact": self.contact,
             "animal_status": self.animal_status,
             "user_id": self.user_id,
