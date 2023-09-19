@@ -463,7 +463,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					// Puedes despachar una acción de error si lo deseas
 				}
 			},
-			update_animal: async (id, name, city, phone, size, date, color, typeOfAnimal, description, animalStatus, contact, photo, isActive) => {
+			update_animal: async (id, name, city, phone, size, date, color, type, description, status, contact, photo, isActive) => {
 				try {
 					const token = getStore().token;
 					const data = {
@@ -473,9 +473,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 						size: size,
 						date: date,
 						color: color,
-						typeOfAnimal: typeOfAnimal,
+						typeOfAnimal: type,
 						description: description,
-						animalStatus: animalStatus,
+						animalStatus: status,
 						contact: contact,
 						photo: photo,
 						id: id,
@@ -543,6 +543,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.error('Error al eliminar el animal:', error);
 					return { success: false, message: 'Ha ocurrido un error al eliminar el animal' };
+				}
+			},
+			get_all_animals: async () => {
+				const token = localStorage.getItem("token");
+				const user_id = getStore().user_id;
+				console.log("user_id: ", user_id)
+				const opts = {
+					method: 'GET',
+					headers: {
+						'Authorization': `Bearer ${token}`,
+						'Content-Type': 'application/json',
+					},
+				};
+
+				try {
+					const resp = await fetch(`${process.env.BACKEND_URL}/api/allanimals`, opts);
+
+					if (resp.status !== 200) {
+						console.error("Error fetching shelter animals");
+						return;
+					}
+
+					const data = await resp.json();
+					console.log(data)
+
+					setStore({ animals: data.results });
+
+				} catch (error) {
+					console.error("Error during shelter animals fetch", error);
+					// Puedes despachar una acción de error si lo deseas
 				}
 			},
 			getMessage: async () => {

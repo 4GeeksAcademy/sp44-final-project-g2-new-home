@@ -818,6 +818,19 @@ def handle_animal(id):
       return response_body, 200
 
 
+@api.route('/allanimals', methods=['GET'])
+def handle_allanimals():
+   if request.method =='GET':
+        # response_body = {"message": "Esto devuelve el get del endpooint animals"}
+        animals = db.session.execute(db.select(Animal).order_by(Animal.name)).scalars()
+        results = [item.serialize() for item in animals]
+        response_body = {
+           "message":"Esto devuelve el endpoint de animals el GET",
+           "results": results,
+           "status": "ok"  }
+        return response_body, 200
+
+
 @api.route("/token", methods=["POST"])
 def create_token():
     email = request.json.get("email", None)

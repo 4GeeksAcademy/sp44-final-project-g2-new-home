@@ -34,7 +34,7 @@ cloudinary.config(
 )
 
 
-app.config["JWT_SECRET_KEY"] = "ajkhfjskdshfjkhasdfhkjahsdfkjhsdfkjakjsdhfjks"  # Change this!
+app.config["JWT_SECRET_KEY"] = os.environ.get('FLASK_APP_KEY')
 jwt = JWTManager(app)
 
 # database condiguration
