@@ -98,7 +98,6 @@ export const Navbar = () => {
                 <div className="container d-flex justify-content-between align-items-center">
                     <div className="nav-links">
                         <Link to="/" className="navbar-brand custom-link"><b>Home</b></Link>
-                        <Link to="/protectors" className="navbar-brand custom-link"><b>Protectors</b></Link>
                         <Link to="/adoptme" className="navbar-brand custom-link"><b>Adoptme</b></Link>
                         <Link to="/animalshelter" className="navbar-brand custom-link"><b>Animal Shelter</b></Link>
                         <Link to="/tips" className="navbar-brand custom-link"><b>Tips</b></Link>

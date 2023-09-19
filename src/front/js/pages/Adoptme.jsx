@@ -1,26 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
-// import imgDefault from "../../img/404.png";
-import { Imagen1 } from "../../img/imgError/1.jpg";
-import { Imagen2 } from "../../img/imgError/2.jpg";
-import { Imagen3 } from "../../img/imgError/3.jpg";
-import { Imagen4 } from "../../img/imgError/4.jpg";
-import { Imagen5 } from "../../img/imgError/5.jpg";
-import { Imagen6 } from "../../img/imgError/6.jpg";
-import { Imagen7 } from "../../img/imgError/7.jpg";
-import { Imagen8 } from "../../img/imgError/8.jpg";
-import { Imagen9 } from "../../img/imgError/9.jpg";
-import { Imagen10 } from "../../img/imgError/10.jpg";
-import { Imagen11 } from "../../img/imgError/11.jpg";
-import { Imagen12 } from "../../img/imgError/12.jpg";
-import { Imagen13 } from "../../img/imgError/13.jpg";
-import { Imagen14 } from "../../img/imgError/14.jpg";
-import { Imagen15 } from "../../img/imgError/15.jpg";
-import { Imagen16 } from "../../img/imgError/16.jpg";
-import { Imagen17 } from "../../img/imgError/17.jpg";
-import { Imagen18 } from "../../img/imgError/18.jpg";
-import { Imagen19 } from "../../img/imgError/19.jpg";
-import { Imagen20 } from "../../img/imgError/20.jpg";
 
 
 
@@ -57,7 +35,7 @@ export const Adoptme = () => {
   useEffect(() => {
 
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0M0swTkpSS3hCUmZJcVBEcEh0OWJ1QTUwSDZOcERraVpFdzV5eUVuc1BvNW5RdjJyaSIsImp0aSI6IjA2M2E0ZjdhYjg2OGM2ZmY1NWI2ODYwZjE2NTI1NjI1MGZlZThiMDQ0NTAwNDEwZDBhMjRmNmVmZDJkNDcwOTVlZWRkOThmODEyZWIxOTVlIiwiaWF0IjoxNjk1MDQ0MzgyLCJuYmYiOjE2OTUwNDQzODIsImV4cCI6MTY5NTA0Nzk4Miwic3ViIjoiIiwic2NvcGVzIjpbXX0.PEC0hLYY71UmK2D5t4SiNR6NyZgD5gzxYWH1THVoE3nS6hgGlbyKJ4abpGJUQUUTd8c7EjNbmImxASKU2Th_8tqo8DAIlVfKP-yDg_DAzDllDswOuMizfWAWMT2riNRF0a_uorC8g_kDf8Jf7K1cJBxlRdwZWqi9A-iXiCeyQXfzq39nEXDgbvEMDK-fdAdO196KMa0VIRl-ZGyfPYouaKgFikVnipnh_TK5FhLAevJSXWWAmZ0EALB7YBdLCOhZbsvLWbSWFayJFIo9jlrYgjvR_BU6impSzvCR5alYl2equsbFL4fIeztfPBIzlTfVhgMZ9J8TBqnkGkw25vECiw");
+    myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0M0swTkpSS3hCUmZJcVBEcEh0OWJ1QTUwSDZOcERraVpFdzV5eUVuc1BvNW5RdjJyaSIsImp0aSI6ImMwYTdkNjI5MGY4Y2JjZjdjMzQzZWU2MTZhM2IwMzIwYzI5NTMwMDIyNWExNGM2NTlmYzEzZTIyZGI1MDIyMjg0YTI3MTg0NjRkNDczYjVlIiwiaWF0IjoxNjk1MTE5MTU4LCJuYmYiOjE2OTUxMTkxNTgsImV4cCI6MTY5NTEyMjc1OCwic3ViIjoiIiwic2NvcGVzIjpbXX0.PUUVm_z9bk0-_vzmt-nRB4Gvf13DjlJt_WRecBsY3xmcE2d3z62OvYlroOzipQO9YlcfMT8hZ9yZ9rWHiyUy-wPpOOCNzTi_7SKWvqJbXyOyjF5Zz87Z6KyZyzcuDsML_neQxnC_quT90YOOksCV8vMZd-wS64BWWZZXxOr6950-8vuFHHa8DMULzRBynJGQGNFKn-S7sL9-sNRHPpH1VnADXHTo4CTf5h7LNyDz4iHFGH6ys0VrSuVvdXYQB-9ZdWm8JnSQqgdamCGyHUUGr7itcnXIySNl2OPbo7ZgadjrnAt42uaWC2de6Sx7NqE2Vq5bIVSdH_SvfuVTQ1WkFw");
 
     var requestOptions = {
       method: 'GET',
