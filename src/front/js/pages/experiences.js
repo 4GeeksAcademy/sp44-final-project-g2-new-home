@@ -5,23 +5,19 @@ import { Context } from "../store/appContext";
 
 export const Experiences = () => {
   const { actions, store } = useContext(Context);
-  const [experiences, setExperiences] = useState([]); // Store published experiences
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
+  // const [experiences, setExperiences] = useState([]); // Store published experiences
+  const [title, setTitle] = useState(localStorage.getItem("experienceTitle"));
+  const [body, setBody] = useState(localStorage.getItem("experienceBody"));
   const [photolist, setPhotolist] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const[file, setFile]= useState("");
-  const[fileUrl, setFileUrl]= useState("");
-
-  
-
-
+  const[fileUrl, setFileUrl]= useState(localStorage.getItem("experienceFileUrl"));
   const [likedExperiences, setLikedExperiences] = useState(new Set());
 
   const peopleId = store.peopleId; 
   const userId = store.user_id;
-  const shelterId = store.animalshelterId;
+  const shelterId = localStorage.getItem("animalshelterId");
 
   const handleShowForm = () => {
     if (peopleId) {
@@ -29,9 +25,19 @@ export const Experiences = () => {
     } else if (!userId) {
       // Mostrar un alert si el usuario no está autenticado
       alert("You need to log in to post your experience.");
-    } else if (shelterId != null || (shelterId && peopleId == null)) {
+    } else if (shelterId != null || (shelterId && peopleId === null)) {
       alert("You do not have permission to publish");
     }
+      
+      const experienceToEdit = store.experiences.find((experience) => experience.id === store.experienceId);
+      localStorage.setItem("experienceTitle", experienceToEdit.title);
+      localStorage.setItem("experienceBody", experienceToEdit.body);
+      localStorage.setItem("experienceFileUrl", experienceToEdit.photo);
+      
+      setFileUrl(experienceToEdit.photo);
+      setTitle(experienceToEdit.title );
+      setBody(experienceToEdit.body );
+      ; 
   };
   
   
@@ -52,17 +58,6 @@ export const Experiences = () => {
       setFile(e.target.files[0]);
       console.log("evento imagen: ", e.target.files);
     }
-    
-    
-    // if (file) {
-    //   // Crear una URL para el archivo seleccionado
-    //   const fileURL = URL.createObjectURL(file);
-
-    //   // Agregar el archivo a la lista de fotos solo si no se excede el límite
-    //   if (photolist.length < 5) {
-    //     setPhotolist([...photolist, fileURL]);
-    //   }
-    // }
   };
   
   const handleEdit = () => {
@@ -106,13 +101,13 @@ export const Experiences = () => {
 
     const data = await response.json();
     const imageUrl = data["img_url: "];
-
+    const id = store.experienceId;
     console.log("data fetch img: ", data);
     console.log("imageUUUUUUUUURL: ", imageUrl)
 
     if (store.experienceId) {
       // Llama a la función de actualizar
-      const success = await actions.update_experience(store.experienceId, title, body, imageUrl);
+      const success = await actions.update_experience(id, title, body, imageUrl);
       if (success) {
         actions.get_experiences();
       }
@@ -124,15 +119,9 @@ export const Experiences = () => {
       }
     }
 
-    // const success = await actions.publishExperience(title, body, imageUrl, peopleId); // Pasa imageUrl en lugar de photolist
-    // if (success) {
-    //   actions.get_experiences();
-    // }
-
     setShowForm(false);
     setTitle("");
     setBody("");
-    setPhotolist([]);
     setFileUrl(""); // Limpia la URL de la imagen después de usarla
   } catch (e) {
     console.error("ERROR IMAGEN", e);
@@ -155,17 +144,13 @@ export const Experiences = () => {
     }
   };
 
+
   useEffect(() => {
     actions.get_experiences();
   }, []);
-  // {store.experiences ? (
-  //   store.experiences.forEach((experience) => {
-  //     // Agrega un console.log para verificar la URL de la imagen
-  //     console.log("experience.imagen:", experience.image);
-  //   })
-  // ) : (
-  //   <p>No hay experiencias disponibles.</p>
-  // )}
+
+
+
   return (
     <div className="container">
       {showForm ? (
@@ -203,7 +188,7 @@ export const Experiences = () => {
                 <button onClick={handleBackToPosts} className="me-3"  style={{ width: "80px" }} id="post">
                   Cancel
                 </button>
-                <button onClick={handleDelete} className="me-3"  style={{ width: "80px" }} id="post">
+                <button onClick={handleDelete} className="me-3 mb-5"  style={{ width: "80px" }} id="post">
                   Delete
                 </button>
                 <button onClick={handleSubmit} style={{ width: "80px" }} id="post">
@@ -248,7 +233,7 @@ export const Experiences = () => {
                     />
                   )}
                   <div className="card-body">
-                    <h4 className="card-text">Posted by: {experience.name}</h4>
+                    <h4 className="card-text">Posted by: {experience.peopleName}</h4>
                     <h5 className="card-title">{experience.title}</h5>
                     <p className="card-text">{experience.body}</p>
                   </div>
@@ -256,14 +241,14 @@ export const Experiences = () => {
               </div>
             ))
           ) : (
-            <p>No hay experiencias disponibles.</p>
+            <p>No experiences available.</p>
           )}
         </div>
       )}
       
       {!showForm && (
         <button onClick={handleShowForm} className="btn btn-primary">
-          {store.experienceId ? "Update us" : "Share your experience with us"} 
+          {store.experienceId ? "Update us" : "Share your experience with us"}                                       
         </button>
       )}
     </div>

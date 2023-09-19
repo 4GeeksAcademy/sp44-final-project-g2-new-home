@@ -12,6 +12,7 @@ from flask_jwt_extended import decode_token
 import cloudinary
 import cloudinary.uploader
 
+
 api = Blueprint('api', __name__)
 
 
@@ -383,37 +384,32 @@ def handle_experiences():
    if request.method == 'GET':
       # Realiza una unión (join) con la tabla "People" para obtener el nombre del usuario
       experiences = db.session.query(ExperiencesBlog, People).join(People).order_by(ExperiencesBlog.title).all()
-      results = [
-         {
-               "id": exp[0].id,
-               "title": exp[0].title,
-               "body": exp[0].body,
-               "photo": exp[0].photo,
-               "name": exp[1].name  # Obtiene el nombre del usuario de la tabla "People"
-         }
-         for exp in experiences
-      ]
-      response_body = {
-         "message": "Esto devuelve el endpoint de experiences el GET",
-         "results": results,
-         "status": "ok"
-      }
+      results = [{"id": exp[0].id,
+                  "title": exp[0].title,
+                  "body": exp[0].body,
+                  "photo": exp[0].photo,
+                  "peopleId": exp[0].people_id,
+                  "peopleName": exp[1].name} for exp in experiences]
+      response_body = {"message": "Esto devuelve el endpoint de experiences el GET",
+                       "results": results,
+                       "status": "ok"}
       return response_body, 200
    if request.method =='POST':
       request_body = request.get_json()
       print(request_body)
-      experiences = ExperiencesBlog (
-                                     title = request_body["title"],
+      experiences = ExperiencesBlog (title = request_body["title"],
                                      body = request_body["body"],
-                                     photo = request_body["photo"])
+                                     photo = request_body["photo"],
+                                     people_id = request_body["peopleId"])
       db.session.add(experiences)
       db.session.commit()
-      response_body = {
-            "message": "Adding new experience",
-            "status": "ok",
-            "new_experience": request_body}
-      # response_body = {"message": "Esto devuelve el POST del endpooint experiences"}
+      response_body = {"message": "Adding new experience",
+                   "status": "ok",
+                   "new_experience": request_body,
+                   "experience_id": experiences.id} 
       return response_body, 200
+
+  
 
 @api.route('/experiences/<int:id>', methods=['GET', 'PUT', 'POST', 'DELETE'])
 @jwt_required()
@@ -720,16 +716,22 @@ def handle_tip(id):
                        "tip_deleting": id  }
       return response_body, 200
    
-@api.route('animals', methods=['POST', 'GET'])
+@api.route('/animals', methods=['POST', 'GET'])
+@jwt_required()
 def handle_animals():
    if request.method =='GET':
         # response_body = {"message": "Esto devuelve el get del endpooint animals"}
-        animals = db.session.execute(db.select(Animal).order_by(Animal.name)).scalars()
-        results = [item.serialize() for item in animals]
+      #   animals = db.session.execute(db.select(Animal).order_by(Animal.name)).scalars()
+      #   results = [item.serialize() for item in animals]
+        current_user_id = get_jwt_identity()  # Obtiene el user_id del token JWT
+    
+        # Filtra los animales por user_id
+        animals = db.session.query(Animal).filter_by(user_id=current_user_id).order_by(Animal.name).all()
+        results = [animal.serialize() for animal in animals]
         response_body = {
            "message":"Esto devuelve el endpoint de animals el GET",
            "results": results,
-           "status": "ok"  }
+           "status": "ok" }
         return response_body, 200
    if request.method =='POST':
       request_body = request.get_json()
@@ -756,13 +758,13 @@ def handle_animals():
          phone = request_body["phone"],
          size = request_body["size"],
          color = request_body["color"],
-         type_of_animal = request_body["type_of_animal"],
+         type_of_animal = request_body["typeOfAnimal"],
          description = request_body["description"],
-         animal_status = request_body["animal_status"],
+         animal_status = request_body["animalStatus"],
          date = request_body["date"],
          contact = request_body["contact"],
          photo = request_body["photo"],
-         is_active = request_body["is_active"],
+         is_active = request_body["isActive"],
          user_id = request_body["user_id"]  )
       db.session.add(animal)
       db.session.commit()
@@ -774,6 +776,7 @@ def handle_animals():
       return response_body, 200
 
 @api.route('/animals/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+@jwt_required()
 def handle_animal(id):
    if request.method == 'GET': 
       animal = db.get_or_404(Animal, id)
@@ -791,13 +794,13 @@ def handle_animal(id):
     animal.phone = request_body["phone"]
     animal.size = request_body["size"]
     animal.color = request_body["color"]
-    animal.type_of_animal = request_body["type_of_animal"]
+    animal.type_of_animal = request_body["typeOfAnimal"]
     animal.description = request_body["description"]
-    animal.animal_lost = request_body["animal_lost"]
+    animal.animal_status = request_body["animalStatus"]
     animal.date = request_body["date"]
     animal.contact = request_body["contact"]
     animal.photo = request_body["photo"]
-    animal.is_active = request_body["is_active"]
+    animal.is_active = request_body["isActive"]
     db.session.commit()
     response_body = {"message": "Update animal",
                      "status":"ok",
@@ -835,6 +838,8 @@ def create_token():
     # Inicializa variables para los IDs de tablas correspondientes a cada rol
     people_id = None
     animalshelter_id = None
+    people_name = None
+    animalshelter_name = None
 
     # Asigna los IDs de tablas según el rol del usuario
     if user_role == 'Person':
@@ -842,12 +847,14 @@ def create_token():
         people = People.query.filter_by(user_id=user_id).first()
         if people:
             people_id = people.id
+            people_name = people.name 
 
     elif user_role == 'AnimalShelter':
         # Consulta la base de datos para obtener el AnimalShelter relacionado con el user_id
         animalshelter = AnimalShelter.query.filter_by(user_id=user_id).first()
         if animalshelter:
             animalshelter_id = animalshelter.id
+            animalshelter_name = animalshelter.name
 
     # Consulta la base de datos para obtener la experiencia del usuario (si existe)
     experience = ExperiencesBlog.query.filter_by(people_id=people_id).first() if people_id else None
@@ -859,8 +866,10 @@ def create_token():
         # Si el usuario no tiene el rol "Admin", agrega el ID correspondiente al rol
         if people_id:
             additional_claims["people_id"] = people_id
+            additional_claims["people_name"] = people_name 
         elif animalshelter_id:
             additional_claims["animalshelter_id"] = animalshelter_id
+            additional_claims["animalshelter_name"] = animalshelter_name
 
     access_token = create_access_token(identity=user.id, additional_claims=additional_claims)
 
@@ -872,7 +881,9 @@ def create_token():
         "user_role": user_role,
         "user_id": user_id,
         "people_id": people_id,
+        "people_name": people_name,
         "animalshelter_id": animalshelter_id,
+        "animalshelter_name": animalshelter_name,
         "experience_id": experience_id
     }
     return jsonify(user_info)
