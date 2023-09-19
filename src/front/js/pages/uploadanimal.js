@@ -86,9 +86,9 @@ const UploadAnimal = () => {
         phone,
         size: size,
         color,
-        type,
+        typeOfAnimal: type,
         description,
-        status,
+        animalStatus: status,
         date: currentDate,
         contact,
         photo: imageUrl, 
@@ -258,6 +258,7 @@ const UploadAnimal = () => {
                   value={size}
                   onChange={(e) => setSize(e.target.value)}
                 >
+                  <option value="" disabled>Select a Size</option>
                   <option value="Large">Large</option>
                   <option value="Medium">Medium</option>
                   <option value="Small">Small</option>
@@ -273,6 +274,7 @@ const UploadAnimal = () => {
                   value={type}
                   onChange={(e) => setType(e.target.value)}
                 >
+                  <option value="" disabled>Select a type of animal</option>
                   <option value="Dog">Dog</option>
                   <option value="Cat">Cat</option>
                 </select>
@@ -286,6 +288,7 @@ const UploadAnimal = () => {
                   value={status}
                   onChange={(e) => setStatus(e.target.value)}
                 >
+                  <option value="" disabled>Select the status of animal</option> 
                   <option value="Lost">Lost</option>
                   <option value="Found">Found</option>
                 </select>

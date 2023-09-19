@@ -545,6 +545,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, message: 'Ha ocurrido un error al eliminar el animal' };
 				}
 			},
+			get_all_animals: async () => {
+				const token = localStorage.getItem("token");
+				const user_id = getStore().user_id;
+				console.log("user_id: ", user_id)
+				const opts = {
+					method: 'GET',
+					headers: {
+						'Authorization': `Bearer ${token}`,
+						'Content-Type': 'application/json',
+					},
+				};
+
+				try {
+					const resp = await fetch(`${process.env.BACKEND_URL}/api/allanimals`, opts);
+
+					if (resp.status !== 200) {
+						console.error("Error fetching shelter animals");
+						return;
+					}
+
+					const data = await resp.json();
+					console.log(data)
+
+					setStore({ animals: data.results });
+
+				} catch (error) {
+					console.error("Error during shelter animals fetch", error);
+					// Puedes despachar una acción de error si lo deseas
+				}
+			},
 			getMessage: async () => {
 				try {
 					// fetching data from the backend
