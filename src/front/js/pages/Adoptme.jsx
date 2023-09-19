@@ -35,7 +35,7 @@ export const Adoptme = () => {
   useEffect(() => {
 
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0M0swTkpSS3hCUmZJcVBEcEh0OWJ1QTUwSDZOcERraVpFdzV5eUVuc1BvNW5RdjJyaSIsImp0aSI6ImMwYTdkNjI5MGY4Y2JjZjdjMzQzZWU2MTZhM2IwMzIwYzI5NTMwMDIyNWExNGM2NTlmYzEzZTIyZGI1MDIyMjg0YTI3MTg0NjRkNDczYjVlIiwiaWF0IjoxNjk1MTE5MTU4LCJuYmYiOjE2OTUxMTkxNTgsImV4cCI6MTY5NTEyMjc1OCwic3ViIjoiIiwic2NvcGVzIjpbXX0.PUUVm_z9bk0-_vzmt-nRB4Gvf13DjlJt_WRecBsY3xmcE2d3z62OvYlroOzipQO9YlcfMT8hZ9yZ9rWHiyUy-wPpOOCNzTi_7SKWvqJbXyOyjF5Zz87Z6KyZyzcuDsML_neQxnC_quT90YOOksCV8vMZd-wS64BWWZZXxOr6950-8vuFHHa8DMULzRBynJGQGNFKn-S7sL9-sNRHPpH1VnADXHTo4CTf5h7LNyDz4iHFGH6ys0VrSuVvdXYQB-9ZdWm8JnSQqgdamCGyHUUGr7itcnXIySNl2OPbo7ZgadjrnAt42uaWC2de6Sx7NqE2Vq5bIVSdH_SvfuVTQ1WkFw");
+    myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0M0swTkpSS3hCUmZJcVBEcEh0OWJ1QTUwSDZOcERraVpFdzV5eUVuc1BvNW5RdjJyaSIsImp0aSI6IjA4MGM4ODI3NjIxNzZkY2M0YTVlZGRmYWJkODdjZjgzMGM1N2E2NzQ3YmZmOTBmZjIzNWZjY2Y1YjQ0M2Y3YWMyMzc1Yjg3YTZmZGU4MzI0IiwiaWF0IjoxNjk1MTMxMjM3LCJuYmYiOjE2OTUxMzEyMzcsImV4cCI6MTY5NTEzNDgzNywic3ViIjoiIiwic2NvcGVzIjpbXX0.dbDl2pZLgks54kY5sUkaI6nznnnNKbvmirWsq4muGR5gA9cSqYbpzb9WVwN28KU5J-EIzBlS3InddS2lWNkT2ZBzsdctWlavYfQdPV2dGUFMnvVCr29qID3Hl1cYyr5f0WThGlIvFleRwn2vHKddHeOfwTeB3gOpu6kMnvbXKJS4hFvii0fVYd0TV7RZCgj7eev6MtehXEs4AAQp-rvtYwYSbZ0uQmqJH4q_DaQVj8h4nhj1nXZ4BBSvWOOZhSYOAcgb8pdr22af4aDrUPv-jC7F415xZ8v0OaZRurIFaGhO1_m4Wc3jvijSQ9PHQZG0YxF5jfevLGFxuJKZFRlObg");
 
     var requestOptions = {
       method: 'GET',
@@ -88,5 +88,3 @@ export const Adoptme = () => {
   )
 }
 
-// getCharacter: (character) => { setStore({ selectCharacter: character, })},
-// 			
