@@ -7,7 +7,7 @@ class CustomUsersModelView(ModelView):
     column_list = ['id', 'email', 'is_active', 'role', 'sum_total_votes', 'vote_count', 'calculated_rating']
 
 class CustomPeopleModelView(ModelView):
-    column_list = ['id', 'name', 'lastname', 'trophy']
+    column_list = ['user', 'id', 'name', 'lastname', 'trophy']
 
 class CustomRatingModelView(ModelView):
     column_list = ['rater', 'rated', 'rating']
@@ -25,7 +25,7 @@ class CustomPeopleModelView(ModelView):
     column_list = ['id', 'name', 'lastname', 'trophy']
 
 class CustomVolunteersModelView(ModelView):
-    column_list = ['id', 'address', 'city', 'zip_code', 'phone', 'email', 'description', 'availability']
+    column_list = ['user', 'id', 'address', 'city', 'zip_code', 'phone', 'email', 'description', 'availability']
 
 def setup_admin(app):
     app.secret_key = os.environ.get('FLASK_APP_KEY', 'sample key')

@@ -7,7 +7,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			message: null,
 			experiences: [],
 			filteredAnimals: localStorage.getItem("filteredAnimals"),
-			animals: localStorage.getItem("animals"),
+			animals: [],
+			protectors: [],
+			// volunteers: [],
+			users: [],
 			user_id: localStorage.getItem("user_id"),
 			user_email: localStorage.getItem("user_email"),
 			peopleId: localStorage.getItem("peopleId"),
@@ -203,39 +206,39 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			volunteer: async (address, city, zipCode, phone, email, description, availability, peopleId) => {
-				const store = getStore();
-				const volunteerData = {
-					address: address,
-					city: city,
-					zip_code: zipCode,
-					phone: phone,
-					email: email,
-					description: description,
-					availability: availability,
-				};
-				const opts = {
-					method: 'POST',
-					headers: {
-						"Content-Type": "application/json",
-						"Authorization": `Bearer ${store.token}`
-					},
-					body: JSON.stringify(volunteerData)
-				};
-				try {
-					const resp = await fetch(process.env.BACKEND_URL + `/api/volunteers/${peopleId}`, opts);
-					if (resp.status !== 200) {
-						alert("There has been some error");
-						return false;
-					}
-					const data = await resp.json();
-					console.log("Volunteer registration successfully completed", data);
-					// Aquí redirijo a login
-					return true;
-				} catch (error) {
-					console.error("Error during volunteer registration", error);
-					return false;
-				}
-			},
+                const store = getStore();
+                const volunteerData = {
+                    address: address,
+                    city: city,
+                    zip_code: zipCode,
+                    phone: phone,
+                    email: email,
+                    description: description,
+                    availability: availability,
+                };
+                const opts = {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${store.token}`
+                    },
+                    body: JSON.stringify(volunteerData)
+                };
+                try {
+                    const resp = await fetch(process.env.BACKEND_URL + `/api/volunteers/${peopleId}`, opts);
+                    if (resp.status !== 200) {
+                        alert("There has been some error");
+                        return false;
+                    }
+                    const data = await resp.json();
+                    console.log("Volunteer registration successfully completed", data);
+                    // Aquí redirijo a login
+                    return true;
+                } catch (error) {
+                    console.error("Error during volunteer registration", error);
+                    return false;
+                }
+            },
 			unsubscribe_user: async (userId) => {
 				try {
 					const response = await fetch(`${process.env.BACKEND_URL}/api/users/${userId}`, {
@@ -277,7 +280,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 
 					const data = await resp.json();
-					console.log("ESTO ES DATARESULTS:", data, typeof(data))
+					console.log("ESTO ES DATARESULTS:", data, typeof (data))
 					// Despacha una acción con los resultados de las experiencias
 					setStore({ experiences: data.results });
 				} catch (error) {
@@ -287,43 +290,43 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			publishExperience: async (title, body, photo, peopleId) => {
 				const experienceData = {
-				  title: title,
-				  body: body,
-				  photo: photo,
-				  peopleId: peopleId
+					title: title,
+					body: body,
+					photo: photo,
+					peopleId: peopleId
 				};
-			
+
 				const opts = {
-				  method: 'POST',
-				  headers: {
-					'Authorization': `Bearer ${localStorage.getItem("token")}`,
-					'Content-Type': 'application/json',
-				  },
-				  body: JSON.stringify(experienceData)
+					method: 'POST',
+					headers: {
+						'Authorization': `Bearer ${localStorage.getItem("token")}`,
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(experienceData)
 				};
-			
+
 				try {
-				  const resp = await fetch(`${process.env.BACKEND_URL}/api/experiences`, opts);
-			
-				  if (resp.status !== 200) {
-					alert("There has been some error");
-					return false;
-				  }
-			
-				  const data = await resp.json();
-			
-				  if (data.experience_id) {
-					// Actualizar el estado de la aplicación con el ID de la experiencia
-					setStore({ experienceId: data.experience_id });
-					localStorage.setItem("experienceId", data.experience_id);
-					return true;
-				  } else {
-					console.error("Error during experience upload: Missing experience_id in response");
-					return false;
-				  }
+					const resp = await fetch(`${process.env.BACKEND_URL}/api/experiences`, opts);
+
+					if (resp.status !== 200) {
+						alert("There has been some error");
+						return false;
+					}
+
+					const data = await resp.json();
+
+					if (data.experience_id) {
+						// Actualizar el estado de la aplicación con el ID de la experiencia
+						setStore({ experienceId: data.experience_id });
+						localStorage.setItem("experienceId", data.experience_id);
+						return true;
+					} else {
+						console.error("Error during experience upload: Missing experience_id in response");
+						return false;
+					}
 				} catch (error) {
-				  console.error("Error during experience upload", error);
-				  return false;
+					console.error("Error during experience upload", error);
+					return false;
 				}
 			},
 			update_experience: async (id, title, body, photo) => {
@@ -545,36 +548,170 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, message: 'Ha ocurrido un error al eliminar el animal' };
 				}
 			},
-			get_all_animals: async () => {
+			get_all_animals: async () => {const token = localStorage.getItem("token");
+			const user_id = getStore().user_id;
+			console.log("user_id: ", user_id)
+			const opts = {
+				method: 'GET',
+				headers: {
+					'Authorization': `Bearer ${token}`,
+					'Content-Type': 'application/json',
+				},
+			};
+
+			try {
+				const resp = await fetch(`${process.env.BACKEND_URL}/api/allanimals`, opts);
+
+				if (resp.status !== 200) {
+					console.error("Error fetching shelter animals");
+					return;
+				}
+
+				const data = await resp.json();
+				console.log(data)
+
+				setStore({ animals: data.results });
+
+			} catch (error) {
+				console.error("Error during shelter animals fetch", error);
+				// Puedes despachar una acción de error si lo deseas
+			}
+		},
+			getProtectors: async () => {
 				const token = localStorage.getItem("token");
-				const user_id = getStore().user_id;
-				console.log("user_id: ", user_id)
+			  
 				const opts = {
-					method: 'GET',
+				  method: 'GET',
+				  headers: {
+					'Authorization': `Bearer ${token}`,
+					'Content-Type': 'application/json',
+				  },
+				};
+			  
+				try {
+				  const resp = await fetch(`${process.env.BACKEND_URL}/api/protectors`, opts);
+			  
+				  if (resp.status !== 200) {
+					console.error("Error fetching protectors");
+					return;
+				  }
+			  
+				  const data = await resp.json();
+			  
+				  // Establece la lista de protectoras en el almacenamiento
+				  setStore({ protectors: data.results });
+				} catch (error) {
+				  console.error("Error during protectors fetch", error);
+				  // Puedes despachar una acción de error si lo deseas
+				}
+			  },
+			// getVolunteers: async () => {
+			// const token = localStorage.getItem("token");
+			
+			// const opts = {
+			// 	method: 'GET',
+			// 	headers: {
+			// 	'Authorization': `Bearer ${token}`,
+			// 	'Content-Type': 'application/json',
+			// 	},
+			// };
+			
+			// try {
+			// 	const resp = await fetch(`${process.env.BACKEND_URL}/api/volunteers`, opts);
+			
+			// 	if (resp.status !== 200) {
+			// 	console.error("Error fetching volunteers");
+			// 	return;
+			// 	}
+			
+			// 	const data = await resp.json();
+			
+			// 	// Establece la lista de voluntarios en el almacenamiento
+			// 	setStore({ volunteers: data.results });
+			// } catch (error) {
+			// 	console.error("Error during volunteers fetch", error);
+			// 	// Puedes despachar una acción de error si lo deseas
+			// }
+			// },
+			getUsers: async () => {
+				const token = localStorage.getItem("token");
+				
+				const opts = {
+				  method: 'GET',
+				  headers: {
+					'Authorization': `Bearer ${token}`,
+					'Content-Type': 'application/json',
+				  },
+				};
+				
+				try {
+				  const resp = await fetch(`${process.env.BACKEND_URL}/api/users`, opts);
+				
+				  if (resp.status !== 200) {
+					console.error("Error fetching users");
+					return;
+				  }
+				
+				  const data = await resp.json();
+				
+				  // Establece la lista de usuarios en el almacenamiento
+				  setStore({ users: data.results });
+				  console.log("daaaaataaaaaa: ",data.results)
+				} catch (error) {
+				  console.error("Error during users fetch", error);
+				  // Puedes despachar una acción de error si lo deseas
+				}
+			},
+			deleteVolunteer: async (volunteerId) => {
+			try {
+				const token = getStore().token;
+				const opts = {
+					method: 'DELETE',
 					headers: {
 						'Authorization': `Bearer ${token}`,
 						'Content-Type': 'application/json',
 					},
 				};
-
-				try {
-					const resp = await fetch(`${process.env.BACKEND_URL}/api/allanimals`, opts);
-
-					if (resp.status !== 200) {
-						console.error("Error fetching shelter animals");
-						return;
-					}
-
-					const data = await resp.json();
-					console.log(data)
-
-					setStore({ animals: data.results });
-
-				} catch (error) {
-					console.error("Error during shelter animals fetch", error);
-					// Puedes despachar una acción de error si lo deseas
+		
+				const resp = await fetch(`${process.env.BACKEND_URL}/api/volunteers/${volunteerId}`, opts);
+		
+				if (resp.status === 200) {
+					// Eliminación exitosa, puedes realizar alguna acción adicional si es necesario.
+					return { success: true, message: 'Voluntario eliminado exitosamente' };
+				} else {
+					const responseData = await resp.json();
+					return { success: false, message: responseData.message };
 				}
+			} catch (error) {
+				console.error('Error al eliminar el voluntario:', error);
+				return { success: false, message: 'Ha ocurrido un error al eliminar el voluntario' };
+			}
 			},
+			deleteUser: async (userId) => {
+				try {
+					const token = getStore().token;
+					const opts = {
+						method: 'DELETE',
+						headers: {
+							'Authorization': `Bearer ${token}`,
+							'Content-Type': 'application/json',
+						},
+					};
+			
+					const resp = await fetch(`${process.env.BACKEND_URL}/api/users/${userId}`, opts);
+			
+					if (resp.status === 200) {
+						// Eliminación exitosa, puedes realizar alguna acción adicional si es necesario.
+						return { success: true, message: 'Usuario eliminado exitosamente' };
+					} else {
+						const responseData = await resp.json();
+						return { success: false, message: responseData.message };
+					}
+				} catch (error) {
+					console.error('Error al eliminar el usuario:', error);
+					return { success: false, message: 'Ha ocurrido un error al eliminar el usuario' };
+				}
+			},			
 			getMessage: async () => {
 				try {
 					// fetching data from the backend

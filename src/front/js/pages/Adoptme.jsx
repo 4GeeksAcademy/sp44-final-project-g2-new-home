@@ -60,28 +60,9 @@ export const Adoptme = () => {
 
   useEffect(() => {
     actions.get_all_animals();
-    // var myHeaders = new Headers();
-    // myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0M0swTkpSS3hCUmZJcVBEcEh0OWJ1QTUwSDZOcERraVpFdzV5eUVuc1BvNW5RdjJyaSIsImp0aSI6IjA2M2E0ZjdhYjg2OGM2ZmY1NWI2ODYwZjE2NTI1NjI1MGZlZThiMDQ0NTAwNDEwZDBhMjRmNmVmZDJkNDcwOTVlZWRkOThmODEyZWIxOTVlIiwiaWF0IjoxNjk1MDQ0MzgyLCJuYmYiOjE2OTUwNDQzODIsImV4cCI6MTY5NTA0Nzk4Miwic3ViIjoiIiwic2NvcGVzIjpbXX0.PEC0hLYY71UmK2D5t4SiNR6NyZgD5gzxYWH1THVoE3nS6hgGlbyKJ4abpGJUQUUTd8c7EjNbmImxASKU2Th_8tqo8DAIlVfKP-yDg_DAzDllDswOuMizfWAWMT2riNRF0a_uorC8g_kDf8Jf7K1cJBxlRdwZWqi9A-iXiCeyQXfzq39nEXDgbvEMDK-fdAdO196KMa0VIRl-ZGyfPYouaKgFikVnipnh_TK5FhLAevJSXWWAmZ0EALB7YBdLCOhZbsvLWbSWFayJFIo9jlrYgjvR_BU6impSzvCR5alYl2equsbFL4fIeztfPBIzlTfVhgMZ9J8TBqnkGkw25vECiw");
-
-    // var requestOptions = {
-    //   method: 'GET',
-    //   mode: 'cors',
-    //   headers: myHeaders,
-    //   redirect: 'follow'
-    // };
-
-
-    // fetch("https://api.petfinder.com/v2/animals?type=dog&page=1", requestOptions)
-    //   .then(response => response.json())
-    //   .then(result => {
-    //     setPets(result.animals);
-    //     console.log(result)
-    //   }
-    //   )
-    //   .catch(error => console.log('error', error));
-
+    
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0M0swTkpSS3hCUmZJcVBEcEh0OWJ1QTUwSDZOcERraVpFdzV5eUVuc1BvNW5RdjJyaSIsImp0aSI6IjA4MGM4ODI3NjIxNzZkY2M0YTVlZGRmYWJkODdjZjgzMGM1N2E2NzQ3YmZmOTBmZjIzNWZjY2Y1YjQ0M2Y3YWMyMzc1Yjg3YTZmZGU4MzI0IiwiaWF0IjoxNjk1MTMxMjM3LCJuYmYiOjE2OTUxMzEyMzcsImV4cCI6MTY5NTEzNDgzNywic3ViIjoiIiwic2NvcGVzIjpbXX0.dbDl2pZLgks54kY5sUkaI6nznnnNKbvmirWsq4muGR5gA9cSqYbpzb9WVwN28KU5J-EIzBlS3InddS2lWNkT2ZBzsdctWlavYfQdPV2dGUFMnvVCr29qID3Hl1cYyr5f0WThGlIvFleRwn2vHKddHeOfwTeB3gOpu6kMnvbXKJS4hFvii0fVYd0TV7RZCgj7eev6MtehXEs4AAQp-rvtYwYSbZ0uQmqJH4q_DaQVj8h4nhj1nXZ4BBSvWOOZhSYOAcgb8pdr22af4aDrUPv-jC7F415xZ8v0OaZRurIFaGhO1_m4Wc3jvijSQ9PHQZG0YxF5jfevLGFxuJKZFRlObg");
+    myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0M0swTkpSS3hCUmZJcVBEcEh0OWJ1QTUwSDZOcERraVpFdzV5eUVuc1BvNW5RdjJyaSIsImp0aSI6IjkyYjAxYmNmOTZjMGQxNTlmMTI0Y2E5NWY1ODgxMTdiMmNjODYzMDlmODc2NTIwMWRlMDU1YWYwM2UzZDI3OTkyYmQ2NDYxYWE0NGZiN2IxIiwiaWF0IjoxNjk1MTU3Njk1LCJuYmYiOjE2OTUxNTc2OTUsImV4cCI6MTY5NTE2MTI5NSwic3ViIjoiIiwic2NvcGVzIjpbXX0.mF8D30W5Pq8Z65BwzHLfBVqBFFhFrQD9Xsighleu8HFfUxTJpqcAuioKDadI1jngDutD3bmthycLyJs5S1MAghVMDKPWCpjZ3M7FXcwiHW-agIEO_2TlC0cCQAHVi6b9H8dH8MUczaVCR64GcFDTAFxTapxCXeWRMjSbVTMjqFy8raN9XLqFHYY2T0l0hqaYa1VB0Ee6Y1AN5bdFC_5MU659uaB4Asf8_ARgVdUPZbPVE9NDp64ppaSSUUbBeh0abpDgfSdTJwESvL4SHINfRu-pQMqWKGAJ5aRcvlplhW3KNPegI3ufHCKffk8A-aprS7q8N0iB2bJkEbPGsWJ82g");
 
     var requestOptions = {
       method: 'GET',

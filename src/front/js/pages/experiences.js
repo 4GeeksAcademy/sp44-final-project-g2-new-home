@@ -23,7 +23,6 @@ export const Experiences = () => {
     if (peopleId) {
       setShowForm(true); // Mostrar el formulario solo si el usuario está autenticado
     } else if (!userId) {
-      // Mostrar un alert si el usuario no está autenticado
       alert("You need to log in to post your experience.");
     } else if (shelterId != null || (shelterId && peopleId === null)) {
       alert("You do not have permission to publish");
