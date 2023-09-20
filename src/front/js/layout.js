@@ -23,9 +23,8 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
-
-import { DetailsPets } from "./pages/DetailsPets.jsx";
 import { Admin } from "./pages/admin";
+
 
 //create your first component
 const Layout = () => {
@@ -56,8 +55,7 @@ const Layout = () => {
                         <Route element={<Single />} path="/single" />
                         <Route element={<Adoptme />} path="/adoptme" />
                         <Route element={<Animalshelter />} path="/animalshelter" />
-                        {/* <Route element={<DetailsPets />} path="/adoptme/:id" /> */}
-                        <Route element={<h1>Not found!</h1>} />
+                       <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
                 </ScrollToTop>

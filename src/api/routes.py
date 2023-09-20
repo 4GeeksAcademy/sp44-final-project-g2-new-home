@@ -11,6 +11,9 @@ from flask_jwt_extended import jwt_required, current_user
 from flask_jwt_extended import decode_token
 import cloudinary
 import cloudinary.uploader
+from datetime import datetime, timedelta
+import os
+import requests
 
 
 api = Blueprint('api', __name__)
@@ -911,8 +914,43 @@ def create_token():
     }
     return jsonify(user_info)
 
+API_KEY=os.environ.get('API_KEY') 
+API_SECRET=os.environ.get('API_SECRET') 
+API_BASE_URL = 'https://api.petfinder.com/v2'
+ACCESS_TOKEN = None
+EXPIRES_IN = None
+headers = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
+CURR_USER_KEY = 'curr_user'
 
+@api.route('/get-token', methods=['GET'])
+def get_token():
+    """
+    ACCESS_TOKEN expires in 60mins.
+    This function checks if TOKEN is expired or not.
+    If Expired then request new one from PetFinder API.
+    """
+    global ACCESS_TOKEN 
+    global EXPIRES_IN
+    global headers 
+    if EXPIRES_IN is None or EXPIRES_IN <= datetime.now() :
+        
+        response = requests.post(f'https://api.petfinder.com/v2/oauth2/token', 
+                            data={
+                                'grant_type':'client_credentials', 
+                                'client_id': API_KEY, 
+                                'client_secret': API_SECRET})
+        data=response.json()
+        ACCESS_TOKEN = data['access_token']
+        EXPIRES_IN = datetime.now() + timedelta(seconds=data['expires_in'])
+        headers = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
+    print(ACCESS_TOKEN)    
+    return jsonify({'access_token': ACCESS_TOKEN}) 
+    
 
-
+@api.route('/proxy/petfinder', methods=['GET'])
+def proxy_petfinder():
+    url = 'https://api.petfinder.com/v2/animals?type=dog&page=1'
+    response = requests.get(url, headers=headers)
+    return jsonify(response.json())
 
 

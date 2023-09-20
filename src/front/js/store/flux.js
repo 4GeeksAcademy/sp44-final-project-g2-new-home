@@ -738,7 +738,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			fetchToken: async () => {
+				try {
+				  const response = await fetch(process.env.BACKEND_URL +'/api/get-token');
+				  const data = await response.json();
+				  if (data.access_token) {
+					return data.access_token;
+				  } else {
+					throw new Error('Token no encontrado en la respuesta');
+				  }
+				} catch (error) {
+				  console.error('Error obteniendo token:', error);
+				  return null; // O devuelve un valor por defecto si es necesario
+				}
+			  },
+			
+
+			// Make call if token expired
+			makeCall: () => {
+				// If current token is invalid, get a new one
+				if (!expires || expires - new Date().getTime() < 1) {
+					getOAuth().then(function () {
+						// use access token
+					});
+				}
 			}
+
 		}
 	};
 };
