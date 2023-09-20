@@ -57,23 +57,6 @@ export const Adoptme = () => {
       if (token) {
         console.log(token);
         getAnimal(token)
-        // const myHeaders = new Headers();
-        // myHeaders.append("Authorization", `Bearer ${token}`);
-        // const requestOptions = {
-        //   method: 'GET',
-        //   mode: 'cors',
-        //   headers: {
-        //     Authorization: `Bearer ${token}`
-        //   },
-        //   redirect: 'follow'
-        // };
-        // fetch(url, requestOptions)
-        //   .then(response => response.json())
-        //   .then(result => {
-        //     setPets(result.animals);
-        //     console.log(result);
-        //   })
-        //   .catch(error => console.log('error', error));
       }
     });
   }, []);
@@ -92,7 +75,6 @@ export const Adoptme = () => {
       <div className="d-flex flex-wrap justify-content-between">
         {pets.map((item, id) => (
           <div key={id} className="card m-3 rounded" style={{ width: "23rem" }}>
-            {/* <img src={item.url || imgDefault} alt={item.name} onError={handleOnErrorImg} /> */}
             <img src={`https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/${item.id}/1/`} onError={handleOnErrorImg} />
             <div className="card-body">
               <h5 className="card-title">{item.name}</h5>

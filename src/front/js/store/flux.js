@@ -617,22 +617,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			  },
 			
-			// getOAuth:  async (API_KEY, API_SECRET) => {
-			// 	return fetch('https://api.petfinder.com/v2/oauth2/token', {
-			// 		method: 'POST',
-			// 		body: 'grant_type=client_credentials&client_id=' + API_KEY + '&client_secret=' + API_SECRET,
-			// 		headers: {
-			// 			'Content-Type': 'application/x-www-form-urlencoded'
-			// 		}
-			// 	}).then(function (resp) {
-			// 		return resp.json();
-			// 	}).then(function (data) {
-			// 		// Store token data
-			// 		token = data.access_token;
-			// 		tokenType = data.token_type;
-			// 		expires = new Date().getTime() + (data.expires_in * 1000);
-			// 	});
-			// },
 
 			// Make call if token expired
 			makeCall: () => {
