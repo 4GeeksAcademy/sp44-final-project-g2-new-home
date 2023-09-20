@@ -23,6 +23,7 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { Admin } from "./pages/admin";
 
 
 //create your first component
@@ -46,6 +47,7 @@ const Layout = () => {
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<Tips />} path="/tips" />
+                        <Route element={<Admin />} path="/users" />
                         <Route element={<UploadAnimal />} path="/animals" />                        
                         <Route element={<Lostanimals />} path="/lostanimals" />
                         <Route element={<VoluntaryForm />} path="/voluntaryform" /> 

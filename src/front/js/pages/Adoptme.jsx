@@ -49,17 +49,17 @@ export const Adoptme = () => {
     } else {
         console.log('error', response.status, response.statusText);
     }
-
-    } 
-
+    }
+  
   useEffect(() => {
-    actions.fetchToken().then(token => {
-      if (token) {
-        console.log(token);
-        getAnimal(token)
-      }
-    });
-  }, []);
+      actions.get_all_animals();
+      actions.fetchToken().then(token => {
+        if (token) {
+          console.log(token);
+          getAnimal(token)
+        }
+      });
+    }, []);
 
   const handleOnErrorImg = (e) => {
     const newBackupIndex = (backupImageIndex + 1) % backupImages.length;
@@ -116,10 +116,3 @@ export const Adoptme = () => {
   </div>
   )
 }
-
-
-
-
-// getCharacter: (character) => { setStore({ selectCharacter: character, })},
-// 			
-

@@ -50,7 +50,7 @@ export const VoluntaryForm = () => {
     }
     if(formData.availability == ""){
       console.log(formData)
-      formData.availability = "Morning"
+      formData.availability = "Morning "
       
     }
     // Aquí puedes agregar la lógica para enviar el formulario
@@ -62,7 +62,7 @@ export const VoluntaryForm = () => {
       formData.email,
       formData.description,
       formData.availability,
-      store.user_id
+      store.peopleId
       // Asegúrate de que peopleId esté definido y disponible
     );
     navigate("/");
@@ -156,7 +156,7 @@ export const VoluntaryForm = () => {
                 value={formData.availability}
                 onChange={handleSelectChange}
               >
-                <option value="Morning">Morning</option>
+                <option value="Morning ">Morning</option>
                 <option value="Afternoon">Afternoon</option>
               </select>
             </div>

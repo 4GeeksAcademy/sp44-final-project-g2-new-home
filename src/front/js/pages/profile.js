@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../store/appContext';
+import { Link } from "react-router-dom";
 
 
 export const Profile = () => {
     const { actions, store } = useContext(Context);
     const [userData, setUserData] = useState({ email: '', role: '', details: {} }); // Inicializa details como un objeto vacío
     const [isEditing, setIsEditing] = useState(false);
-
+    
     const handleEditClick = () => {
         setIsEditing(true);
     };
@@ -55,6 +56,29 @@ export const Profile = () => {
             actions.unsubscribe_user(store.user_id); // Llama a la función que eliminará al usuario
         }
     };
+
+    const handleToggleActiveClick = () => {
+            
+        // Cambia el valor de is_active en el estado local
+        const desactivateId = userData.id;
+         
+        actions.desactivate_profile(desactivateId)
+            .then(response => {
+                if (response.success) {
+                    actions.logout()
+                    alert(response.message); // Puedes mostrar un mensaje de éxito
+                } else {
+                    // Maneja el caso de error en la actualización
+                    alert(response.message);
+                }
+            })
+            .catch(error => {
+                // Maneja errores de red u otros errores
+                console.error('Error updating user active status:', error);
+            });
+    };
+    
+    
 
     useEffect(() => {
         const userDataFromLocalStorage = JSON.parse(localStorage.getItem("user_data"));
@@ -204,8 +228,8 @@ export const Profile = () => {
                                   </div>
                               </div>
                           )}
-                          <button type="submit" className="btn btn-primary">Guardar</button>
-                          <button type="button" className="btn btn-secondary" onClick={() => setIsEditing(false)}>Cancelar</button>
+                          <button type="submit" className="btn btn-primary me-3">Save</button>
+                          <button type="button" className="btn btn-secondary" onClick={() => setIsEditing(false)}>Cancel</button>
                       </form>
                   ) : (
                     <div>
@@ -235,7 +259,10 @@ export const Profile = () => {
                             </p>
                         )}
                         <button onClick={handleEditClick} className="btn btn-primary">Edit Profile</button>
-                        <button onClick={handleUnsubscribe} className="btn btn-primary ms-3">Unsubscribe</button>
+                        {/* <button onClick={handleUnsubscribe} className="btn btn-primary ms-3">Unsubscribe</button> */}
+                        <Link to="/" onClick={handleToggleActiveClick} className="btn btn-primary ms-3">
+                           'Desactivate account'
+                        </Link>
                     </div>
                 )}
             </div>

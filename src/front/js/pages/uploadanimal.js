@@ -26,22 +26,19 @@ const UploadAnimal = () => {
 
   const userId = store.user_id;
   const shelterId = store.animalshelterId;
+  const peopleId = store.peopleId
   const filteredAnimals = store.filteredAnimals;
   console.log("user_id delc componente:", userId);
   console.log("filteredAnimals en mi componente upload:", store.filteredAnimals);
  
   
   const handleShowForm = () => {
-    if (userId && shelterId) {
-      setShowForm(true);
-      const currentDate = new Date().toLocaleDateString();
-      setDate(currentDate); // Mostrar el formulario solo si el usuario está autenticado
-    } else if (!userId) {
-      // Mostrar un alert si el usuario no está autenticado
-      alert("You need to log in to post your animal.");
-    } else if (!shelterId) {
-      alert("You do not have permission to publish");
-    }
+    setShowForm(true);
+    const currentDate = new Date().toLocaleDateString();
+    setDate(currentDate);
+    if (!userId) {
+    alert("You need to log in to post your animal.");
+  } 
   };
 
   const handleImageChange = (e) => {

@@ -67,6 +67,24 @@ export const Animalshelter = () => {
                     </div>
                 ))}
             </div>
+            <div className="d-flex flex-wrap justify-content-between">
+                {store.protectors.map((item) => (
+                    <div key={item.id} className="card m-3 rounded" style={{ width: "23rem" }}>
+                        <img src={ImgProtector} onError={handleOnErrorImg} />
+                        <div className="card-body bg-light">
+                            <h5 className="card-title">{item.name}</h5>
+                            {/* <p><strong>Email: </strong>{item.email}</p>
+                            <p><strong>Phone: </strong>{item.phone}</p> */}
+                            <p><strong>Address: </strong>{item.address}</p>
+                            <p><strong>City: </strong>{item.city}</p>
+                            <p><strong>State: </strong>{item.cif}</p>
+                            <p><strong>Post Code: </strong>{item.zip_code}</p>
+                            {/* <p><strong>Country: </strong>{item.address.country}</p> */}
+                            <p><strong>Website: </strong><a href={item.web} target="_blank" rel="noopener noreferrer">{item.web}</a></p>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }

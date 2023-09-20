@@ -30,16 +30,38 @@ def upload_image():
 
 @api.route('/users', methods=['POST', 'GET'])
 def handle_users():
-    if request.method =='GET':
-        # response_body = {"message": "Esto devuelve el get del endpooint users"}
-        users = db.session.execute(db.select(User).order_by(User.email)).scalars()
-        results =[item.serialize() for item in users]
-        response_body ={
-            "message":"Esto devuelve el endpoint de userst el GET",
-            "results": results,
-            "status": "ok" }
-        return response_body, 200
-    if request.method =='POST':
+   if request.method == 'GET':
+    # Consulta para obtener los usuarios con detalles según su rol
+    users_with_details = db.session.query(User, People, AnimalShelter).\
+        outerjoin(People, User.id == People.user_id).\
+        outerjoin(AnimalShelter, User.id == AnimalShelter.user_id).\
+        all()
+
+    # Serializar los resultados en el formato deseado
+    results = []
+    for user, person, shelter in users_with_details:
+        user_details = {
+            "id": user.id,
+            "email": user.email,
+            "role": user.role,
+            "is_active": user.is_active,
+        }
+        if user.role == 'Person':
+            user_details.update(person.serialize())
+        elif user.role == 'AnimalShelter':
+            user_details.update(shelter.serialize())
+
+        results.append(user_details)
+
+    # Crear la respuesta
+    response_body = {
+        "message": "Esto devuelve el endpoint de users GET con detalles",
+        "results": results,
+        "status": "ok"
+    }
+
+    return response_body, 200
+   if request.method =='POST':
       request_body = request.get_json()
       print(request_body)
       if request_body['role'] == 'Person':
@@ -58,7 +80,7 @@ def handle_users():
             lastname=request_body['lastname'],
             trophy=request_body.get('trophy', False),
             user_id = user_id
-        )
+         )
          db.session.add(person)
          db.session.commit()
 
@@ -95,7 +117,7 @@ def handle_users():
 
 
 @api.route('/users/<int:id>', methods=['GET', 'PUT', 'DELETE'])
-@jwt_required()
+# @jwt_required()
 def handle_user(id):
    if request.method == 'GET': 
     user_with_details = db.session.query(User, People, AnimalShelter).\
@@ -155,36 +177,28 @@ def handle_user(id):
     # Actualizar el correo electrónico en la tabla User si se proporciona
     if 'email' in data:
         user.email = data['email']
+    if 'is_active' in data:
+        user.is_active = data['is_active']
 
     # Guardar los cambios en la base de datos
     db.session.commit()
-    return {"message": "User data updated successfully", "status": "ok"}, 200
+    response_body = {"message": "Updated user",
+                     "status": "ok",
+                     "results": data,
+                     "user_updating": id,
+                     "email": user.email,
+                     "is_active": user.is_active
+                     }
+    return  response_body, 200
    if request.method == 'DELETE':
       user = User.query.get(id)
-      # Verificar el rol del usuario
-      if user.role == 'Person':
-         # Si el usuario tiene el rol 'Person', también debemos eliminar los datos en la tabla 'People'
-         person = People.query.filter_by(user_id=id).first()
-         if person:
-               db.session.delete(person)  # Eliminar datos en la tabla 'People'
-
-   elif user.role == 'AnimalShelter':
-      # Si el usuario tiene el rol 'AnimalShelter', también debemos eliminar los datos en la tabla 'AnimalShelter'
-      shelter = AnimalShelter.query.filter_by(user_id=id).first()
-      if shelter:
-            db.session.delete(shelter)  # Eliminar datos en la tabla 'AnimalShelter'
-
-   # Ahora, eliminamos el usuario de la tabla 'User'
-   db.session.delete(user)
-   db.session.commit()
-   # user = db.get_or_404(User, id)
-   db.session.delete(user) 
-   db.session.commit()
-   response_body = {"message": "DELETED user",
-                     "status": "ok",
-                     "user_deleting": id,
-                     }
-   return response_body, 200
+      user.is_active = False
+      db.session.commit()
+      response_body = {"message": "Desactivate",
+                        "status": "ok",
+                        "user_updating_is_active": id,
+                        }
+      return response_body, 200
 
 
 def update_vote_stars(user_id):
@@ -283,7 +297,6 @@ def handle_ratings():
 
   
 @api.route('/volunteers', methods=['POST', 'GET'])
-@jwt_required()
 def handle_volunteers():
    if request.method == 'GET':
       # response_body = {"message": "Esto devuelve el get del endpooint volunteers"}
@@ -306,18 +319,15 @@ def handle_volunteers():
                                  description = request_body["description"],
                                  availability = request_body["availability"],
                                  people_id = request_body["people_id"])
-                                 
       db.session.add(volunteer)
       db.session.commit()
-       # Obtén el ID del usuario 
+       # Obtén el ID del usuario
       # user_id = user.id
-
       # user = Users (
       #    email = request_body["email"],
       # )
       # db.session.add(user)
       # db.session.commit()
-
       response_body = {
          "message": "adding new volunteer",
          "status": "ok",
@@ -326,7 +336,7 @@ def handle_volunteers():
       return response_body, 200
    
 @api.route('/volunteers/<int:id>', methods=['GET', 'PUT', 'POST', 'DELETE'])
-@jwt_required()
+# @jwt_required()
 def handle_volunteer(id):
    if request.method == 'GET': 
       volunteer = db.get_or_404(Volunteer, id) 
@@ -364,12 +374,12 @@ def handle_volunteer(id):
                                  phone = request_body["phone"],
                                  description = request_body["description"],
                                  availability = request_body["availability"],
-                                 people_id = people.id ) 
+                                 people_id = people.id )
       db.session.add(volunteer)
       db.session.commit()
       response_body = {"message": "Adding volunteer",
                        "status": "ok",
-                       "volunter_adding": id,         
+                       "volunter_adding": id,
                        }
       return response_body, 200
    if request.method == 'DELETE': 
