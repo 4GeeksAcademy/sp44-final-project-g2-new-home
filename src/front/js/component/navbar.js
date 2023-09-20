@@ -105,7 +105,7 @@ export const Navbar = () => {
                             <Link to="/animalshelter" className="navbar-brand custom-link"><b>Animal Shelter</b></Link>
                         )}
                         <Link to="/tips" className="navbar-brand custom-link"><b>Tips</b></Link>
-                        <Link to="/lostanimals" className="navbar-brand custom-link"><b>Lost animals</b></Link>
+                        {/* <Link to="/lostanimals" className="navbar-brand custom-link"><b>Lost animals</b></Link> */}
                         <Link to="/voluntaryform" className="navbar-brand custom-link"><b>Voluntary form</b></Link>
                         <Link to="/experiences" className="navbar-brand custom-link"><b>Experiences</b></Link>
                         {store.user_id && store.animalshelterId == null && store.peopleId == null && (

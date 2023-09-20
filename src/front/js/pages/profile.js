@@ -228,8 +228,8 @@ export const Profile = () => {
                                   </div>
                               </div>
                           )}
-                          <button type="submit" className="btn btn-primary">Guardar</button>
-                          <button type="button" className="btn btn-secondary" onClick={() => setIsEditing(false)}>Cancelar</button>
+                          <button type="submit" className="btn btn-primary me-3">Save</button>
+                          <button type="button" className="btn btn-secondary" onClick={() => setIsEditing(false)}>Cancel</button>
                       </form>
                   ) : (
                     <div>
