@@ -277,7 +277,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 
 					const data = await resp.json();
-					console.log("ESTO ES DATARESULTS:", data, typeof(data))
+					console.log("ESTO ES DATARESULTS:", data, typeof (data))
 					// Despacha una acción con los resultados de las experiencias
 					setStore({ experiences: data.results });
 				} catch (error) {
@@ -287,43 +287,43 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			publishExperience: async (title, body, photo, peopleId) => {
 				const experienceData = {
-				  title: title,
-				  body: body,
-				  photo: photo,
-				  peopleId: peopleId
+					title: title,
+					body: body,
+					photo: photo,
+					peopleId: peopleId
 				};
-			
+
 				const opts = {
-				  method: 'POST',
-				  headers: {
-					'Authorization': `Bearer ${localStorage.getItem("token")}`,
-					'Content-Type': 'application/json',
-				  },
-				  body: JSON.stringify(experienceData)
+					method: 'POST',
+					headers: {
+						'Authorization': `Bearer ${localStorage.getItem("token")}`,
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(experienceData)
 				};
-			
+
 				try {
-				  const resp = await fetch(`${process.env.BACKEND_URL}/api/experiences`, opts);
-			
-				  if (resp.status !== 200) {
-					alert("There has been some error");
-					return false;
-				  }
-			
-				  const data = await resp.json();
-			
-				  if (data.experience_id) {
-					// Actualizar el estado de la aplicación con el ID de la experiencia
-					setStore({ experienceId: data.experience_id });
-					localStorage.setItem("experienceId", data.experience_id);
-					return true;
-				  } else {
-					console.error("Error during experience upload: Missing experience_id in response");
-					return false;
-				  }
+					const resp = await fetch(`${process.env.BACKEND_URL}/api/experiences`, opts);
+
+					if (resp.status !== 200) {
+						alert("There has been some error");
+						return false;
+					}
+
+					const data = await resp.json();
+
+					if (data.experience_id) {
+						// Actualizar el estado de la aplicación con el ID de la experiencia
+						setStore({ experienceId: data.experience_id });
+						localStorage.setItem("experienceId", data.experience_id);
+						return true;
+					} else {
+						console.error("Error during experience upload: Missing experience_id in response");
+						return false;
+					}
 				} catch (error) {
-				  console.error("Error during experience upload", error);
-				  return false;
+					console.error("Error during experience upload", error);
+					return false;
 				}
 			},
 			update_experience: async (id, title, body, photo) => {
@@ -601,7 +601,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			fetchToken: async () => {
+				try {
+				  const response = await fetch(process.env.BACKEND_URL +'/api/get-token');
+				  const data = await response.json();
+				  if (data.access_token) {
+					return data.access_token;
+				  } else {
+					throw new Error('Token no encontrado en la respuesta');
+				  }
+				} catch (error) {
+				  console.error('Error obteniendo token:', error);
+				  return null; // O devuelve un valor por defecto si es necesario
+				}
+			  },
+			
+
+			// Make call if token expired
+			makeCall: () => {
+				// If current token is invalid, get a new one
+				if (!expires || expires - new Date().getTime() < 1) {
+					getOAuth().then(function () {
+						// use access token
+					});
+				}
 			}
+
 		}
 	};
 };

@@ -1,34 +1,42 @@
 import React, { useState, useContext, useEffect } from "react";
 import ImgProtector  from "../../img/logoNewHome.jpeg"
-
+import { Context } from "../store/appContext";
 
 export const Animalshelter = () => {
+    const { store, actions } = useContext(Context);
     const [shelter, setShelter] = useState([]);
     const hostPetfinder = 'https://api.petfinder.com/v2/';
     const url = hostPetfinder + 'organizations/'
 
-    useEffect(() => {
 
-        var myHeaders = new Headers();
-        myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0M0swTkpSS3hCUmZJcVBEcEh0OWJ1QTUwSDZOcERraVpFdzV5eUVuc1BvNW5RdjJyaSIsImp0aSI6IjA4MGM4ODI3NjIxNzZkY2M0YTVlZGRmYWJkODdjZjgzMGM1N2E2NzQ3YmZmOTBmZjIzNWZjY2Y1YjQ0M2Y3YWMyMzc1Yjg3YTZmZGU4MzI0IiwiaWF0IjoxNjk1MTMxMjM3LCJuYmYiOjE2OTUxMzEyMzcsImV4cCI6MTY5NTEzNDgzNywic3ViIjoiIiwic2NvcGVzIjpbXX0.dbDl2pZLgks54kY5sUkaI6nznnnNKbvmirWsq4muGR5gA9cSqYbpzb9WVwN28KU5J-EIzBlS3InddS2lWNkT2ZBzsdctWlavYfQdPV2dGUFMnvVCr29qID3Hl1cYyr5f0WThGlIvFleRwn2vHKddHeOfwTeB3gOpu6kMnvbXKJS4hFvii0fVYd0TV7RZCgj7eev6MtehXEs4AAQp-rvtYwYSbZ0uQmqJH4q_DaQVj8h4nhj1nXZ4BBSvWOOZhSYOAcgb8pdr22af4aDrUPv-jC7F415xZ8v0OaZRurIFaGhO1_m4Wc3jvijSQ9PHQZG0YxF5jfevLGFxuJKZFRlObg");
-
-        var requestOptions = {
-            method: 'GET',
-            mode: 'cors',
-            headers: myHeaders,
-            redirect: 'follow'
+    const getShelter = async (token) => {
+        const url ='https://api.petfinder.com/v2/organizations';
+        const requestOptions = {
+          method: 'GET',
+          mode: 'cors',
+          headers: {Authorization: `Bearer ${token}`},
+          redirect: 'follow'
         };
+        const response = await fetch(url, requestOptions);
+        if(response.ok) {
+          const data = await response.json();
+          console.log(data);
+          setShelter(data.organizations);
+        } else {
+            console.log('error', response.status, response.statusText);
+        }
+    
+        } 
+    
+      useEffect(() => {
+        actions.fetchToken().then(token => {
+          if (token) {
+            console.log(token);
+            getShelter(token)
+          }
+        });
+      }, []);
 
-        fetch(url, requestOptions)
-            .then(response => response.json())
-            .then(result => {
-                console.log(result)
-                setShelter(result.organizations);
-                console.log(result)
-            }
-            )
-            .catch(error => console.log('error', error));
-    }, []); // El segundo argumento [] indica que este efecto solo se ejecuta una vez al montar el componente.
 
     const handleOnErrorImg = (e) => {
         const newBackupIndex = (backupImageIndex + 1) % backupImages.length;
