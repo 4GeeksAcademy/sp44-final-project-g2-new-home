@@ -1,13 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../store/appContext';
 import { Link } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+
 
 
 export const Profile = () => {
     const { actions, store } = useContext(Context);
     const [userData, setUserData] = useState({ email: '', role: '', details: {} }); // Inicializa details como un objeto vacío
     const [isEditing, setIsEditing] = useState(false);
-    
+    const navigate = useNavigate()
+
     const handleEditClick = () => {
         setIsEditing(true);
     };
@@ -62,10 +65,11 @@ export const Profile = () => {
         // Cambia el valor de is_active en el estado local
         const desactivateId = userData.id;
          
-        actions.desactivate_profile(desactivateId)
+        actions.delete_profile(desactivateId)
             .then(response => {
                 if (response.success) {
                     actions.logout()
+                    navigate("/");
                     alert(response.message); // Puedes mostrar un mensaje de éxito
                 } else {
                     // Maneja el caso de error en la actualización
@@ -260,9 +264,9 @@ export const Profile = () => {
                         )}
                         <button onClick={handleEditClick} className="btn btn-primary">Edit Profile</button>
                         {/* <button onClick={handleUnsubscribe} className="btn btn-primary ms-3">Unsubscribe</button> */}
-                        <Link to="/" onClick={handleToggleActiveClick} className="btn btn-primary ms-3">
+                        <button onClick={handleToggleActiveClick} className="btn btn-primary ms-3">
                            'Desactivate account'
-                        </Link>
+                        </button>
                     </div>
                 )}
             </div>

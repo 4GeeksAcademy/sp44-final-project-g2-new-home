@@ -687,7 +687,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return { success: false, message: 'Ha ocurrido un error al eliminar el voluntario' };
 			}
 			},
-			deleteUser: async (userId) => {
+			delete_profile: async (userId) => {
 				try {
 					const token = getStore().token;
 					const opts = {
