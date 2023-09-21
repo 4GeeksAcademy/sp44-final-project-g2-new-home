@@ -99,11 +99,10 @@ export const Navbar = () => {
                     <div className="nav-links">
                         <Link to="/" className="navbar-brand custom-link"><b>Home</b></Link>
                         <Link to="/adoptme" className="navbar-brand custom-link"><b>Adoptme</b></Link>
-                        {store.user_id && store.animalshelterId || store.user_id && store.animalshelterId == null && store.peopleId == null ? (
-                            <Link to="/animals" className="navbar-brand custom-link"><b>My Animals</b></Link>
-                        ) : (
-                            <Link to="/animalshelter" className="navbar-brand custom-link"><b>Animal Shelter</b></Link>
+                        {store.user_id && (
+                        <Link to="/animals" className="navbar-brand custom-link"><b>Lost Animals</b></Link>
                         )}
+                        <Link to="/animalshelter" className="navbar-brand custom-link"><b>Animal Shelter</b></Link>
                         <Link to="/tips" className="navbar-brand custom-link"><b>Tips</b></Link>
                         {/* <Link to="/lostanimals" className="navbar-brand custom-link"><b>Lost animals</b></Link> */}
                         <Link to="/voluntaryform" className="navbar-brand custom-link"><b>Voluntary form</b></Link>

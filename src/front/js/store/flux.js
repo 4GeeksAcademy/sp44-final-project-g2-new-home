@@ -136,6 +136,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ token: null })
 				setStore({ experienceId: null })
 				setStore({ user_id: null })
+				setStore({ peopleId: null })
 			},
 			get_profile: async (userId) => {
 				console.log('getUserProfile llamado con userId:', userId);
