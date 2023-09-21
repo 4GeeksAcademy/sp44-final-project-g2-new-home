@@ -24,6 +24,7 @@ export const VoluntaryForm = () => {
   const [emailError, setEmailError] = useState(null);
 
   useEffect(() => {
+    actions.getVolunteers()
     // Guarda los datos del formulario en el almacenamiento local cada vez que cambian
     localStorage.setItem("animalFormData", JSON.stringify(formData));
   }, [formData]);
@@ -78,6 +79,7 @@ export const VoluntaryForm = () => {
   return (
       <div className="container">
         <div className="card text-center animate__animated animate__bounceInUp" id="formcomplete">
+        {!store.animalshelterId?(
         <div className="card-body">
           <h2 className="card-title" id="voluntaryform">
             <b>Voluntary Form</b>
@@ -170,10 +172,29 @@ export const VoluntaryForm = () => {
               onChange={handleInputChange}
             ></textarea>
           </div>
+          {store.user_id ? (
             <button className="btn btn-primary" onClick={handleFormSubmit}>
-            Submit
-          </button>
-        </div>
+              Submit
+            </button>
+          ) : (
+            <p><b>Join us, we need your help. Log in and submit your form.</b></p>
+          )}
+        </div>):
+        (
+          <ul className="list-group custom-list">
+                {store.volunteers.map((item) => (
+                    <li className="list-group-item custom-list-item mb-3" key={item.id}>
+                            <h5 className="mb-3"><b>Email: {item.email}</b></h5>
+                            <p><strong>Address: </strong>{item.address}</p>
+                            <p><strong>City: </strong>{item.city}</p>
+                            <p><strong>State: </strong>{item.zip_code}</p>
+                            <p><strong>Post Code: </strong>{item.phone}</p>
+                            <p><strong>Availability: </strong>{item.availability}</p>
+                            <p><strong>DEscription: </strong>{item.description}</p> 
+                    </li>
+                ))}
+            </ul>
+        )}
       </div>
     </div>
   );
