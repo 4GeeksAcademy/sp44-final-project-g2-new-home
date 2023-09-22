@@ -30,28 +30,28 @@ export const Login = () => {
     
 
 	return (
-		<div className="text-center mt-5">
-			
-            {(store.token && store.token != "" && store.token != undefined) ? (
+		<div className="text-center mt-5 mb-5">
+            <div className="mt-5">
+                <h1>LOGIN</h1>
+                <div className="container d-flex flex-column align-items-center mt-5">
+                    <div className="card w-25 verde-claro">
+                        <div className="card-body">
+                            <div className="">
+                                <label className="me-3 mb-3"><b>Email address</b></label>
+                                <input type="text" placeholder="write your email..." onChange={(e) => setEmail(e.target.value)} />
+                            </div>
+                            <div>
+                                <label className="me-3 mt-3 mb-3"><b>Password</b></label>
+                                <input type="password" placeholder="write your password..." onChange={(e) => setPassword(e.target.value)} />
+                            </div>
+                            <button type="submit" className="btn btn-dark mt-4" onClick={handleClick}>Login</button>
+                        </div>
+                    </div>
                     <div>
-                        <h1>Congrats!!!!!</h1>
-                        <p><b>"You are logged in with this token: " </b> {store.token}</p>
+                        <img src="https://tse1.mm.bing.net/th?id=OIP.Yaf0PrYnrgyOw939nocKwAHaE7&pid=Api" alt="Puppy" />
                     </div>
-            ) : (
-                    <div className="mt-5">
-                        <h1>LOGIN</h1>
-                        <div className="d-flex justify-content-center">
-                            <label className="me-3">Email address</label>
-                            <input type="text" placeholder="write your email..." onChange={(e)=> setEmail(e.target.value)}/>
-                        </div>
-                        <div >
-                            <label className="me-3 mt-3">Password</label>
-                            <input className="ms-4" type="password" placeholder="write your password..."onChange={(e)=> setPassword(e.target.value)} />
-                        </div>
-                        <button type="submit" className="btn btn-dark mt-3" onClick={handleClick}>Login</button>
-                    </div>
-                )
-            }
-		</div>
+                </div>
+            </div>
+        </div>
 	)
 };

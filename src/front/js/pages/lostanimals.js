@@ -33,12 +33,14 @@ export const Lostanimals = () => {
   }, []);
 
   const handleShowForm = () => {
+    if (!userId) {
+    alert("You need to log in to post your animal.");
+  } else  { 
     setShowForm(true);
     const currentDate = new Date().toLocaleDateString();
     setDate(currentDate);
-    if (!userId) {
-    alert("You need to log in to post your animal.");
-  } 
+  }
+    
   };
 
   const handleImageChange = (e) => {

@@ -18,7 +18,7 @@ export const Footer = () => {
   const googleMapsLink = "https://www.google.com/maps/place/4+Erizas+Road,+Málaga,+29011";
 
   return (
-    <footer className="footer mt-auto py-4 text-center">
+    <footer className="footer margen  text-center">
       <div className="container" id="main">
         
         <div className="row">
@@ -103,7 +103,7 @@ export const Footer = () => {
             >
             Private Area
             </a> */}
-            <a href="policy" className="custom-link">
+            <a href="policy" className="custom-link ms-1">
               Legal Policies
             </a>
             {/* <a

@@ -78,7 +78,7 @@ export const VoluntaryForm = () => {
   
   return (
       <div className="container">
-        <div className="card text-center animate__animated animate__bounceInUp" id="formcomplete">
+        <div className="card mt-5 text-center animate__animated animate__bounceInUp" id="formcomplete">
         {!store.animalshelterId?(
         <div className="card-body">
           <h2 className="card-title" id="voluntaryform">
