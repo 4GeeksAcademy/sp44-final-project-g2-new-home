@@ -151,7 +151,8 @@ export const Experiences = () => {
 
 
   return (
-    <div className="container">
+   
+    <div className="container contenido">
       {showForm ? (
         // Mostrar el formulario
         <div className="container">
@@ -251,5 +252,6 @@ export const Experiences = () => {
         </button>
       )}
     </div>
+    
   );
 };

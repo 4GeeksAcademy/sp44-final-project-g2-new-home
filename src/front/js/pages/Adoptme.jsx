@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
+import "../../styles/adoptme.css";
 
 
 
@@ -69,9 +70,9 @@ export const Adoptme = () => {
 
 
   return (
-
-  <div className="container bg-danger mb-3">
-      <h1 className="text-light text-center pt-4">PLEASE ADOPT ME!!!!!</h1>
+   <div className="body fondo">
+  <div className="container  mb-3  ">
+      <h1 className="text-succes text-center pt-4">THESE ARE OUR DOGS FOR ADOPTION</h1>
       <div className="d-flex flex-wrap justify-content-between">
         {pets.map((item, id) => (
           <div key={id} className="card m-3 rounded" style={{ width: "23rem" }}>
@@ -113,6 +114,7 @@ export const Adoptme = () => {
         ))
         ) : null}
       </div>
+  </div>
   </div>
   )
 }
