@@ -161,10 +161,7 @@ const UploadAnimal = () => {
   
   const handleSavechanges = async (e) => {
     e.preventDefault();
-    if (!file) {
-      alert("Please select a file.");
-      return;
-    }
+ 
 
     try {
       const form = new FormData();
@@ -223,12 +220,14 @@ const UploadAnimal = () => {
               <h2>
                 <b>Upload an Animal</b>
               </h2>
-              <div className="image-upload">
+              <div className="image-upload  w-25">
+              <label htmlFor="files" className="btn">Select Image</label>
                 <input
                   type="file"
-                  id="image-input"
+                  id="files"
                   accept="image/jpeg"
                   onChange={handleImageChange}
+                  style={{visibility:"hidden"}}
                 />
               </div>
               <div className="input-fields">
@@ -345,12 +344,16 @@ const UploadAnimal = () => {
                     {editModeAnimals[animal.id] ? (
                       // Mostrar campos editables cuando está en modo de edición
                       <div className="input-fields">
-                        <label htmlFor="img">Photo:</label>
-                        <input
-                          type="file"
-                          accept="image/jpeg"
-                          onChange={handleImageChange}
-                        />
+                      <div className="image-upload d-flex">
+                        <label htmlFor="files" className="btn btn-primary w-100">Select Image</label>
+                          <input
+                            type="file"
+                            id="files"
+                            accept="image/jpeg"
+                            onChange={handleImageChange}
+                            style={{visibility:"hidden"}}
+                          />
+                        </div>
                         <label htmlFor="name">Name:</label>
                         <input
                           type="text"

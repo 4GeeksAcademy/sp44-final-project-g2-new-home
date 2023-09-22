@@ -179,14 +179,16 @@ export const Lostanimals = () => {
             <h2>
               <b>Add Your Animal</b>
             </h2>
-            <div className="image-upload">
-              <input
-                type="file"
-                id="image-input"
-                accept="image/jpeg"
-                onChange={handleImageChange}
-              />
-            </div>
+            <div className="image-upload  w-25">
+              <label htmlFor="files" className="btn">Select Image</label>
+                <input
+                  type="file"
+                  id="files"
+                  accept="image/jpeg"
+                  onChange={handleImageChange}
+                  style={{visibility:"hidden"}}
+                />
+              </div>
             <div className="input-fields">
               <input
                 type="text"

@@ -151,7 +151,6 @@ export const Experiences = () => {
 
 
   return (
-   
     <div className="container contenido">
       {showForm ? (
         // Mostrar el formulario
@@ -161,15 +160,16 @@ export const Experiences = () => {
               <h2>
                 <b>{store.experienceId ? "Update" : "Publish"} an Experience</b>
               </h2>
-              <div className="image-upload">
+              <div className="image-upload d-flex">
+                <label for="files" className="btn btn-primary w-25">Select Image</label>
                   <input
                     type="file"
-                    id="image-input"
+                    id="files"
                     accept="image/jpeg"
-                    // multiple
                     onChange={handleImageChange}
+                    style={{visibility:"hidden"}}
                   />
-              </div>
+                </div>
               <div className="input-fields">
                 <input
                   type="text"
