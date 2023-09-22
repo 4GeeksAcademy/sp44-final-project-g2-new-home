@@ -93,18 +93,18 @@ export const Navbar = () => {
     // const user_email = store.user_email 
 
     return (
-        <nav className="navbar navbar-expand-lg bg-body-tertiary">
+        <nav className="navbar navbar-expand-lg navbarcolor">
             <div className="container-fluid text-center justify-content-center">
                 <div className="container d-flex justify-content-between align-items-center">
                     <div className="nav-links">
                         <Link to="/" className="navbar-brand custom-link"><b>Home</b></Link>
                         <Link to="/adoptme" className="navbar-brand custom-link"><b>Adoptme</b></Link>
                         {store.user_id && (
-                        <Link to="/animals" className="navbar-brand custom-link"><b>Lost Animals</b></Link>
+                        <Link to="/animals" className="navbar-brand custom-link"><b>My Animals</b></Link>
                         )}
                         <Link to="/animalshelter" className="navbar-brand custom-link"><b>Animal Shelter</b></Link>
                         <Link to="/tips" className="navbar-brand custom-link"><b>Tips</b></Link>
-                        {/* <Link to="/lostanimals" className="navbar-brand custom-link"><b>Lost animals</b></Link> */}
+                        <Link to="/lostanimals" className="navbar-brand custom-link"><b>Lost animals</b></Link>
                         <Link to="/voluntaryform" className="navbar-brand custom-link"><b>Voluntary form</b></Link>
                         <Link to="/experiences" className="navbar-brand custom-link"><b>Experiences</b></Link>
                         {store.user_id && store.animalshelterId == null && store.peopleId == null && (
@@ -200,7 +200,7 @@ export const Navbar = () => {
                                     id="userDropdown"
                                     data-bs-toggle="dropdown" // Agregamos esta línea para activar el dropdown de Bootstrap
                                 >
-                                    {`Welcome ${store.user_email}`}
+                                   <b> {`Welcome ${store.user_email}`}</b>
                                 </button>
                                 <ul className="dropdown-menu dropdown-menu-lg-end" aria-labelledby="userDropdown">
                                     <li>

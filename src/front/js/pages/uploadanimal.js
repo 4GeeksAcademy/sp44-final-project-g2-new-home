@@ -273,7 +273,7 @@ const UploadAnimal = () => {
                 >
                   <option value="" disabled>Select a type of animal</option>
                   <option value="Dog">Dog</option>
-                  <option value="Cat">Cat</option>
+                  {/* <option value="Cat">Cat</option> */}
                 </select>
                 <textarea
                   placeholder="Description"
@@ -316,6 +316,13 @@ const UploadAnimal = () => {
         // Mostrar las vistas de todas las publicaciones
         <div className="row">
           <h2 className="mt-4 mb-4">These are your animals</h2>
+          <div>
+          {!showForm && (
+            <button onClick={handleShowForm} className="btn btn-primary mb-4">
+              Upload your animal here
+            </button>
+          )}
+          </div>
           {filteredAnimals ? (
             filteredAnimals.map((animal) => (
               <div className="col-md-4 mb-4" key={animal.id}>
@@ -402,7 +409,7 @@ const UploadAnimal = () => {
                         >
                           <option value="" disabled>Select a type of animal</option> 
                           <option value="Dog">Dog</option>
-                          <option value="Cat">Cat</option>
+                          {/* <option value="Cat">Cat</option> */}
                         </select>
 
                         <label htmlFor="description">Description:</label>
@@ -494,12 +501,6 @@ const UploadAnimal = () => {
             <p>No animals available.</p>
           )}
         </div>
-      )}
-
-      {!showForm && (
-        <button onClick={handleShowForm} className="btn btn-primary">
-          Upload your animal here
-        </button>
       )}
     </div>
   );

@@ -69,8 +69,8 @@ export const Profile = () => {
             .then(response => {
                 if (response.success) {
                     actions.logout()
+                    alert("Account successfully deactivated"); 
                     navigate("/");
-                    alert(response.message); // Puedes mostrar un mensaje de éxito
                 } else {
                     // Maneja el caso de error en la actualización
                     alert(response.message);

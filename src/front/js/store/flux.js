@@ -9,7 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			filteredAnimals: localStorage.getItem("filteredAnimals"),
 			animals: [],
 			protectors: [],
-			// volunteers: [],
+			volunteers: [],
 			users: [],
 			user_id: localStorage.getItem("user_id"),
 			user_email: localStorage.getItem("user_email"),
@@ -137,6 +137,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ experienceId: null })
 				setStore({ user_id: null })
 				setStore({ peopleId: null })
+				setStore({ animalshelterId: null })
 			},
 			get_profile: async (userId) => {
 				console.log('getUserProfile llamado con userId:', userId);
@@ -429,7 +430,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 
 					const data = await resp.json();
-					setStore({ filteredAnimals: data.results });
+					setStore({ filteredAnimals: data.results, animals:data.results });
 					console.log("Animal registration successfully completed", data);
 					return true;
 				} catch (error) {
@@ -606,34 +607,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  // Puedes despachar una acción de error si lo deseas
 				}
 			  },
-			// getVolunteers: async () => {
-			// const token = localStorage.getItem("token");
+			getVolunteers: async () => {
+			const token = localStorage.getItem("token");
 			
-			// const opts = {
-			// 	method: 'GET',
-			// 	headers: {
-			// 	'Authorization': `Bearer ${token}`,
-			// 	'Content-Type': 'application/json',
-			// 	},
-			// };
+			const opts = {
+				method: 'GET',
+				headers: {
+				'Authorization': `Bearer ${token}`,
+				'Content-Type': 'application/json',
+				},
+			};
 			
-			// try {
-			// 	const resp = await fetch(`${process.env.BACKEND_URL}/api/volunteers`, opts);
+			try {
+				const resp = await fetch(`${process.env.BACKEND_URL}/api/volunteers`, opts);
 			
-			// 	if (resp.status !== 200) {
-			// 	console.error("Error fetching volunteers");
-			// 	return;
-			// 	}
+				if (resp.status !== 200) {
+				console.error("Error fetching volunteers");
+				return;
+				}
 			
-			// 	const data = await resp.json();
+				const data = await resp.json();
 			
-			// 	// Establece la lista de voluntarios en el almacenamiento
-			// 	setStore({ volunteers: data.results });
-			// } catch (error) {
-			// 	console.error("Error during volunteers fetch", error);
-			// 	// Puedes despachar una acción de error si lo deseas
-			// }
-			// },
+				// Establece la lista de voluntarios en el almacenamiento
+				setStore({ volunteers: data.results });
+			} catch (error) {
+				console.error("Error during volunteers fetch", error);
+				// Puedes despachar una acción de error si lo deseas
+			}
+			},
 			getUsers: async () => {
 				const token = localStorage.getItem("token");
 				

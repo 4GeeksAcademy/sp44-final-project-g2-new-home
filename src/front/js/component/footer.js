@@ -18,7 +18,7 @@ export const Footer = () => {
   const googleMapsLink = "https://www.google.com/maps/place/4+Erizas+Road,+Málaga,+29011";
 
   return (
-    <footer className="footer mt-auto py-4 text-center">
+    <footer className="footer margen  text-center">
       <div className="container" id="main">
         
         <div className="row">
@@ -96,17 +96,17 @@ export const Footer = () => {
         <div className="row">
           <div className="col-lg-12 text-center">
             &copy; 2023 New home. All rights reserved.
-            <a id="privatearea"
+            {/* <a id="privatearea"
               href="https://sites.google.com/view/privatearea"
               target="_blank"
               className="custom-link"
             >
             Private Area
+            </a> */}
+            <a href="policy" className="custom-link ms-1">
+              Legal Policies
             </a>
-            <a href="legal-notice.html" className="custom-link">
-              Legal Notice
-            </a>
-            <a
+            {/* <a
               href="privacy-policy.html"
               className="custom-link"
             >
@@ -114,7 +114,7 @@ export const Footer = () => {
             </a>
             <a href="cookie-policy.html" className="custom-link">
               Cookie Policy
-            </a>
+            </a> */}
           </div>
         </div>
       </div>

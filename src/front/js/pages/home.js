@@ -8,7 +8,7 @@ export const Home = () => {
     const { store, actions } = useContext(Context);
 
     return (
-        <div className="text-center mt-5">
+        <div className="text-center mb-0">
             <div className="position-relative">
                 <div className="portada-container">    
                     <img src={portada} alt="Portada" className="portada-image animate__animated animate__rollIn" />

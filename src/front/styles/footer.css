@@ -1,8 +1,8 @@
 /* Estilos para el contenedor principal */
 #main {
-    background-color: rgba(0, 0, 0, 0.2) !important;
+    background-color: #f2ffce !important;
     padding: 15px; /* Ajusta el espacio interno según tus preferencias */
-    margin-top: 15px;
+    
     position: relative;
     max-width: 100%;
 }

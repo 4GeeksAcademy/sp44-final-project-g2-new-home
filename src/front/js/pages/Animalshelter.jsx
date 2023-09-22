@@ -29,6 +29,7 @@ export const Animalshelter = () => {
         } 
     
       useEffect(() => {
+        actions.getProtectors()
         actions.fetchToken().then(token => {
           if (token) {
             console.log(token);
