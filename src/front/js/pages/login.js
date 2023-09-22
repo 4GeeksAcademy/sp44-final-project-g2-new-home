@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 import { Navigate, useNavigate } from "react-router-dom";
+import "../../styles/login.css";
 
 export const Login = () => {
 	const { store, actions } = useContext(Context);
@@ -30,7 +31,7 @@ export const Login = () => {
     
 
 	return (
-		<div className="text-center mt-5 mb-5">
+		<div className="text-center mt-5 mb-5 ">
             <div className="mt-5">
                 <h1>LOGIN</h1>
                 <div className="container d-flex flex-column align-items-center mt-5">
