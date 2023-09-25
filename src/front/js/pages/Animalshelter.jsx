@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import ImgProtector  from "../../img/logoNewHome.jpeg"
 import { Context } from "../store/appContext";
+import "../../styles/animalshelter.css";
 
 export const Animalshelter = () => {
     const { store, actions } = useContext(Context);
@@ -47,8 +48,9 @@ export const Animalshelter = () => {
 
 
     return (
+        <div className="body fondoprot">
         <div className="container mb-3">
-            <h1 className="text-primary text-center pt-4">Protectors</h1>
+            <h1 className="text-succes text-center pt-4">Protectors</h1>
             <div className="d-flex flex-wrap justify-content-between">
                 {shelter.map((item, id) => (
                     <div key={id} className="card m-3 rounded" style={{ width: "23rem" }}>
@@ -86,6 +88,7 @@ export const Animalshelter = () => {
                     </div>
                 ))}
             </div>
+        </div>
         </div>
     )
 }
