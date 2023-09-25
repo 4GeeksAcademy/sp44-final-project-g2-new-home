@@ -949,7 +949,7 @@ def get_token():
 
 @api.route('/proxy/petfinder', methods=['GET'])
 def proxy_petfinder():
-    url = 'https://api.petfinder.com/v2/animals?type=dog&page=1'
+    url = 'https://api.petfinder.com/v2/animals?type=dog&1'
     response = requests.get(url, headers=headers)
     return jsonify(response.json())
 

@@ -104,7 +104,7 @@ const Register = () => {
           </div>
           <div>
             <label className="mt-3 me-3 form-label">
-              I have read and accept the<a href="/policy">terms and conditions</a> and declare that I am
+              I have read and accept the <a href="/policy">terms and conditions</a> and declare that I am
               of legal age.
             </label>
             <input

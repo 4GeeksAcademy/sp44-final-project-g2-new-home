@@ -1,3 +1,70 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
+
+/* styles.css (o tu archivo de estilos preferido) */
+
+.my-masonry-grid {
+    display: flex;
+    width: auto;
+    border-radius: 1rem;
+    background-color: rgb(175, 212, 255);
+    justify-content: center;
+  }
+  
+  .my-masonry-grid_column {
+    padding: 25px; 
+    background-clip: padding-box;
+  }
+  
+  /* Agrega estilos para los elementos dentro de las columnas según tus necesidades */
+  .my-masonry-grid_column > div {
+    margin-bottom: 30px;
+    width: 100%;
+  }
+  /* Ajusta el ancho de las tarjetas dentro de las columnas */
+.my-masonry-grid_column .card {
+    width: 100%; /* Establece el ancho al 100% para que las tarjetas ocupen todo el ancho de la columna */
+    max-width: 100%; /* Establece un ancho máximo para las tarjetas si lo deseas */
+    margin-bottom: 20px; /* Espacio entre tarjetas */
+    /* Otros estilos de tarjetas según tus necesidades */
+  }
+  @media (min-width: 992px) and (max-width: 1199px) {
+    .my-masonry-grid_column > div {
+      margin-bottom: 30px;
+      width: 620px;
+    }
+}
+@media (min-width:768px) and (max-width: 991px) {
+  .my-masonry-grid_column > div {
+    margin-bottom: 30px;
+    width: 425px;
+  }
+}
+@media (min-width:577px) and (max-width: 767px) {
+  .my-masonry-grid_column > div {
+    margin-bottom: 30px;
+    width: 300px;
+  }
+}
+@media (min-width:550px) and (max-width: 576px) {
+  .my-masonry-grid_column > div {
+    margin-bottom: 30px;
+    width: 290px;
+  }
+}
+@media (min-width:533px) and (max-width: 549px) {
+  .my-masonry-grid_column > div {
+    margin-bottom: 30px;
+    width: 285px;
+  }
+}
+@media (min-width:455px) and (max-width: 532px) {
+  .my-masonry-grid_column > div {
+    margin-bottom: 30px;
+    width: 265px;
+  }
+}
+@media (min-width:333px) and (max-width: 454px) {
+  .my-masonry-grid_column > div {
+    margin-bottom: 30px;
+    width: 400px;
+  }
+}
