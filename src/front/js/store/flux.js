@@ -4,8 +4,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			token: localStorage.getItem("token"),
+			tokenApi: localStorage.getItem("tokenApi"),
 			message: null,
 			experiences: [],
+			ApiAnimal: [],
 			filteredAnimals: localStorage.getItem("filteredAnimals"),
 			animals: [],
 			protectors: [],
@@ -430,7 +432,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 
 					const data = await resp.json();
-					setStore({ filteredAnimals: data.results, animals:data.results });
+					setStore({ filteredAnimals: data.results});
 					console.log("Animal registration successfully completed", data);
 					return true;
 				} catch (error) {
@@ -754,7 +756,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  console.error('Error obteniendo token:', error);
 				  return null; // O devuelve un valor por defecto si es necesario
 				}
-			  },
+			},
 			
 
 			// Make call if token expired
@@ -771,4 +773,4 @@ const getState = ({ getStore, getActions, setStore }) => {
 	};
 };
 
-export default getState;
+export default getState;                                                     

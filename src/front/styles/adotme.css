@@ -1,0 +1,83 @@
+ @media (max-width: 1199px) {
+    .card {
+      width: 42% !important; /* Ocupar el 100% del ancho en dispositivos móviles */
+    }
+  } 
+
+  @media (max-width: 991px) {
+    .card {
+      width: 44% !important; /* Ocupar el 100% del ancho en dispositivos móviles */
+    }
+  } 
+
+  @media (max-width: 767px) {
+    .card {
+      width: 43% !important; /* Ocupar el 100% del ancho en dispositivos móviles */
+    }
+  } 
+  @media (max-width: 473px) {
+    .card {
+      width: 42% !important; /* Ocupar el 100% del ancho en dispositivos móviles */
+    }
+  } 
+  @media (max-width: 416px) {
+    .card {
+      width: 41% !important; /* Ocupar el 100% del ancho en dispositivos móviles */
+    }
+  } 
+  @media (max-width: 372px) {
+    .card {
+      width: 40% !important; /* Ocupar el 100% del ancho en dispositivos móviles */
+    }
+  }
+  @media (max-width: 336px) {
+    .card {
+      width: 39% !important; /* Ocupar el 100% del ancho en dispositivos móviles */
+    }
+  }  
+  @media (max-width: 307px) {
+    .card {
+      width: 38% !important; /* Ocupar el 100% del ancho en dispositivos móviles */
+    }
+  } 
+  @media (max-width: 283px) {
+    .card {
+      width: 37% !important; /* Ocupar el 100% del ancho en dispositivos móviles */
+    }
+  } 
+  @media (max-width: 263px) {
+    .card {
+      width: 36% !important; /* Ocupar el 100% del ancho en dispositivos móviles */
+    }
+  } 
+  @media (max-width: 249px) {
+    .card {
+      width: 90% !important; /* Ocupar el 100% del ancho en dispositivos móviles */
+    }
+  } 
+ .card img{
+    object-fit: cover;
+    object-position: center top;
+    width: 100%;
+    height:100%;
+    transition: 0.3s;
+    border-radius: 8px;
+}
+.card{
+    border-radius:12px;
+    padding:1%;
+    margin-bottom: 6%;
+    background: #fff;
+    box-shadow: 10px 10px 24px -12px rgba(0,0,0,0.75);
+    transition: 0.3s;
+}
+.card img.card-v{
+    width:100%;
+    height:100%;
+}
+.card:hover{
+    box-shadow: inset 10px 10px 24px -12px (0,0,0,0.75);
+}
+.card:hover {
+    transform:scale(0.98);
+} 

@@ -22,8 +22,8 @@ export const Lostanimals = () => {
   const [photo, setPhoto] = useState("");
   const [isActive, setIsActive] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const[file, setFile]= useState("");
-  const[fileUrl, setFileUrl]= useState("");
+  const [file, setFile] = useState("");
+  const [fileUrl, setFileUrl] = useState("");
   const [editData, setEditData] = useState({});
   const [editModeAnimals, setEditModeAnimals] = useState({});
   const [status, setStatus] = useState("Lost");
@@ -34,17 +34,17 @@ export const Lostanimals = () => {
 
   const handleShowForm = () => {
     if (!userId) {
-    alert("You need to log in to post your animal.");
-  } else  { 
-    setShowForm(true);
-    const currentDate = new Date().toLocaleDateString();
-    setDate(currentDate);
-  }
-    
+      alert("You need to log in to post your animal.");
+    } else {
+      setShowForm(true);
+      const currentDate = new Date().toLocaleDateString();
+      setDate(currentDate);
+    }
+
   };
 
   const handleImageChange = (e) => {
-    if (e.target.files.length){
+    if (e.target.files.length) {
       setFile(e.target.files[0]);
       console.log("evento imagen: ", e.target.files);
     }
@@ -56,27 +56,27 @@ export const Lostanimals = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-     
+
     if (!name || !city || !phone || !type || !description || !status || !contact || !file) {
       alert("Please fill in all required fields.");
       return;
     }
-  
+
     try {
       const form = new FormData();
       form.append("img", file);
-  
+
       const response = await fetch(process.env.BACKEND_URL + "/api/img", {
         method: "POST",
         body: form
       });
-  
+
       const data = await response.json();
       const imageUrl = data["img_url: "];
 
       console.log("data fetch img: ", data);
       console.log("imageUUUUUUUUURL: ", imageUrl)
-      
+
       const currentDate = new Date().toISOString().split('T')[0];
 
       const animalData = {
@@ -90,31 +90,31 @@ export const Lostanimals = () => {
         animalStatus: status,
         date: currentDate,
         contact,
-        photo: imageUrl, 
+        photo: imageUrl,
         isActive,
         user_id: userId,
       };
       console.log("Datos del animal que se envian: ", animalData)
-  
+
       // Llamar a la función del store para publicar el animal
       const success = await actions.publishAnimal(animalData);
       if (success) {
-        await actions.get_shelter_animals();
-        
+        await actions.get_all_animals();
+
         setShowForm(false);
-        setName(""); 
-        setCity(""); 
-        setPhone(""); 
-        setSize(""); 
-        setColor(""); 
-        setType(""); 
-        setDescription(""); 
+        setName("");
+        setCity("");
+        setPhone("");
+        setSize("");
+        setColor("");
+        setType("");
+        setDescription("");
         setStatus("");
-        setDate(""); 
-        setContact(""); 
+        setDate("");
+        setContact("");
         setPhoto("");
-        setFileUrl(""); 
-        setIsActive(true); 
+        setFileUrl("");
+        setIsActive(true);
       }
     } catch (e) {
       console.error("ERROR IMAGEN", e);
@@ -124,7 +124,7 @@ export const Lostanimals = () => {
   const handleEdit = (animalId) => {
     // Activa el modo de edición para el animal con el ID dado
     setEditModeAnimals({ ...editModeAnimals, [animalId]: true });
-    
+
     // Pobla los campos editables con los valores actuales del animal
     const animal = filteredAnimals.find((a) => a.id === animalId);
     setName(animal.name);
@@ -154,16 +154,16 @@ export const Lostanimals = () => {
       setEditData({ ...editData, photo: e.target.files[0] });
     }
   };
-  
+
   const handleCancelEdit = (animalId) => {
     // Cancela el modo de edición para el animal con el ID dado
     setEditModeAnimals({ ...editModeAnimals, [animalId]: false });
   };
-  
+
   const userId = store.user_id;
 
-  
- 
+
+
   return (
     <div id="lostanimals-container" className="container text-center">
       <h1 className="" id="lostanimals">{activeTab === "lost" ? "Lost Animals" : "Found Animals"}</h1>
@@ -174,192 +174,190 @@ export const Lostanimals = () => {
       )}
       {showForm && (
         <div className="container">
-        <div className="experiences-container">
-          <div className="experience-post">
-            <h2>
-              <b>Add Your Animal</b>
-            </h2>
-            <div className="image-upload  w-25">
-              <label htmlFor="files" className="btn">Select Image</label>
+          <div className="experiences-container">
+            <div className="experience-post">
+              <h2>
+                <b>Add Your Animal</b>
+              </h2>
+              <div className="image-upload">
                 <input
                   type="file"
-                  id="files"
+                  id="image-input"
                   accept="image/jpeg"
                   onChange={handleImageChange}
-                  style={{visibility:"hidden"}}
                 />
               </div>
-            <div className="input-fields">
-              <input
-                type="text"
-                placeholder="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="City"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="Phone"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-              />
-              <select
-                className="form-control mb-3"
-                value={size}
-                onChange={(e) => setSize(e.target.value)}
-              >
-                <option value="" disabled>Select a Size</option>
-                <option value="Large">Large</option>
-                <option value="Medium">Medium</option>
-                <option value="Small">Small</option>
-              </select>
-              <input
-                type="text"
-                placeholder="Color"
-                value={color}
-                onChange={(e) => setColor(e.target.value)}
-              />
-              <select
-                className="form-control mb-3"
-                value={type}
-                onChange={(e) => setType(e.target.value)}
-              >
-                <option value="" disabled>Select a type of animal</option>
-                <option value="Dog">Dog</option>
-                {/* <option value="Cat">Cat</option> */}
-              </select>
-              <textarea
-                placeholder="Description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              ></textarea>
-              <select
-                className="form-control mb-3"
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-              >
-                <option value="" disabled>Select the status of animal</option> 
-                <option value="Lost">Lost</option>
-                <option value="Found">Found</option>
-              </select>
-              <input
-                type="hidden"
-                name="date"
-                value={new Date().toLocaleDateString()}
-              />
-              <input
-                type="text"
-                placeholder="Contact information"
-                value={contact}
-                onChange={(e) => setContact(e.target.value)}
-              />
-              <div>
-              <button onClick={handleBackToPosts} className="me-3"  style={{ width: "80px" }} id="post">
-                Cancel
-              </button>
-              <button onClick={handleSubmit} style={{ width: "80px" }} id="post">
-                Post
-              </button>
-            </div>
+              <div className="input-fields">
+                <input
+                  type="text"
+                  placeholder="Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                <input
+                  type="text"
+                  placeholder="City"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                />
+                <input
+                  type="text"
+                  placeholder="Phone"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+                <select
+                  className="form-control mb-3"
+                  value={size}
+                  onChange={(e) => setSize(e.target.value)}
+                >
+                  <option value="" disabled>Select a Size</option>
+                  <option value="Large">Large</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Small">Small</option>
+                </select>
+                <input
+                  type="text"
+                  placeholder="Color"
+                  value={color}
+                  onChange={(e) => setColor(e.target.value)}
+                />
+                <select
+                  className="form-control mb-3"
+                  value={type}
+                  onChange={(e) => setType(e.target.value)}
+                >
+                  <option value="" disabled>Select a type of animal</option>
+                  <option value="Dog">Dog</option>
+                  {/* <option value="Cat">Cat</option> */}
+                </select>
+                <textarea
+                  placeholder="Description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                ></textarea>
+                <select
+                  className="form-control mb-3"
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
+                >
+                  <option value="" disabled>Select the status of animal</option>
+                  <option value="Lost">Lost</option>
+                  <option value="Found">Found</option>
+                </select>
+                <input
+                  type="hidden"
+                  name="date"
+                  value={new Date().toLocaleDateString()}
+                />
+                <input
+                  type="text"
+                  placeholder="Contact information"
+                  value={contact}
+                  onChange={(e) => setContact(e.target.value)}
+                />
+                <div>
+                  <button onClick={handleBackToPosts} className="me-3" style={{ width: "80px" }} id="post">
+                    Cancel
+                  </button>
+                  <button onClick={handleSubmit} style={{ width: "80px" }} id="post">
+                    Post
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
       )}
       <div className="card text-center" id="cuerpo">
-      <div className="card-header">
-        <button
-          className={`btn ${activeTab === "lost" ? "btn-primary" : "btn-secondary"}`}
-          onClick={() => setActiveTab("lost")}
-        >
-          Lost Animals
-        </button>
-        <button
-          className={`btn ${activeTab === "found" ? "btn-primary" : "btn-secondary"}`}
-          onClick={() => setActiveTab("found")}
-        >
-          Found Animals
-        </button>
-      </div>
-      <div className="card-body">
-      <div className="row">
-  {store.animals.map((animal) => {
-    // Filtrar los animales según el estado activo
-    if (activeTab === "lost" && animal.animal_status === "Lost") {
-      return (
-        <div className="col-md-4 mb-4" key={animal.id}>
-          <div className="card">
-            {animal.photo ? (
-              <img
-                src={animal.photo}
-                alt={`Image for ${animal.name}`}
-                className="card-img-top"
-              />
-            ) : (
-              <img
-                src="/placeholder-image.jpg"
-                alt="Image not available"
-                className="card-img-top"
-              />
-            )}
-            <div className="card-body">
-              <h4 className="card-title">Name: {animal.name}</h4>
-              <p className="card-text">City: {animal.city}</p>
-              <p className="card-text">Phone: {animal.phone}</p>
-              <p className="card-text">Size Type: {animal.size}</p>
-              <p className="card-text">Color: {animal.color}</p>
-              <p className="card-text">Type of Animal: {animal.type_of_animal}</p>
-              <p className="card-text">Description: {animal.description}</p>
-              <p className="card-text">Animal Status: {animal.animal_status}</p>
-              <p className="card-text">Contact: {animal.contact}</p>
-              <p className="card-text">Date: {animal.date}</p>
-            </div>
+        <div className="card-header">
+          <button
+            className={`btn ${activeTab === "lost" ? "btn-primary" : "btn-secondary"}`}
+            onClick={() => setActiveTab("lost")}
+          >
+            Lost Animals
+          </button>
+          <button
+            className={`btn ${activeTab === "found" ? "btn-primary" : "btn-secondary"}`}
+            onClick={() => setActiveTab("found")}
+          >
+            Found Animals
+          </button>
+        </div>
+        <div className="card-body">
+          <div className="row">
+            {store.animals.map((animal) => {
+              // Filtrar los animales según el estado activo
+              if (activeTab === "lost" && animal.animal_status === "Lost") {
+                return (
+                  <div className="col-md-4 mb-4" key={animal.id}>
+                    <div className="card">
+                      {animal.photo ? (
+                        <img
+                          src={animal.photo}
+                          alt={`Image for ${animal.name}`}
+                          className="card-img-top"
+                        />
+                      ) : (
+                        <img
+                          src="/placeholder-image.jpg"
+                          alt="Image not available"
+                          className="card-img-top"
+                        />
+                      )}
+                      <div className="card-body">
+                        <h4 className="card-title">Name: {animal.name}</h4>
+                        <p className="card-text">City: {animal.city}</p>
+                        <p className="card-text">Phone: {animal.phone}</p>
+                        <p className="card-text">Size Type: {animal.size}</p>
+                        <p className="card-text">Color: {animal.color}</p>
+                        <p className="card-text">Type of Animal: {animal.type_of_animal}</p>
+                        <p className="card-text">Description: {animal.description}</p>
+                        <p className="card-text">Animal Status: {animal.animal_status}</p>
+                        <p className="card-text">Contact: {animal.contact}</p>
+                        <p className="card-text">Date: {animal.date}</p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              } else if (activeTab === "found" && animal.animal_status === "Found") {
+                return (
+                  <div className="col-md-4 mb-4" key={animal.id}>
+                    <div className="card">
+                      {animal.photo ? (
+                        <img
+                          src={animal.photo}
+                          alt={`Image for ${animal.name}`}
+                          className="card-img-top"
+                        />
+                      ) : (
+                        <img
+                          src="/placeholder-image.jpg"
+                          alt="Image not available"
+                          className="card-img-top"
+                        />
+                      )}
+                      <div className="card-body">
+                        <h4 className="card-title">Name: {animal.name}</h4>
+                        <p className="card-text">City: {animal.city}</p>
+                        <p className="card-text">Phone: {animal.phone}</p>
+                        <p className="card-text">Size Type: {animal.size}</p>
+                        <p className="card-text">Color: {animal.color}</p>
+                        <p className="card-text">Type of Animal: {animal.type_of_animal}</p>
+                        <p className="card-text">Description: {animal.description}</p>
+                        <p className="card-text">Animal Status: {animal.animal_status}</p>
+                        <p className="card-text">Contact: {animal.contact}</p>
+                        <p className="card-text">Date: {animal.date}</p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+              return null; // No mostrar la tarjeta si no coincide con activeTab y animal_status
+            })}
           </div>
         </div>
-      );
-    } else if (activeTab === "found" && animal.animal_status === "Found") {
-      return (
-        <div className="col-md-4 mb-4" key={animal.id}>
-          <div className="card">
-            {animal.photo ? (
-              <img
-                src={animal.photo}
-                alt={`Image for ${animal.name}`}
-                className="card-img-top"
-              />
-            ) : (
-              <img
-                src="/placeholder-image.jpg"
-                alt="Image not available"
-                className="card-img-top"
-              />
-            )}
-            <div className="card-body">
-              <h4 className="card-title">Name: {animal.name}</h4>
-              <p className="card-text">City: {animal.city}</p>
-              <p className="card-text">Phone: {animal.phone}</p>
-              <p className="card-text">Size Type: {animal.size}</p>
-              <p className="card-text">Color: {animal.color}</p>
-              <p className="card-text">Type of Animal: {animal.type_of_animal}</p>
-              <p className="card-text">Description: {animal.description}</p>
-              <p className="card-text">Animal Status: {animal.animal_status}</p>
-              <p className="card-text">Contact: {animal.contact}</p>
-              <p className="card-text">Date: {animal.date}</p>
-            </div>
-          </div>
-        </div>
-      );
-    }
-    return null; // No mostrar la tarjeta si no coincide con activeTab y animal_status
-  })}
-</div>
       </div>
     </div>
-  </div>
   );
 };

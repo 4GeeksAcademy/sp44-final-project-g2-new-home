@@ -1,11 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
-import "../../styles/adoptme.css";
-
+import "../../styles/adotme.css";
+import Masonry from "react-masonry-css";
+import { Link } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from "react-router-dom";
 
 
 export const Adoptme = () => {
-
+  const navigate = useNavigate()
   const { store, actions } = useContext(Context);
   const [pets, setPets] = useState([]);
   const hostPetfinder = 'https://api.petfinder.com/v2/';
@@ -68,53 +71,72 @@ export const Adoptme = () => {
     e.target.src = backupImages[newBackupIndex].default; // Usa .default para obtener la ruta de la imagen importada
   };
 
+  const handleClick = (pet)=>{
+    navigate("/details");
+  }
+  
+  
+return(
+  <div className="container mb-3">
+  <h1 className="text-success text-center pt-4">Adopt a pet</h1>
 
-  return (
-   <div className="body fondo">
-  <div className="container  mb-3  ">
-      <h1 className="text-succes text-center pt-4">THESE ARE OUR DOGS FOR ADOPTION</h1>
-      <div className="d-flex flex-wrap justify-content-between">
-        {pets.map((item, id) => (
-          <div key={id} className="card m-3 rounded" style={{ width: "23rem" }}>
-            <img src={`https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/${item.id}/1/`} onError={handleOnErrorImg} />
-            <div className="card-body">
-              <h5 className="card-title">{item.name}</h5>
-              <p><strong>Breed mixture: </strong>{item.breeds.primary}</p> 
-              <p><strong>Age: </strong>{item.age}</p>
-              <p><strong>Gender: </strong>{item.gender}</p>
-              <p><strong>Size: </strong>{item.size}</p>
-              <p><strong>Descriptions: </strong>{item.description}</p>
-              <p><strong>City: </strong>{item.city}</p>
-              <p><strong>Contact: </strong>{item.contact.phone}</p>
-            </div>
-            
-          </div>
-        ))}
-      </div>
-      <div className="d-flex flex-wrap justify-content-between">
-        { store.animals ? (
-        store.animals.map((animal) => (
-          <div className="card m-3 rounded" key={animal.id} style={{ width: "23rem" }}>
+  <div className="row bg-primary-subtle rounded-5">
+  {pets.slice(0, 18).map((item, id) => (
+      <div key={id} className="card  m-3 rounded col-12 col-md-6 col-lg-4" style={{ width: "30%" }}>
+        <img
+          src={`https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/${item.id}/1/`}
+          onError={handleOnErrorImg}
+          alt={`Image for ${item.name}`}
+          className="card-img-top card-v"
+          // style={{ width: "100%", height: "30%", objectFit: "contain" }}
+        />
+        <div className="card-body">
+          <h5 className="card-title">{item.name}</h5>
+          <p><strong>Breed mixture: </strong>{item.breeds ? item.breeds.primary : 'N/A'}</p> 
+          <p><strong>Age: </strong>{item.age ? item.age : 'N/A'}</p>
+          <p><strong>Gender: </strong>{item.gender ? item.gender : 'N/A'}</p>
+          <p><strong>Size: </strong>{item.size ? item.size : 'N/A'}</p>
+          <p><strong>Descriptions: </strong>{item.description ? item.description : 'N/A'}</p>
+          <p><strong>City: </strong>{item.city ? item.city : 'N/A'}</p>
+          <p><strong>Contact: </strong>{item.contact && item.contact.phone ? item.contact.phone : 'N/A'}</p>
+        
+        </div> <button onClick={handleClick}>Details</button>
+      </div> 
+    ))}
+  </div>
+
+  <Masonry
+    breakpointCols={{ default: 3, 100: 1, 2500: 1 }}
+    className="my-masonry-grid"
+    columnClassName="my-masonry-grid_column"
+  >
+    <div className="row">
+      {store.animals ? (
+        store.animals.map((animal, index) => (
+          <div key={animal.id} className="card m-3 rounded col-12 col-md-6 col-lg-4" style={{ width: "30%"}}>
             <img
-              src={animal.photo}
+              src={animal.photo || backupImages[backupImageIndex].default}
               alt={`Image for ${animal.name}`}
-              className="card-img-top"
+              className="card-img-top card-v"
+              style={{ }}
+
             />
             <div className="card-body">
               <h5 className="card-title">{animal.name}</h5>
-              <p><strong>City: </strong>{animal.city}</p> 
-              <p><strong>Animal Status: </strong>{animal.animal_status}</p>
-              <p><strong>Color: </strong>{animal.color}</p>
-              <p><strong>Size: </strong>{animal.size}</p>
-              <p><strong>Descriptions: </strong>{animal.description}</p>
-              <p><strong>City: </strong>{animal.contact}</p>
-              <p><strong>Contact: </strong>{animal.phone}</p>
+              <p><strong>City: </strong>{animal.city ? animal.city : 'N/A'}</p> 
+              <p><strong>Animal Status: </strong>{animal.animal_status ? animal.animal_status : 'N/A'}</p>
+              <p><strong>Color: </strong>{animal.color ? animal.color : 'N/A'}</p>
+              <p><strong>Size: </strong>{animal.size ? animal.size : 'N/A'}</p>
+              <p><strong>Descriptions: </strong>{animal.description ? animal.description : 'N/A'}</p>
+              <p><strong>City: </strong>{animal.contact ? animal.contact : 'N/A'}</p>
+              <p><strong>Contact: </strong>{animal.phone ? animal.phone : 'N/A'}</p>
+              {/* Resto de la información de la tarjeta */}
             </div>
           </div>
         ))
-        ) : null}
-      </div>
-  </div>
-  </div>
-  )
+      ) : null}
+    </div>
+  </Masonry>
+</div>
+) 
 }

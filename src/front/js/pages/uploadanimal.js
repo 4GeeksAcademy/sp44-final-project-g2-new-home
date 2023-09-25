@@ -1,6 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
-import "../../styles/experiences.css";
+import "../../styles/index.css";
+import Masonry from 'react-masonry-css';
+
 
 const UploadAnimal = () => {
   const { store, actions } = useContext(Context);
@@ -203,6 +205,12 @@ const UploadAnimal = () => {
       }
     }
   };
+
+  const breakpointColumnsObj = {
+    default: 3,
+    454:2,
+    212:1
+  };
   
   useEffect(() => {
     actions.get_shelter_animals();
@@ -211,7 +219,7 @@ const UploadAnimal = () => {
   
   
   return (
-    <div className="container">
+    <div className="container  align-items-center">
       {showForm ? (
         // Mostrar el formulario
         <div className="container">
@@ -315,7 +323,7 @@ const UploadAnimal = () => {
         // Mostrar las vistas de todas las publicaciones
         <div className="row">
           <h2 className="mt-4 mb-4">These are your animals</h2>
-          <div>
+          <div className="">
           {!showForm && (
             <button onClick={handleShowForm} className="btn btn-primary mb-4">
               Upload your animal here
@@ -323,8 +331,14 @@ const UploadAnimal = () => {
           )}
           </div>
           {filteredAnimals ? (
-            filteredAnimals.map((animal) => (
-              <div className="col-md-4 mb-4" key={animal.id}>
+            <Masonry
+              breakpointCols={breakpointColumnsObj}
+              className="my-masonry-grid"
+              columnClassName="my-masonry-grid_column"
+            >
+            {filteredAnimals.map((animal) => (
+              
+              <div className="col-md-4 mb-4 mt-4" key={animal.id}>
                 <div className="card">
                   {animal.photo ? (
                     <img
@@ -499,11 +513,12 @@ const UploadAnimal = () => {
                   </div>
                 </div>
               </div>
-            ))
+))}
+          </Masonry>
           ) : (
             <p>No animals available.</p>
           )}
-        </div>
+        </div> 
       )}
     </div>
   );
