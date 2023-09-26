@@ -209,17 +209,15 @@ const UploadAnimal = () => {
     }
   };
 
-  const breakpointColumnsObj = {
-    default: 3,
-    454:2,
-    212:1
-  };
-  
   useEffect(() => {
     actions.get_shelter_animals();
   }, []);
 
-  
+  const breakpointColumnsObj = {
+  default: 3,
+    487:2,
+    204:1
+  };
   
   return (
     <div className="container  align-items-center">

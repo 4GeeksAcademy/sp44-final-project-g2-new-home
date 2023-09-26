@@ -1,6 +1,3 @@
-
-/* styles.css (o tu archivo de estilos preferido) */
-
 .my-masonry-grid {
     display: flex;
     width: auto;
@@ -56,15 +53,173 @@
     width: 285px;
   }
 }
-@media (min-width:455px) and (max-width: 532px) {
+@media (min-width:487px) and (max-width: 532px) {
   .my-masonry-grid_column > div {
     margin-bottom: 30px;
     width: 265px;
   }
 }
-@media (min-width:333px) and (max-width: 454px) {
+@media (min-width:442px) and (max-width: 486px) {
   .my-masonry-grid_column > div {
     margin-bottom: 30px;
-    width: 400px;
+    width: 380px;
   }
 }
+@media (min-width:400px) and (max-width: 441px) {
+  .my-masonry-grid_column > div {
+    margin-bottom: 30px;
+    width: 350px;
+  }
+}
+@media (min-width:380px) and (max-width: 399px) {
+  .my-masonry-grid_column > div {
+    margin-bottom: 30px;
+    width: 330px;
+  }
+}
+@media (min-width:340px) and (max-width: 379px) {
+  .my-masonry-grid_column > div {
+    margin-bottom: 30px;
+    width: 300px;
+  }
+}
+@media (min-width:316px) and (max-width: 339px) {
+  .my-masonry-grid_column > div {
+    margin-bottom: 30px;
+    width: 270px;
+  }
+}
+@media (min-width:271px) and (max-width: 315px) {
+  .my-masonry-grid_column > div {
+    margin-bottom: 30px;
+    width: 270px;
+  }
+  .my-masonry-grid_column {
+    padding: 10px; 
+    background-clip: padding-box;
+  }
+}
+
+@media (min-width:259px) and (max-width: 270px) {
+  .my-masonry-grid_column > div {
+    margin-bottom: 30px;
+    width: 260px;
+  }
+  .my-masonry-grid_column {
+    padding: 10px; 
+    background-clip: padding-box;
+  }
+}
+@media (min-width:250px) and (max-width: 258px) {
+  .my-masonry-grid_column > div {
+    margin-bottom: 30px;
+    width: 240px;
+  }
+  .my-masonry-grid_column {
+    padding: 10px; 
+    background-clip: padding-box;
+  }
+}
+@media (min-width:235px) and (max-width: 249px) {
+  .my-masonry-grid_column > div {
+    margin-bottom: 30px;
+    width: 100px;
+  }
+  .my-masonry-grid_column {
+    padding: 5px; 
+    background-clip: padding-box;
+  }
+}
+@media (min-width:220px) and (max-width: 234px) {
+  .my-masonry-grid_column > div {
+    margin-bottom: 30px;
+    width: 90px;
+  }
+  .my-masonry-grid_column {
+    padding: 5px; 
+    background-clip: padding-box;
+  }
+}
+@media (min-width:205px) and (max-width: 219px) {
+  .my-masonry-grid_column > div {
+    margin-bottom: 30px;
+    width: 85px;
+  }
+  .my-masonry-grid_column {
+    padding: 5px; 
+    background-clip: padding-box;
+  }
+}
+@media (min-width:196px) and (max-width: 204px) {
+  .my-masonry-grid_column > div {
+    margin-bottom: 30px;
+    width: 160px;
+  }
+  .my-masonry-grid_column {
+    padding: 5px; 
+    background-clip: padding-box;
+  }
+}
+
+.card img{
+  object-fit: cover;
+  object-position: center top;
+  width: 100%;
+  height:100%;
+  transition: 0.3s;
+  border-radius: 8px;
+}
+.card{
+  border-radius:12px;
+  padding:1%;
+  margin-bottom: 6%;
+  background: #fff;
+  box-shadow: 10px 10px 24px -12px rgba(0,0,0,0.75);
+  transition: 0.3s;
+}
+.card img.card-v{
+  width:100%;
+  height:100%;
+}
+.card:hover{
+  box-shadow: inset 10px 10px 24px -12px (0,0,0,0.75);
+}
+.card:hover {
+  transform:scale(0.98);
+} 
+
+/* Estilos para la tabla */
+.table {
+  font-size: 16px; /* Tamaño de fuente */
+  background-color: #f8f9fa; /* Color de fondo */
+  border-radius: 0.5rem; 
+  box-shadow: -5px 5px 10px 5px rgba(0, 0, 0, 0.2);
+
+}
+
+/* Estilos para las filas de la tabla en hover */
+.table-hover tbody tr:hover {
+  background-color: #da0d0d; /* Color de fondo en hover */
+  cursor: pointer;
+}
+
+/* Estilos para las celdas de encabezado */
+.table thead th {
+  background-color: #343a40; /* Color de fondo del encabezado */
+  color: white; /* Color del texto del encabezado */
+}
+
+/* Estilos para las celdas del cuerpo de la tabla */
+.table tbody td {
+  vertical-align: middle; /* Alineación vertical en el medio */
+}
+.titulos{
+ color: rgb(61, 31, 70);
+ font-weight: bold;
+ font-size: rem;
+}
+
+
+
+
+

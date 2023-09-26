@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from '../store/appContext';
 import { useNavigate } from "react-router-dom";
-import "../../styles/voluntaryform.css"
+import "../../styles/index.css"
 
 
 export const VoluntaryForm = () => {
