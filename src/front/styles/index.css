@@ -68,3 +68,12 @@
     width: 400px;
   }
 }
+
+
+nav-link.active {
+  background-color: #007bff; /* Cambia el color de fondo a tu elección */
+  color: #ffffff; /* Cambia el color del texto a tu elección */
+  border-radius: 5px; /* Añade bordes redondeados (opcional) */
+  /* Otros estilos si lo deseas */
+}
+

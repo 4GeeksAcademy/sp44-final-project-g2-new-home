@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { useContext } from "react";
 
@@ -9,6 +9,7 @@ export const Navbar = () => {
     const [searchVisible, setSearchVisible] = useState(false);
     const [cityFilter, setCityFilter] = useState("");
     const [petType, setPetType] = useState(""); // Nuevo estado para el tipo de mascota
+    // const [activeTab, setActiveTab] = useState(0);
     const cities = [
         "Álava",
         "Albacete",
@@ -84,33 +85,61 @@ export const Navbar = () => {
 
     const handleSearch = () => {
         setSearchHistory([...searchHistory, cityFilter.toLowerCase()]);
-        // Aquí puedes realizar la acción de búsqueda
+        // Aquí puedes realizar la acción de búsquedaa
         console.log("City: ", cityFilter);
         console.log("Pet Type: ", petType);
         closeSearch();
     };
 
+    const [activeTab, setActiveTab] = useState(0);
+  // Función para cambiar la pestaña activa
+  const handleTabClick = (index) => {
+    setActiveTab(index);
+  };
     // const user_email = store.user_email 
+
+    const activeStyle = {
+        backgroundColor: "lightblue", // Cambia el color de fondo de la pestaña activa aquí
+      };
 
     return (
         <nav className="navbar navbar-expand-lg navbarcolor">
             <div className="container-fluid text-center justify-content-center">
                 <div className="container d-flex justify-content-between align-items-center">
-                    <div className="nav-links">
-                        <Link to="/" className="navbar-brand custom-link"><b>Home</b></Link>
-                        <Link to="/adoptme" className="navbar-brand custom-link"><b>Adoptme</b></Link>
-                        {store.user_id && (
-                        <Link to="/animals" className="navbar-brand custom-link"><b>My Animals</b></Link>
-                        )}
-                        <Link to="/animalshelter" className="navbar-brand custom-link"><b>Animal Shelter</b></Link>
-                        <Link to="/tips" className="navbar-brand custom-link"><b>Tips</b></Link>
-                        <Link to="/lostanimals" className="navbar-brand custom-link"><b>Lost animals</b></Link>
-                        <Link to="/voluntaryform" className="navbar-brand custom-link"><b>Voluntary form</b></Link>
-                        <Link to="/experiences" className="navbar-brand custom-link"><b>Experiences</b></Link>
-                        {store.user_id && store.animalshelterId == null && store.peopleId == null && (
-                        <Link to="/users" className="navbar-brand custom-link"><b>Manage Users</b></Link>
-                        )}
-                    </div>
+                <ul className="nav nav-tabs">
+  <li className="nav-item">
+    <Link  className={`nav-link ${activeTab === 0 ? "active" : ""}`} to="/" onClick={() => handleTabClick(0)}><b>Home</b></Link>
+  </li>
+  <li className="nav-item">
+    <Link className={`nav-link ${activeTab === 1 ? "active" : ""}`} to="/adoptme" onClick={() => handleTabClick(1)}><b>Adoptme</b></Link>
+  </li>
+  {store.user_id && (
+    <li className="nav-item">
+      <Link className={`nav-link ${activeTab === 2 ? "active" : ""}`} to="/animals" onClick={() => handleTabClick(2)}><b>My Animals</b></Link>
+    </li>
+  )}
+  <li className="nav-item">
+    <Link className={`nav-link ${activeTab === 3 ? "active" : ""}`} to="/animalshelter" onClick={() => handleTabClick(3)}><b>Animal Shelter</b></Link>
+  </li>
+  <li className="nav-item">
+    <Link className={`nav-link ${activeTab === 4 ? "active" : ""}`} to="/tips" onClick={() => handleTabClick(4)}><b>Tips</b></Link>
+  </li>
+  <li className="nav-item">
+    <Link className={`nav-link ${activeTab === 5 ? "active" : ""}`} to="/lostanimals"onClick={() => handleTabClick(5)}><b>Lost animals</b></Link>
+  </li>
+  <li className="nav-item">
+    <Link className="nav-link" to="/voluntaryform"><b>Voluntary form</b></Link>
+  </li>
+  <li className="nav-item">
+    <Link className="nav-link" to="/experiences"><b>Experiences</b></Link>
+  </li>
+  {store.user_id && store.animalshelterId == null && store.peopleId == null && (
+    <li className="nav-item">
+      <Link className="nav-link" to="/users"><b>Manage Users</b></Link>
+    </li>
+  )}
+</ul>
+
                     {/* <button className="btn btn-outline-success" id="openSearchButton" onClick={toggleSearch}>
                         Open Search
                     </button> */}
@@ -194,14 +223,16 @@ export const Navbar = () => {
                     ) : (
                         <div className="d-flex me-3">
                             <div className="dropdown">
-                                <button
-                                    className="btn btn-success"
-                                    type="button"
-                                    id="userDropdown"
-                                    data-bs-toggle="dropdown" // Agregamos esta línea para activar el dropdown de Bootstrap
-                                >
-                                   <b> {`Welcome ${store.user_email}`}</b>
-                                </button>
+                            <button
+                                className="btn btn-transparent dropdown-toggle"
+                                type="button"
+                                id="userDropdown"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+                                <i className="fas fa-user me-2"></i>
+                                <b>{store.user_email}</b>
+                            </button>
                                 <ul className="dropdown-menu dropdown-menu-lg-end" aria-labelledby="userDropdown">
                                     <li>
                                         <Link to="/" onClick={() => actions.logout()} className="dropdown-item">
