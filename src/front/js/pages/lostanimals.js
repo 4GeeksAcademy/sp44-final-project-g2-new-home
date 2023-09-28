@@ -166,7 +166,7 @@ export const Lostanimals = () => {
 
   return (
     <div id="lostanimals-container" className="container text-center">
-      <h1 className="" id="lostanimals">{activeTab === "lost" ? "Lost Animals" : "Found Animals"}</h1>
+      <h1 id="lostanimals">{activeTab === "lost" ? "Lost Animals" : "Found Animals"}</h1>
       {!showForm && (
         <button onClick={handleShowForm} className="btn btn-primary mb-5 mt-5">
           Add your animal here

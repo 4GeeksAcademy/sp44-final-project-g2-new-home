@@ -7,7 +7,6 @@ import tip_3 from "../../img/tip_3.png";
 import tip_4 from "../../img/tip_4.jpg";
 import tip_5 from "../../img/tip_5.png";
 import tip_6 from "../../img/tip_6.png";
-import "../../styles/tips.css";
 
 export const Tips = () => {
   const { store, actions } = useContext(Context);

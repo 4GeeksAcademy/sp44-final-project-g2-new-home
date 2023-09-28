@@ -2,17 +2,20 @@ import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/adotme.css";
 import Masonry from "react-masonry-css";
-import { Link } from "react-router-dom";
+import { Link, } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from "react-router-dom";
 
 
 export const Adoptme = () => {
+
   const navigate = useNavigate()
   const { store, actions } = useContext(Context);
   const [pets, setPets] = useState([]);
+  console.log(pets)
   const hostPetfinder = 'https://api.petfinder.com/v2/';
-  const url = hostPetfinder + 'animal?type=dog&page=1';
+  const urlApi = hostPetfinder + 'animal?type=dog&page=1';
+
   const backupImages = [
       require("../../img/imgError/1.jpg"),
       require("../../img/imgError/2.jpg"),
@@ -38,14 +41,14 @@ export const Adoptme = () => {
   const [backupImageIndex, setBackupImageIndex] = useState(0);
 
   const getAnimal = async (token) => {
-    const url ='https://api.petfinder.com/v2/animals?type=dog&page=1';
+    const urlApi ='https://api.petfinder.com/v2/animals?type=dog&page=1';
     const requestOptions = {
       method: 'GET',
       mode: 'cors',
       headers: {Authorization: `Bearer ${token}`},
       redirect: 'follow'
     };
-    const response = await fetch(url, requestOptions);
+    const response = await fetch(urlApi, requestOptions);
     if(response.ok) {
       const data = await response.json();
       console.log(data);
@@ -71,43 +74,38 @@ export const Adoptme = () => {
     e.target.src = backupImages[newBackupIndex].default; // Usa .default para obtener la ruta de la imagen importada
   };
 
-  const handleClick = (pet)=>{
-    navigate("/details");
-  }
+  // const handleClick = (data)=>{
+  //   navigate("/details");
+  //   console.log(data)
+  // }
   
   
 return(
   <div className="container mb-3">
   <h1 className="text-success text-center pt-4">Adopt a pet</h1>
 
-  <div className="row bg-primary-subtle rounded-5">
-  {pets.slice(0, 18).map((item, id) => (
+  <div className="row  rounded-5">
+  {pets.slice(0, 18).map((animal, id) => (
       <div key={id} className="card  m-3 rounded col-12 col-md-6 col-lg-4" style={{ width: "30%" }}>
         <img
-          src={`https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/${item.id}/1/`}
+          src={`https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/${animal.id}/1/`}
           onError={handleOnErrorImg}
-          alt={`Image for ${item.name}`}
+          alt={`Image for ${animal.name}`}
           className="card-img-top card-v"
-          // style={{ width: "100%", height: "30%", objectFit: "contain" }}
         />
         <div className="card-body">
-          <h5 className="card-title">{item.name}</h5>
-          <p><strong>Breed mixture: </strong>{item.breeds ? item.breeds.primary : 'N/A'}</p> 
-          <p><strong>Age: </strong>{item.age ? item.age : 'N/A'}</p>
-          <p><strong>Gender: </strong>{item.gender ? item.gender : 'N/A'}</p>
-          <p><strong>Size: </strong>{item.size ? item.size : 'N/A'}</p>
-          <p><strong>Descriptions: </strong>{item.description ? item.description : 'N/A'}</p>
-          <p><strong>City: </strong>{item.city ? item.city : 'N/A'}</p>
-          <p><strong>Contact: </strong>{item.contact && item.contact.phone ? item.contact.phone : 'N/A'}</p>
-        
-        </div> <button onClick={handleClick}>Details</button>
+          <h5 className="card-title d-flex justify-content-center mb-3 ">{animal.name}</h5>
+          <p><strong>Breed mixture: </strong>{animal.breeds ? animal.breeds.primary : 'N/A'}</p> 
+        </div>
+        <div className="mt-2">
+          <Link to="/details" state={ animal } >More details</Link>
+        </div>
       </div> 
     ))}
   </div>
-
   <Masonry
     breakpointCols={{ default: 3, 100: 1, 2500: 1 }}
-    className="my-masonry-grid"
+    className="my-masonry-grid "
     columnClassName="my-masonry-grid_column"
   >
     <div className="row">

@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-import "../../styles/experiences.css";
 import { Context } from "../store/appContext";
 
 
@@ -157,7 +156,7 @@ export const Experiences = () => {
         <div className="container">
           <div className="experiences-container">
             <div className="experience-post">
-              <h2>
+              <h2 >
                 <b>{store.experienceId ? "Update" : "Publish"} an Experience</b>
               </h2>
               <div className="image-upload d-flex">
@@ -214,7 +213,7 @@ export const Experiences = () => {
       ) : (
         // Mostrar las vistas de todas las publicaciones
         <div className="row">
-          <h2 className="mt-4 mb-4">These have been some of the experiences of our users...</h2>
+          <h2 className="mt-4 mb-4" id="experiences">These have been some of the experiences of our users...</h2>
           {store.experiences ? (
             store.experiences.map((experience) => (
               <div className="col-md-4 mb-4" key={experience.id}>

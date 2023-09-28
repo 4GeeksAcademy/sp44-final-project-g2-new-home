@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from '../store/appContext';
 import { useNavigate } from "react-router-dom";
-import "../../styles/voluntaryform.css"
 
 
 export const VoluntaryForm = () => {
@@ -81,9 +80,9 @@ export const VoluntaryForm = () => {
         <div className="card mt-5 text-center animate__animated animate__bounceInUp" id="formcomplete">
         {!store.animalshelterId?(
         <div className="card-body">
-          <h2 className="card-title" id="voluntaryform">
+          <h1 className="card-title" id="voluntaryform">
             <b>Voluntary Form</b>
-          </h2>
+          </h1>
           <div className="form-group row">
             <div className="col-md-4">
               <label>Name:</label>
