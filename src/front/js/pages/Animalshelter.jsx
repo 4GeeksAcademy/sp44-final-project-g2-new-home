@@ -9,6 +9,8 @@ export const Animalshelter = () => {
   const [shelter, setShelter] = useState([]);
   const [shelterAPI, setShelterAPI] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
+  const [selectedState, setSelectedState] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const hostPetfinder = "https://api.petfinder.com/v2/";
   const url = hostPetfinder + "organizations/";
 
@@ -68,28 +70,56 @@ export const Animalshelter = () => {
     setSelectedCity(event.target.value);
   };
 
+  const handleStateChange = (event) => {
+    setSelectedState(event.target.value);
+  };
+
   // Filtrar las protectoras combinadas por ciudad
   const filteredShelter = combinedShelter.filter((item) => {
-    if (selectedCity === "") {
-      return true; // Mostrar todas las protectoras si no se ha seleccionado una ciudad
-    } else {
-      return item.city === selectedCity;
-    }
+    const cityMatch = selectedCity === "" || item.city === selectedCity;
+    const stateMatch = selectedState === "" || item.state === selectedState;
+    const nameMatch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
+  
+    return cityMatch && stateMatch && nameMatch;
   });
+  
 
   return (
     <div className="container mb-3">
-      <h1 className="titulos text-right pt-4 mb-5">
+      <h1 className="titulos text-right pt-4 mb-5 esmeralda">
         Find a Shelter: Animal Shelters and Rescues Near You
       </h1>
       {/* Dropdown para seleccionar la ciudad */}
       <div className="d-flex">
-        <div className=" me-5" style={{ flex: "0 0 auto" }}>
-          <p><b>Select a city</b></p>
+      <div className="me-5 border border-4 sombra rounded-2" style={{ maxHeight: "370px", overflowY: "auto" }}>
+        <div className="leyendadifuminado p-3 text-center" style={{width:"100%"}}>
+          <h5 className="text-light"><b>Find faster here{"\u00A0"}{"\u00A0"}{"\u00A0"}<i className="fas fa-paw text-light"></i></b></h5>
+        </div>
+        <div className="me-5 p-3" style={{ flex: "0 0 auto" }}>
+          <p className="ms-4"><b>Select a state</b></p>
           <select
-            className="form-select"
+            className="form-select ms-4"
+            value={selectedState}
+            onChange={handleStateChange}
+            style={{ margin: "0 auto" }}
+          >
+            <option value="">All States</option>
+            {[...new Set(filteredShelter.map(item => item.state))]
+              .sort()
+              .map((state, id) => (
+                <option key={id} value={state}>
+                  {state}
+                </option>
+              ))}
+          </select>
+        </div>
+        <div className="me-5 p-3" style={{ flex: "0 0 auto" }}>
+          <p className="ms-4"><b>Select a city</b></p>
+          <select
+            className="form-select ms-4"
             value={selectedCity}
             onChange={handleCityChange}
+            style={{ margin: "0 auto" }}
           >
              <option value="">All Cities</option>
       {[...new Set(filteredShelter.map(item => item.city))]
@@ -101,15 +131,26 @@ export const Animalshelter = () => {
             ))}
           </select>
         </div>
+        <div className="d-flex justify-content-center">
+        <input
+          type="text"
+          className="form-control mt-3"
+          placeholder="Search by name"
+          value={searchTerm}
+          style={{ maxWidth: "74%"}}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        </div>
+      </div>
         {/* Tabla */}
         <table className="table table-striped table-hover border border-4" style={{ flex: "1" }}>
           <thead>
-            <tr className="text-center custom-row">
+            <tr className="">
               <th scope="col">WEBSITE</th>
               <th scope="col">ORGANIZATION</th>
               <th scope="col">EMAIL</th>
               <th scope="col">CITY</th>
-              <th scope="col">STATE/PROV</th>
+              <th scope="col">STATE</th>
               <th scope="col">COUNTRY</th>
               <th scope="col">POST CODE</th>
               <th scope="col">PHONE</th>

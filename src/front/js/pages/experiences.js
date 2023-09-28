@@ -21,28 +21,32 @@ export const Experiences = () => {
   const shelterId = localStorage.getItem("animalshelterId");
 
   const handleShowForm = () => {
-    if (peopleId) {
-      setShowForm(true); // Mostrar el formulario solo si el usuario está autenticado
-    } else if (!userId) {
-      alert("You need to log in to post your experience.");
-    } else if (shelterId != null || (shelterId && peopleId === null)) {
-      alert("You do not have permission to publish");
-    }
-      
+    if (store.experienceId !== null) {
       const experienceToEdit = store.experiences.find((experience) => experience.id === store.experienceId);
-      localStorage.setItem("experienceTitle", experienceToEdit.title);
-      localStorage.setItem("experienceBody", experienceToEdit.body);
-      localStorage.setItem("experienceFileUrl", experienceToEdit.photo);
       
-      setFileUrl(experienceToEdit.photo);
-      setTitle(experienceToEdit.title );
-      setBody(experienceToEdit.body );
-      ; 
+      if (experienceToEdit) {
+        localStorage.setItem("experienceTitle", experienceToEdit.title);
+        localStorage.setItem("experienceBody", experienceToEdit.body);
+        localStorage.setItem("experienceFileUrl", experienceToEdit.photo);
+        
+        setFileUrl(experienceToEdit.photo);
+        setTitle(experienceToEdit.title);
+        setBody(experienceToEdit.body);
+        setIsEditing(true); // Activa el modo de edición si estás editando una experiencia existente
+      } else {
+        // Manejar el caso en el que no se encuentra la experiencia correspondiente
+        console.error("Experience not found for ID:", store.experienceId);
+      }
+    } else {
+      setShowForm(true); // Mostrar el formulario solo si el usuario está autenticado
+    }
   };
   
   
+  
   const handleBackToPosts = () => {
-    setShowForm(false); // Volver a las vistas de todas las publicaciones
+    setShowForm(false); 
+    setFileUrl(false);
   };
   
   const handleTitleChange = (e) => {
@@ -54,9 +58,10 @@ export const Experiences = () => {
   };
 
   const handleImageChange = (e) => {
-    if (e.target.files.length){
+    if (e.target.files.length) {
+      const imageUrl = URL.createObjectURL(e.target.files[0]);
+      setFileUrl(imageUrl); // Actualizar el estado de la vista previa de la imagen
       setFile(e.target.files[0]);
-      console.log("evento imagen: ", e.target.files);
     }
   };
   
@@ -147,6 +152,8 @@ export const Experiences = () => {
 
   useEffect(() => {
     actions.get_experiences();
+    console.log("store.experienceId:", store.experienceId);
+
   }, []);
 
   const breakpointColumnsObj = {
@@ -159,70 +166,91 @@ export const Experiences = () => {
     <div className="container">
       {showForm ? (
         // Mostrar el formulario
-        <div className="container">
-          <div className="experiences-container">
-            <div className="experience-post">
-              <h2>
-                <b>{store.experienceId ? "Update" : "Publish"} an Experience</b>
+        <div className="container justify-content-center d-flex">
+          <div className="">
+            <div className="card row mt-5 fondo" >
+              <h2 className="coloresmeralda text-center my-3">
+                <b>{ store.experienceId !== null ? "Update your experience" : "Publish an experience"}</b>
               </h2>
-              <div className="image-upload">
-                  <input
-                    type="file"
-                    id="image-input"
-                    accept="image/jpeg"
-                    // multiple
-                    onChange={handleImageChange}
-                  />
-              </div>
-              <div className="input-fields">
+              <div className="text-light p-3 mt-4 custom-preview-image text-center upload-container">
+                <label htmlFor="image-input" className="upload-button p-2 rounded-3 center-button" >
+                  <b>Upload Image</b>
+                </label>
                 <input
-                  type="text"
-                  placeholder="Title"
-                  value={title}
-                  onChange={handleTitleChange}
+                  type="file"
+                  id="image-input"
+                  accept="image/jpeg"
+                  onChange={handleImageChange}
+                  style={{ visibility: "hidden" }}
                 />
-                <textarea
-                  placeholder="Description"
-                  value={body}
-                  onChange={handleDescriptionChange}
-                ></textarea>
               </div>
-              {store.experienceId ? (
-              <div>
-                <button onClick={handleBackToPosts} className="me-3"  style={{ width: "80px" }} id="post">
-                  Cancel
-                </button>
-                <button onClick={handleDelete} className="me-3 mb-5"  style={{ width: "80px" }} id="post">
-                  Delete
-                </button>
-                <button onClick={handleSubmit} style={{ width: "80px" }} id="post">
-                  Update
-                </button>
+              {fileUrl && (
+                <div className="custom-preview-image upload-container">
+                  <img src={fileUrl} alt="Preview" />
+                </div>
+              )} 
+              <div className="input-fields">
+                <form onSubmit={handleSubmit}>
+                  <div className="row mt-5 d-flex justify-content-center">
+                      <div className="col-md-6">
+                        <input
+                          type="text"
+                          placeholder="Title"
+                          value={title}
+                          onChange={handleTitleChange}
+                          className="form-control"
+                        />
+                      </div>
+                      <div className="col-10">
+                        <textarea
+                          placeholder="Description"
+                          value={body}
+                          onChange={handleDescriptionChange}
+                          className="form-control mt-3"
+                        ></textarea>
+                      </div>
+                  </div>
+                </form>
+              </div>
+              { store.experienceId !== null ? (
+              <div className="row">
+                <div className="col-12 py-3 d-flex justify-content-center">
+                  <button onClick={handleBackToPosts} className="btn btn-transparent mt-2 ms-4 me-3" >
+                      <i className="fas fa-arrow-left fa-2xl"></i>
+                  </button>
+               
+                  <button onClick={handleSubmit} className="btn btn-transparent text-dark mt-2" >
+                      <i className="fas fa-2xl fa-square-check" style={{color: "#27ca1c"}}></i>
+                  </button>
+                
+                  <button onClick={handleDelete} className="btn btn-transparent mt-2 ms-3"  >
+                      <i className="fas fa-trash-can fa-2xl" style={{color: "#585555"}}></i>
+                  </button>
+                </div>
               </div>
             ) : (
-              <div>
-                <button onClick={handleBackToPosts} className="me-3"  style={{ width: "80px" }} id="post">
-                  Cancel
-                </button>
-                <button onClick={handleSubmit} style={{ width: "80px" }} id="post">
-                  Post
-                </button>
-              </div>
+              <div className="row">
+                <div className="col-12 py-3 d-flex justify-content-center">
+                  <button onClick={handleBackToPosts} className="btn btn-transparent mt-2 ms-4 me-3" >
+                      <i className="fas fa-arrow-left fa-2xl"></i>
+                  </button>
+                  <button onClick={handleSubmit} className="btn btn-transparent collapse-arrow text-dark mt-2 me-3">
+                      <i className="far fa-paper-plane"></i>
+                  </button>
+                </div>
+              </div> 
             )}
-              { 
-                fileUrl !== ""  ? <img src={fileUrl} className="img-fluid"/> : null
-              }
             </div>
           </div>
         </div>
       ) : (
         // Mostrar las vistas de todas las publicaciones
         <div className="row">
-          <h2 className="mt-4 mb-4">These have been some of the experiences of our users...</h2>
+          <h2 className="mt-4 mb-4 esmeralda">These have been some of the experiences of our users...</h2>
           <div className="d-flex justify-content-center mb-5">
           {!showForm && (
-        <button onClick={handleShowForm} className="btn btn-primary w-25">
-          {store.experienceId ? "Update us" : "Share your experience with us"}                                       
+        <button onClick={handleShowForm} className="btn btn-add-animal text-dark mt-3">
+          { store.experienceId !== null ? <b>"Update us"</b>  : <b>"Share your experience with us"</b> }                                       
         </button>
          )}
          </div>
@@ -234,7 +262,7 @@ export const Experiences = () => {
           {store.experiences ? (
             store.experiences.map((experience) => (
               <div className="col-md-4 mb-4" key={experience.id}>
-                <div className="card">
+                <div className="card custom-card">
                   {experience.photo ? (
                     <img
                       src={experience.photo}

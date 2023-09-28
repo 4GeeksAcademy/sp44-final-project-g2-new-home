@@ -139,6 +139,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ experienceId: null })
 				setStore({ user_id: null })
 				setStore({ peopleId: null })
+				setStore({ peopleName: null })
 				setStore({ animalshelterId: null })
 			},
 			get_profile: async (userId) => {

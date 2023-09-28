@@ -2,7 +2,7 @@
     display: flex;
     width: auto;
     border-radius: 1rem;
-    background-color: rgb(175, 212, 255);
+    background-color:transparent;
     justify-content: center;
   }
   
@@ -184,18 +184,14 @@
 .card:hover{
   box-shadow: inset 10px 10px 24px -12px (0,0,0,0.75);
 }
-.card:hover {
+.custom-card:hover {
   transform:scale(0.98);
 } 
 
 /* Estilos para la tabla */
 .table {
-  font-size: 16px; /* Tamaño de fuente */
-  background-color: #f8f9fa; /* Color de fondo */
-  border-radius: 0.5rem; 
+  font-size: 1rem; 
   box-shadow: 0px 5px 10px rgba(31, 32, 32, 0.2), 5px 0px 10px rgba(31, 32, 32, 0.2), -5px 0px 10px rgba(31, 32, 32, 0.2);
-
-
 }
 
 /* Estilos para las filas de la tabla en hover */
@@ -206,14 +202,20 @@
 
 /* Estilos para las celdas de encabezado */
 .table thead th {
-  background-color: #343a40; /* Color de fondo del encabezado */
-  color: white; /* Color del texto del encabezado */
+  background-color: rgb(15, 138, 101);
+  color: white; 
+  vertical-align: middle;
 }
 
 /* Estilos para las celdas del cuerpo de la tabla */
 .table tbody td {
   vertical-align: middle; /* Alineación vertical en el medio */
 }
+.custom-container {
+  width: 75%;
+  margin: 0 auto; /* Esto centrará el contenido horizontalmente en el contenedor padre */
+}
+
 .titulos{
  color: rgb(61, 31, 70);
  font-weight: bold;
@@ -249,8 +251,14 @@ ul {
 }
 .esmeralda{
   color: rgb(26, 158, 118);
-  font-size: 400%;
+  font-size: 250%;
   font-weight: bold;
+}
+.coloresmeralda{
+  color: rgb(26, 158, 118) !important;
+}
+.fondo{
+  background-color: rgb(63 153 125 / 10%) !important ;
 }
 #tip1{
   background: rgb(63 153 125 / 10%);
@@ -269,4 +277,167 @@ ul {
 }
 #tip6{
   background: rgb(63 153 125 / 10%);
+}
+
+.expandable-cell {
+  position: relative;
+  overflow: hidden;
+}
+
+.content {
+  max-height: 1.4rem; /* Establece la altura máxima inicial que se mostrará */
+  overflow: hidden;
+  transition: max-height 0.3s ease-out; /* Agrega una transición suave */
+}
+
+.content.expanded {
+  max-height: none; /* Muestra todo el contenido cuando se expande */
+}
+
+.expandable-cell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.fa-caret-right {
+  transition: transform 0.3s;
+}
+
+.expanded .fa-caret-right {
+  transform: rotate(90deg); /* Girar la flecha cuando esté expandida */
+}
+
+.sombra{
+  box-shadow: 0px 5px 10px rgba(31, 32, 32, 0.2), 5px 0px 10px rgba(31, 32, 32, 0.2), -5px 0px 10px rgba(31, 32, 32, 0.2);
+}
+input[type="text"]:focus {
+  outline: none; 
+  border-color: rgb(16, 117, 87); /* Cambia el color del borde al rojo */
+  box-shadow: 0 0 5px rgb(20, 122, 92); /* Agrega una sombra roja alrededor del campo */
+  /* Aquí puedes agregar otros estilos según tus preferencias */
+}
+input[type="email"]:focus {
+  outline: none; 
+  border-color: rgb(16, 117, 87); /* Cambia el color del borde al rojo */
+  box-shadow: 0 0 5px rgb(20, 122, 92); /* Agrega una sombra roja alrededor del campo */
+  /* Aquí puedes agregar otros estilos según tus preferencias */
+}
+input[type="password"]:focus {
+  outline: none; 
+  border-color: rgb(16, 117, 87); /* Cambia el color del borde al rojo */
+  box-shadow: 0 0 5px rgb(20, 122, 92); /* Agrega una sombra roja alrededor del campo */
+  /* Aquí puedes agregar otros estilos según tus preferencias */
+}
+select:focus,
+textarea:focus {
+  outline: none !important; 
+  border-color: #107558 !important; 
+box-shadow: 0 0 5px #147a5c !important; 
+}
+.formlabel{
+  font-size: 120%;
+}
+.corner-top-left {
+  border-top-left-radius: 1rem; /* Ajusta el valor según desees */
+}
+.corner-top-right {
+  border-top-right-radius: 1rem; /* Ajusta el valor según desees */
+}
+.lost-card {
+  background-color: transparent !important; 
+}
+/* Estilos para el botón activo (verde) */
+/* Estilos para el botón activo (verde) */
+/* Estilos para el botón activo (verde) */
+.btn-green {
+  background-color: rgb(63, 153, 125) !important;
+  color: white !important; /* Texto en blanco para contraste */
+}
+
+/* Estilos para el botón inactivo (blanco) */
+.btn-white {
+  background-color: white !important;
+  color: rgb(63, 153, 125) !important; /* Color de texto en verde */
+  border: 2px solid rgb(63, 153, 125) !important; /* Borde verde para el botón inactivo */
+}
+.btn-green:focus, .btn-white:focus {
+  background-color: rgba(63, 153, 125, 0.8) !important; /* Color de fondo con un poco de transparencia */
+  box-shadow: 0 0 10px rgba(63, 153, 125, 0.8) !important; /* Sombra con el mismo color */
+  outline: none !important; /* Eliminar el borde de enfoque predeterminado del botón */
+}
+
+/* Estilos para el botón "Add Your Animal" en amarillo */
+.btn-add-animal {
+  background-color: #FFC107 !important; /* Amarillo */
+  color: white !important; /* Texto en blanco para contraste */
+  border: none !important; /* Sin borde */
+  transition: background-color 0.3s ease; /* Agregar transición suave para el color de fondo */
+}
+
+/* Estilos para el botón cuando está enfocado (haciendo clic en él) */
+.btn-add-animal:focus {
+  background-color: #FFA000 !important; /* Amarillo más oscuro al enfocar */
+  box-shadow: 0 0 10px #FFA000 !important; /* Sombra más oscura al enfocar */
+  outline: none; /* Eliminar el borde de enfoque predeterminado del botón */
+}
+.btn-upload{
+  background-color: #ff8f33;
+}
+/* Estilos para la vista previa de la imagen */
+.preview-image {
+  margin-top: 5%;
+  margin-left: auto;
+  margin-right:auto;}
+
+.preview-image img {
+  max-width: 40%; /* Asegura que la imagen no exceda el ancho del contenedor */
+  max-height: 10%; /* Establece una altura máxima para la imagen (60% del contenedor) */
+  width: auto;
+  margin-left: auto;
+  margin-right:auto; /* Permite que la imagen mantenga su relación de aspecto */
+  display: block; /* Elimina márgenes y espacios innecesarios alrededor de la imagen */
+  margin-top: 0.2%; /* Espacio superior entre la imagen y otros elementos (2% del contenedor) */
+}
+/* Estilo para el botón "Upload Image" */
+.upload-button {
+  background-color: #ff8f33;
+  width: auto; /* Establece el ancho automático para el botón */
+  display: inline-block; /* Cambia el comportamiento de bloque a en línea */
+  margin: 0 auto; /* Centra el botón horizontalmente */
+  padding: 10px 20px; /* Ajusta el relleno según tus preferencias */
+}
+
+/* Estilo para la vista previa de la imagen */
+.custom-preview-image {
+  margin-top: 5%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center; /* Centra el contenido de la vista previa */
+}
+
+.custom-preview-image img {
+  max-width: 40%; /* Establece el ancho máximo de la imagen al 100% del contenedor */
+  max-height: 10%; /* Establece una altura máxima para la imagen (60% del contenedor) */
+  width: auto;
+  margin-top: 0.2%; /* Espacio superior entre la imagen y otros elementos (2% del contenedor) */
+}
+
+.upload-container {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente el contenido */
+  align-items: center; /* Centra verticalmente el contenido */
+  flex-direction: column; /* Alinea verticalmente los elementos uno encima del otro */
+  text-align: center; /* Centra el texto dentro del contenedor */
+}
+
+.upload-container img {
+  max-width: 40%; /* Asegura que la imagen no exceda el ancho del contenedor */
+  max-height: auto; /* Permite que la imagen mantenga su relación de aspecto */
+  width: auto;
+  height: auto;
+  display: block; /* Elimina márgenes y espacios innecesarios alrededor de la imagen */
+  margin-top: 0.2%; /* Espacio superior entre la imagen y otros elementos */
 }
