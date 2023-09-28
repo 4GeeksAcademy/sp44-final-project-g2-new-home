@@ -7,44 +7,79 @@ import tip_3 from "../../img/tip_3.png";
 import tip_4 from "../../img/tip_4.jpg";
 import tip_5 from "../../img/tip_5.png";
 import tip_6 from "../../img/tip_6.png";
+import "../../styles/index.css";
+
 
 export const Tips = () => {
   const { store, actions } = useContext(Context);
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-md-auto">
-          <div className="sidebar animate__animated animate__backInUp" id="sidebartips">
-            <h2>Tips Navigation</h2>
+    <div className="container-fluid">
+      <div className=" animate__animated animate__bounceInRight text-center mb-5 mt-5">
+        <h1 className="esmeralda">Tips for Pet Adoption</h1>
+      </div> 
+      <div className="row d-flex justify-content-center">
+        <div id="sidebartips" className="col-md-2">
+          <div className="sidebar animate__animated animate__backInUp border border-4 rounded-2" id="sticky-legend">
             <ul className="nav flex-column">
-              <li className="nav-item">
-                <a className="nav-link" id="a1" href="#tip1">Tip for peaceful coexistence</a>
+              <li className="nav-item border-bottom border-4 leyendadifuminado rounded-top-1">
+                <h5 className="text-center p-3 text-light">Go to the one that interests you most{"\u00A0"}{"\u00A0"}{"\u00A0"}<i className="fas fa-paw text-light"></i></h5>
+                
               </li>
-              <li className="nav-item">
-                <a className="nav-link" id="a2" href="#tip2">Tip for introducing a new cat to your home</a>
+              <li className="nav-item  border-bottom border-4">
+                <a className="nav-link text-primary-emphasis custom-tr-tips" id="a1" href="#tip1">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="me-2 bi bi-cursor-fill" viewBox="0 0 16 16">
+                    <path d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103z"/>
+                  </svg> 
+                  Go to tip for peaceful coexistence 
+                </a>
               </li>
-              <li className="nav-item">
-                <a className="nav-link" id="a3" href="#tip3">Tip for successful dog and cat walks</a>
+              <li className="nav-item border-bottom border-4">
+                <a className="nav-link text-primary-emphasis custom-tr-tips" id="a2" href="#tip2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="me-2 bi bi-cursor-fill" viewBox="0 0 16 16">
+                    <path d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103z"/>
+                  </svg>
+                  Go to tip for introducing a new cat to your home
+                </a>
               </li>
-              <li className="nav-item">
-                <a className="nav-link" id="a4" href="#tip4">Tip for introducing pets into a home with children</a>
+              <li className="nav-item border-bottom border-4">
+                <a className="nav-link text-primary-emphasis custom-tr-tips" id="a3" href="#tip3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="me-2 bi bi-cursor-fill" viewBox="0 0 16 16">
+                    <path d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103z"/>
+                  </svg>
+                  Go to tip for successful dog and cat walks
+                </a>
               </li>
-              <li className="nav-item">
-                <a className="nav-link" id="a5" href="#tip5">Tip for teaching your pet basic training commands</a>
+              <li className="nav-item custom-tr-tips border-bottom border-4">
+                <a className="nav-link text-primary-emphasis " id="a4" href="#tip4">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="me-2 bi bi-cursor-fill" viewBox="0 0 16 16">
+                    <path d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103z"/>
+                  </svg>
+                  Go to tip for introducing pets into a home with children
+                </a>
               </li>
-              <li className="nav-item">
-                <a className="nav-link" id="a6" href="#tip6">Tip for providing a safe home for your pets</a>
+              <li className="nav-item custom-tr-tips border-bottom border-4">
+                <a className="nav-link text-primary-emphasis " id="a5" href="#tip5">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="me-2 bi bi-cursor-fill" viewBox="0 0 16 16">
+                    <path d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103z"/>
+                  </svg>
+                  Go to tip for teaching your pet basic training commands
+                </a>
+              </li>
+              <li className="nav-item custom-tr-tips rounded-bottom border-4">
+                <a className="nav-link text-primary-emphasis " id="a6" href="#tip6">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="me-2 bi bi-cursor-fill" viewBox="0 0 16 16">
+                    <path d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103z"/>
+                  </svg>
+                  Go to tip for providing a safe home for your pets
+                </a>
               </li>
             </ul>
           </div>
         </div>
-        <div className="col-md-11" id="main1">
-          <div className="container text-center">
-            <div className=" animate__animated animate__bounceInRight">
-              <h1>Tips for Pet Adoption</h1>
-            </div>          
-            <div className="card text-center animate__animated animate__bounceInUp" id="tip1">
+        <div className="col-md-9" id="main1">
+          <div className="container text-center">         
+            <div className="card  text-center animate__animated animate__bounceInUp rounded-4" id="tip1">
               <h3 className="card-title">Tip for peaceful coexistence</h3>
               <img src={tip_1} alt="Tip 1" className="Foto tip1" />
               <div className="card-body">

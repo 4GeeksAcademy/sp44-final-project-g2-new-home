@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
+import "../../styles/index.css";
 import { Context } from "../store/appContext";
-
-
+import Masonry from "react-masonry-css";
 export const Experiences = () => {
   const { actions, store } = useContext(Context);
   // const [experiences, setExperiences] = useState([]); // Store published experiences
@@ -13,11 +13,9 @@ export const Experiences = () => {
   const[file, setFile]= useState("");
   const[fileUrl, setFileUrl]= useState(localStorage.getItem("experienceFileUrl"));
   const [likedExperiences, setLikedExperiences] = useState(new Set());
-
-  const peopleId = store.peopleId; 
+  const peopleId = store.peopleId;
   const userId = store.user_id;
   const shelterId = localStorage.getItem("animalshelterId");
-
   const handleShowForm = () => {
     if (peopleId) {
       setShowForm(true); // Mostrar el formulario solo si el usuario está autenticado
@@ -26,38 +24,30 @@ export const Experiences = () => {
     } else if (shelterId != null || (shelterId && peopleId === null)) {
       alert("You do not have permission to publish");
     }
-      
       const experienceToEdit = store.experiences.find((experience) => experience.id === store.experienceId);
       localStorage.setItem("experienceTitle", experienceToEdit.title);
       localStorage.setItem("experienceBody", experienceToEdit.body);
       localStorage.setItem("experienceFileUrl", experienceToEdit.photo);
-      
       setFileUrl(experienceToEdit.photo);
       setTitle(experienceToEdit.title );
       setBody(experienceToEdit.body );
-      ; 
+      ;
   };
-  
-  
   const handleBackToPosts = () => {
     setShowForm(false); // Volver a las vistas de todas las publicaciones
   };
-  
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
   };
-
   const handleDescriptionChange = (e) => {
     setBody(e.target.value);
   };
-
   const handleImageChange = (e) => {
     if (e.target.files.length){
       setFile(e.target.files[0]);
       console.log("evento imagen: ", e.target.files);
     }
   };
-  
   const handleEdit = () => {
   if (isEditing) {
     // Si estamos en modo de edición, desactiva la edición
@@ -70,8 +60,6 @@ export const Experiences = () => {
     // Por ejemplo, puedes buscar la experiencia en 'experiences' por su ID y establecer 'title' y 'body' en los estados correspondientes
   }
 };
-
-
   const handleLikeClick = (id) => {
     if (likedExperiences.has(id)) {
       likedExperiences.delete(id);
@@ -80,29 +68,24 @@ export const Experiences = () => {
     }
     setLikedExperiences(new Set(likedExperiences)); // Update to trigger a re-render
   };
-
   const handleSubmit = async (e) => {
   e.preventDefault();
   // if (!file) {
   //   alert("Please select a file.");
   //   return;
   // }
-
   try {
     const form = new FormData();
     form.append("img", file);
-
     const response = await fetch(process.env.BACKEND_URL + "/api/img", {
       method: "POST",
       body: form
     });
-
     const data = await response.json();
     const imageUrl = data["img_url: "];
     const id = store.experienceId;
     console.log("data fetch img: ", data);
     console.log("imageUUUUUUUUURL: ", imageUrl)
-
     if (store.experienceId) {
       // Llama a la función de actualizar
       const success = await actions.update_experience(id, title, body, imageUrl);
@@ -116,7 +99,6 @@ export const Experiences = () => {
         actions.get_experiences();
       }
     }
-
     setShowForm(false);
     setTitle("");
     setBody("");
@@ -124,7 +106,7 @@ export const Experiences = () => {
   } catch (e) {
     console.error("ERROR IMAGEN", e);
   }
-};
+  };
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete this experience?")) {
       // La confirmación del usuario es requerida para evitar eliminaciones accidentales
@@ -135,40 +117,39 @@ export const Experiences = () => {
         setTitle("");
         setBody("");
         setPhotolist([]);
-        setFileUrl(""); 
+        setFileUrl("");
       } else {
         alert("Failed to delete the experience. Please try again later.");
       }
     }
   };
-
-
   useEffect(() => {
     actions.get_experiences();
   }, []);
-
-
-
+  const breakpointColumnsObj = {
+    default: 3,
+      487:2,
+      204:1
+  };
   return (
-    <div className="container contenido">
+    <div className="container">
       {showForm ? (
         // Mostrar el formulario
         <div className="container">
           <div className="experiences-container">
             <div className="experience-post">
-              <h2 >
+              <h2>
                 <b>{store.experienceId ? "Update" : "Publish"} an Experience</b>
               </h2>
-              <div className="image-upload d-flex">
-                <label for="files" className="btn btn-primary w-25">Select Image</label>
+              <div className="image-upload">
                   <input
                     type="file"
-                    id="files"
+                    id="image-input"
                     accept="image/jpeg"
+                    // multiple
                     onChange={handleImageChange}
-                    style={{visibility:"hidden"}}
                   />
-                </div>
+              </div>
               <div className="input-fields">
                 <input
                   type="text"
@@ -204,7 +185,7 @@ export const Experiences = () => {
                 </button>
               </div>
             )}
-              { 
+              {
                 fileUrl !== ""  ? <img src={fileUrl} className="img-fluid"/> : null
               }
             </div>
@@ -213,7 +194,19 @@ export const Experiences = () => {
       ) : (
         // Mostrar las vistas de todas las publicaciones
         <div className="row">
-          <h2 className="mt-4 mb-4" id="experiences">These have been some of the experiences of our users...</h2>
+          <h2 className="mt-4 mb-4">These have been some of the experiences of our users...</h2>
+          <div className="d-flex justify-content-center mb-5">
+          {!showForm && (
+        <button onClick={handleShowForm} className="btn btn-primary w-25">
+          {store.experienceId ? "Update us" : "Share your experience with us"}
+        </button>
+         )}
+         </div>
+         <Masonry
+              breakpointCols={breakpointColumnsObj}
+              className="my-masonry-grid"
+              columnClassName="my-masonry-grid_column"
+            >
           {store.experiences ? (
             store.experiences.map((experience) => (
               <div className="col-md-4 mb-4" key={experience.id}>
@@ -242,15 +235,9 @@ export const Experiences = () => {
           ) : (
             <p>No experiences available.</p>
           )}
+          </Masonry>
         </div>
       )}
-      
-      {!showForm && (
-        <button onClick={handleShowForm} className="btn btn-primary">
-          {store.experienceId ? "Update us" : "Share your experience with us"}                                       
-        </button>
-      )}
     </div>
-    
   );
 };

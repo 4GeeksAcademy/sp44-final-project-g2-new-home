@@ -92,61 +92,111 @@ export const Admin = () => {
     actions.getUsers();
   }, []); // El segundo argumento vacío asegura que esta función se ejecute solo una vez al montar el componente
 
-  return (
-    <div className="container w-50">
-      <h2 className="mb-4">List of Users</h2>
-      {/* Mapea store.users para mostrar la lista de usuarios */}
-      <ul className="list-group custom-list">
-        {store.users.map((user) => (
-          <li className="list-group-item custom-list-item mb-3" key={user.user_id}>
-            <h4 className="mb-3">Email: {user.email}</h4>
-            <p><strong>Role:</strong> {user.role}</p>
+ // Función de comparación para ordenar alfabéticamente por correo electrónico
+ const compareByEmail = (a, b) => {
+  const emailA = a.email.toUpperCase();
+  const emailB = b.email.toUpperCase();
 
-            {user.role === "Person" && (
-              <>
-                <p><strong>Name:</strong> {user.name}</p>
-                <p><strong>Last Name:</strong> {user.lastname}</p>
-              </>
-            )}
-            {user.role === "AnimalShelter" && (
-              <>
-                <p><strong>CIF:</strong> {user.cif}</p>
-                <p><strong>City:</strong> {user.city}</p>
-                <p><strong>Address:</strong> {user.address}</p>
-                <p><strong>Zip Code:</strong> {user.zip_code}</p>
-                <p><strong>Web:</strong> <a href={user.web} target="_blank" rel="noopener noreferrer">{user.web}</a></p>
-              </>
-            )}
-            {/* {user.is_active == true ? (
-              <button
-                className="btn btn-danger me-3"
-                style={{ width: "180px" }}
-                onClick={() => {
-                  handleUpdateIsActive(user.id);
-                }}
-              >
-                Desactivate Account
-              </button>
-            ) : (
-              <button
-                className="btn btn-success me-3"
-                style={{ width: "180px" }}
-                onClick={() => {
-                  handleUpdateIsActive(user.id);
-                }}
-              >
-                Activate Account
-              </button>
-            )} */}
-            {/* <button
-              className="btn btn-danger"
-              onClick={() => handleDelete(user.id, user.volunterId, user.experienceId, user.animalId)}
-            >
-              Delete
-            </button> */}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+  if (emailA < emailB) {
+    return -1;
+  }
+
+  if (emailA > emailB) {
+    return 1;
+  }
+
+  return 0;
+};
+
+// Ordenar la lista de usuarios por correo electrónico
+const sortedUsers = [...store.users].sort(compareByEmail);
+
+// Encontrar el índice del usuario "admin" en la lista ordenada
+const adminIndex = sortedUsers.findIndex((user) => user.role === "admin");
+
+// Mover el usuario "admin" al principio de la lista
+if (adminIndex !== -1) {
+  sortedUsers.splice(adminIndex, 1); // Elimina el usuario "admin" de su posición original
+  sortedUsers.unshift(store.users[adminIndex]); // Agrega el usuario "admin" al principio de la lista
+}
+
+// const handleToggleActiveClick = () => {
+            
+//   // Cambia el valor de is_active en el estado local
+//   const desactivateId = user.id;
+   
+//   actions.delete_profile(desactivateId)
+//       .then(response => {
+//           if (response.success) {
+//               alert("Account successfully deactivated"); 
+//           } else {
+//               // Maneja el caso de error en la actualización
+//               alert(response.message);
+//           }
+//       })
+//       .catch(error => {
+//           // Maneja errores de red u otros errores
+//           console.error('Error updating user active status:', error);
+//       });
+// };
+
+
+return (
+  <div className="container mb-3">
+    <h1 className="titulos text-center pt-4 mb-5">List of Users</h1>
+    <table className="table table-striped border border-4 text-center">
+      <thead>
+        <tr className="text-center custom-row">
+          <th scope="col">EMAIL</th>
+          <th scope="col">ROLE</th>
+          <th scope="col">NAME</th>
+          <th scope="col">LAST NAME</th>
+          <th scope="col">CIF</th>
+          <th scope="col">CITY</th>
+          <th scope="col">ADDRESS</th>
+          <th scope="col">ZIP CODE</th>
+          <th scope="col">WEB</th>
+          <th scope="col">DEACTIVATE ACCOUNT</th> 
+        </tr>
+      </thead>
+      <tbody>
+  {sortedUsers.map((user) => (
+    <tr className="text-center" key={user.user_id}>
+      <td>{user.email}</td>
+      <td>{user.role}</td>
+      <td>{user.name || "/"}</td>
+      <td>{user.lastname || "/"}</td>
+      <td>{user.cif || "/"}</td>
+      <td>{user.city || "/"}</td>
+      <td>{user.address || "/"}</td>
+      <td>{user.zip_code || "/"}</td>
+      <td>
+        {user.web ? (
+          <a href={user.web} target="_blank" rel="noopener noreferrer">
+            <i className="fas fa-globe text-primary" title={user.web}></i>
+          </a>
+        ) : (
+          "/"
+        )}
+      </td>
+      <td>
+        <button
+          className="btn btn-transparent me-3"
+          onClick={() => {
+            handleToggleActiveClick();
+          }}
+        >
+          {user.is_active ? (
+            <i className="fas fa-user" style={{ color: "#db0606" }}></i>
+          ) : (
+            <i className="fas fa-user-slash" style={{ color: "#ff0a3b" }}></i>
+          )}
+        </button>
+      </td>
+    </tr>
+  ))}
+</tbody>
+    </table>
+  </div>
+);
 };

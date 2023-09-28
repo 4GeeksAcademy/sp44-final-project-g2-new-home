@@ -1,7 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
-import "../../styles/lostanimals.css";
+import "../../styles/index.css";
+import Masonry from "react-masonry-css";
 
 export const Lostanimals = () => {
   const { store, actions } = useContext(Context);
@@ -162,6 +163,11 @@ export const Lostanimals = () => {
 
   const userId = store.user_id;
 
+  const breakpointColumnsObj = {
+    default: 3,
+      487:2,
+      204:1
+  };
 
 
   return (
@@ -272,7 +278,7 @@ export const Lostanimals = () => {
       <div className="card text-center" id="cuerpo">
         <div className="card-header">
           <button
-            className={`btn ${activeTab === "lost" ? "btn-primary" : "btn-secondary"}`}
+            className={`btn me-3 ${activeTab === "lost" ? "btn-primary" : "btn-secondary"}`}
             onClick={() => setActiveTab("lost")}
           >
             Lost Animals
@@ -286,6 +292,11 @@ export const Lostanimals = () => {
         </div>
         <div className="card-body">
           <div className="row">
+          <Masonry
+              breakpointCols={breakpointColumnsObj}
+              className="my-masonry-grid"
+              columnClassName="my-masonry-grid_column"
+            >
             {store.animals.map((animal) => {
               // Filtrar los animales según el estado activo
               if (activeTab === "lost" && animal.animal_status === "Lost") {
@@ -355,6 +366,7 @@ export const Lostanimals = () => {
               }
               return null; // No mostrar la tarjeta si no coincide con activeTab y animal_status
             })}
+            </Masonry>
           </div>
         </div>
       </div>

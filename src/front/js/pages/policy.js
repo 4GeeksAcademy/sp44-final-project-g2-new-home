@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import logo from "../../img/logo.png";
 import portada from "../../img/portada.png";
+import "../../styles/index.css";
+
 
 export const Policy = () => {
     const { store, actions } = useContext(Context);
