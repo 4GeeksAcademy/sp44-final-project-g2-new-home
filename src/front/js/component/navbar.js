@@ -93,7 +93,7 @@ export const Navbar = () => {
     // const user_email = store.user_email 
 
     return (
-        <nav className="navbar navbar-expand-lg navbarcolor">
+        <nav className="navbar navbar-expand-lg navbarcolor ">
             <div className="container-fluid text-center justify-content-center">
                 <div className="container d-flex justify-content-between align-items-center">
                     <div className="nav-links">
@@ -194,14 +194,16 @@ export const Navbar = () => {
                     ) : (
                         <div className="d-flex me-3">
                             <div className="dropdown">
-                                <button
-                                    className="btn btn-success"
-                                    type="button"
-                                    id="userDropdown"
-                                    data-bs-toggle="dropdown" // Agregamos esta línea para activar el dropdown de Bootstrap
-                                >
-                                   <b> {`Welcome ${store.user_email}`}</b>
-                                </button>
+                            <button
+                                className="btn btn-transparent dropdown-toggle"
+                                type="button"
+                                id="userDropdown"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+                                <i className="fas fa-user me-2"></i>
+                                <b>{store.user_email}</b>
+                            </button>
                                 <ul className="dropdown-menu dropdown-menu-lg-end" aria-labelledby="userDropdown">
                                     <li>
                                         <Link to="/" onClick={() => actions.logout()} className="dropdown-item">

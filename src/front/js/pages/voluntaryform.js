@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from '../store/appContext';
 import { useNavigate } from "react-router-dom";
-import "../../styles/voluntaryform.css"
+import "../../styles/index.css"
 
 
 export const VoluntaryForm = () => {
@@ -77,125 +77,140 @@ export const VoluntaryForm = () => {
   };
   
   return (
-      <div className="container">
+    <div className="container">
+      <h1 className="text-center esmeralda">Volunteers</h1>
         <div className="card mt-5 text-center animate__animated animate__bounceInUp" id="formcomplete">
-        {!store.animalshelterId?(
-        <div className="card-body">
-          <h2 className="card-title" id="voluntaryform">
-            <b>Voluntary Form</b>
-          </h2>
-          <div className="form-group row">
-            <div className="col-md-4">
-              <label>Name:</label>
-              <input
-                type="text"
-                className="form-control"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className="col-md-4">
-              <label>Address:</label>
-              <input
-                type="text"
-                className="form-control"
-                name="address"
-                value={formData.address}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className="col-md-4">
-              <label>City:</label>
-              <input
-                type="text"
-                className="form-control"
-                name="city"
-                value={formData.city}
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
-          <div className="form-group row">
-            <div className="col-md-3">
-              <label>Zip Code:</label>
-              <input
-                type="text"
-                className="form-control"
-                name="zipCode"
-                value={formData.zipCode}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className="col-md-3">
-              <label>Phone:</label>
-              <input
-                type="text"
-                className="form-control"
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className="col-md-3">
-              <label>Email:</label>
-              <input
-                type="email"
-                className={`form-control ${emailError ? "is-invalid" : ""}`}
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-              />
-              {emailError && (
-                <div className="invalid-feedback">{emailError}</div>
-              )}
-            </div>
-            <div className="col-md-3">
-            <label>Availability:</label>
-              <select
-                className="form-control"
-                name="availability"
-                value={formData.availability}
-                onChange={handleSelectChange}
-              >
-                <option value="Morning ">Morning</option>
-                <option value="Afternoon">Afternoon</option>
-              </select>
-            </div>
-          </div>
-          <div className="form-group">
-            <label>Description:</label>
-            <textarea
-              className="form-control"
-              name="description"
-              value={formData.description}
-              onChange={handleInputChange}
-            ></textarea>
-          </div>
-          {store.user_id ? (
-            <button className="btn btn-primary" onClick={handleFormSubmit}>
-              Submit
-            </button>
-          ) : (
-            <p><b>Join us, we need your help. Log in and submit your form.</b></p>
-          )}
-        </div>):
-        (
-          <ul className="list-group custom-list">
-                {store.volunteers.map((item) => (
-                    <li className="list-group-item custom-list-item mb-3" key={item.id}>
-                            <h5 className="mb-3"><b>Email: {item.email}</b></h5>
-                            <p><strong>Address: </strong>{item.address}</p>
-                            <p><strong>City: </strong>{item.city}</p>
-                            <p><strong>State: </strong>{item.zip_code}</p>
-                            <p><strong>Post Code: </strong>{item.phone}</p>
-                            <p><strong>Availability: </strong>{item.availability}</p>
-                            <p><strong>DEscription: </strong>{item.description}</p> 
-                    </li>
-                ))}
-            </ul>
-        )}
-      </div>
+            {!store.animalshelterId ? (
+                <div className="card-body">
+                    <h2 className="card-title" id="voluntaryform">
+                        <b>Voluntary Form</b>
+                    </h2>
+                    <div className="form-group row">
+                        <div className="col-md-4">
+                            <label>Name:</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div className="col-md-4">
+                            <label>Address:</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                name="address"
+                                value={formData.address}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div className="col-md-4">
+                            <label>City:</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                name="city"
+                                value={formData.city}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                    </div>
+                    <div className="form-group row">
+                        <div className="col-md-3">
+                            <label>Zip Code:</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                name="zipCode"
+                                value={formData.zipCode}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div className="col-md-3">
+                            <label>Phone:</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                name="phone"
+                                value={formData.phone}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div className="col-md-3">
+                            <label>Email:</label>
+                            <input
+                                type="email"
+                                className={`form-control ${emailError ? "is-invalid" : ""}`}
+                                name="email"
+                                value={formData.email}
+                                onChange={handleInputChange}
+                            />
+                            {emailError && (
+                                <div className="invalid-feedback">{emailError}</div>
+                            )}
+                        </div>
+                        <div className="col-md-3">
+                            <label>Availability:</label>
+                            <select
+                                className="form-control"
+                                name="availability"
+                                value={formData.availability}
+                                onChange={handleSelectChange}
+                            >
+                                <option value="Morning ">Morning</option>
+                                <option value="Afternoon">Afternoon</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <label>Description:</label>
+                        <textarea
+                            className="form-control"
+                            name="description"
+                            value={formData.description}
+                            onChange={handleInputChange}
+                        ></textarea>
+                    </div>
+                    {store.user_id ? (
+                        <button className="btn btn-primary" onClick={handleFormSubmit}>
+                            Submit
+                        </button>
+                    ) : (
+                        <p><b>Join us, we need your help. Log in and submit your form.</b></p>
+                    )}
+                </div>
+            ) : (
+                <table className="table table-striped border border-4 text-center">
+                    <thead>
+                        <tr className="text-center custom-row">
+                            <th scope="col">Email</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">City</th>
+                            <th scope="col">State</th>
+                            <th scope="col">Post Code</th>
+                            <th scope="col">Availability</th>
+                            <th scope="col">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {store.volunteers.map((item) => (
+                            <tr className="text-center" key={item.id}>
+                                <td>{item.email}</td>
+                                <td>{item.address}</td>
+                                <td>{item.city}</td>
+                                <td>{item.state}</td>
+                                <td>{item.zip_code}</td>
+                                <td>{item.availability}</td>
+                                <td>{item.description}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            )}
+        </div>
     </div>
-  );
+);
+
 };

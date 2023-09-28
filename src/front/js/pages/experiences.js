@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
-import "../../styles/experiences.css";
+import "../../styles/index.css";
 import { Context } from "../store/appContext";
+import Masonry from "react-masonry-css";
 
 
 export const Experiences = () => {
@@ -125,7 +126,8 @@ export const Experiences = () => {
   } catch (e) {
     console.error("ERROR IMAGEN", e);
   }
-};
+  };
+
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete this experience?")) {
       // La confirmación del usuario es requerida para evitar eliminaciones accidentales
@@ -143,12 +145,15 @@ export const Experiences = () => {
     }
   };
 
-
   useEffect(() => {
     actions.get_experiences();
   }, []);
 
-
+  const breakpointColumnsObj = {
+    default: 3,
+      487:2,
+      204:1
+  };
 
   return (
     <div className="container contenido">
@@ -215,6 +220,18 @@ export const Experiences = () => {
         // Mostrar las vistas de todas las publicaciones
         <div className="row">
           <h2 className="mt-4 mb-4">These have been some of the experiences of our users...</h2>
+          <div className="d-flex justify-content-center mb-5">
+          {!showForm && (
+        <button onClick={handleShowForm} className="btn btn-primary w-25">
+          {store.experienceId ? "Update us" : "Share your experience with us"}                                       
+        </button>
+         )}
+         </div>
+         <Masonry
+              breakpointCols={breakpointColumnsObj}
+              className="my-masonry-grid"
+              columnClassName="my-masonry-grid_column"
+            >
           {store.experiences ? (
             store.experiences.map((experience) => (
               <div className="col-md-4 mb-4" key={experience.id}>
@@ -240,16 +257,12 @@ export const Experiences = () => {
                 </div>
               </div>
             ))
+            
           ) : (
             <p>No experiences available.</p>
           )}
+          </Masonry>
         </div>
-      )}
-      
-      {!showForm && (
-        <button onClick={handleShowForm} className="btn btn-primary">
-          {store.experienceId ? "Update us" : "Share your experience with us"}                                       
-        </button>
       )}
     </div>
     

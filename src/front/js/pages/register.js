@@ -102,16 +102,21 @@ const Register = () => {
             <label className="me-3 mt-3 form-label"><b>Web:</b></label>
             <input className="form-control" maxLength={100} type="text" name="web" onChange={(e) => setWeb(e.target.value)} required />
           </div>
-          <div>
-            <label className="mt-3 me-3 form-label">
-              I have read and accept the <a href="/policy">terms and conditions</a> and declare that I am
-              of legal age.
-            </label>
-            <input
-              type="checkbox"
-              checked={isActive}
-              onChange={() => setIsActive(!isActive)} // Cambia el estado de isActive cuando se hace clic en el checkbox
-            />
+          <div className="d-flex align-items-center">
+            <div className="d-flex align-items-center">
+              <input
+                type="checkbox"
+                className="mt-3"
+                checked={isActive}
+                onChange={() => setIsActive(!isActive)} // Cambia el estado de isActive cuando se hace clic en el checkbox
+              />
+            </div>
+              <div className="d-flex align-items-center">
+                <label className="mt-5 me-3 form-label">
+                  I have read and accept the <a href="/policy">terms and conditions</a> and declare that I am
+                  of legal age.
+                </label>
+            </div>
           </div>
         </>
       )}
@@ -125,17 +130,21 @@ const Register = () => {
             <label className="me-3 mt-3 form-label"><b>Last Name:</b></label>
             <input className="form-control" maxLength={20} type="text" onChange={(e) => setLastname(e.target.value)} required />
           </div>
-          <div>
-          <label className="mt-3 me-3 form-label">
-            I have read and accept the <a href="/policy">terms and conditions</a> and declare that I am
-            of legal age.
-          </label>
-
-            <input
-              type="checkbox"
-              checked={isActive}
-              onChange={() => setIsActive(!isActive)} // Cambia el estado de isActive cuando se hace clic en el checkbox
-            />
+          <div className="d-flex align-items-center">
+            <div className="d-flex align-items-center">
+              <input
+                type="checkbox"
+                className="mt-3"
+                checked={isActive}
+                onChange={() => setIsActive(!isActive)} // Cambia el estado de isActive cuando se hace clic en el checkbox
+              />
+            </div>
+              <div className="d-flex align-items-center">
+                <label className="mt-5 me-3 form-label">
+                  I have read and accept the <a href="/policy">terms and conditions</a> and declare that I am
+                  of legal age.
+                </label>
+            </div>
           </div>
         </>
       )}
