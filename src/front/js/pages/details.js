@@ -35,7 +35,7 @@ export const Details = () => {
       <Col xs={6}>
       <Card className="h-100 d-flex flex-column justify-content-between w-75 mx-auto" style={{ width: "100%" }}>
       <Card.Body>
-        <h3 className="card-title d-flex justify-content-center mb-5 mt-5">{name}</h3>
+        <h3 className="card-title d-flex justify-content-center mb-5">{name}</h3>
         <p className="card-text fs-4"><strong >Breed mixture: </strong>{pet.breeds ? pet.breeds.primary : 'N/A'}</p>
           <p className="card-text fs-4"><strong>Age: </strong>{pet.age ? pet.age : 'N/A'}</p>
           <p className="card-text fs-4"><strong>Gender: </strong>{pet.gender ? pet.gender : 'N/A'}</p>
