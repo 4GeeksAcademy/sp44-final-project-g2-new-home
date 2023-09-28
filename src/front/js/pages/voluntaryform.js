@@ -19,27 +19,22 @@ export const VoluntaryForm = () => {
     description: "",
     availability: ""
   };
-
   const [formData, setFormData] = useState(initialFormData);
   const [emailError, setEmailError] = useState(null);
-
   useEffect(() => {
     actions.getVolunteers()
     // Guarda los datos del formulario en el almacenamiento local cada vez que cambian
     localStorage.setItem("animalFormData", JSON.stringify(formData));
   }, [formData]);
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
   const valitimeEmail = (email) => {
     // Expresión regular para validar direcciones de correo electrónico
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(email);
   };
-
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     // Validar el campo de email
@@ -52,7 +47,6 @@ export const VoluntaryForm = () => {
     if(formData.availability == ""){
       console.log(formData)
       formData.availability = "Morning "
-      
     }
     // Aquí puedes agregar la lógica para enviar el formulario
     await actions.volunteer(
@@ -70,12 +64,10 @@ export const VoluntaryForm = () => {
     // Limpiar el formulario después de enviar
     setFormData(initialFormData);
   };
-
   const handleSelectChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  
   return (
     <div className="container">
       <h1 className="text-center esmeralda">Volunteers</h1>
@@ -212,5 +204,4 @@ export const VoluntaryForm = () => {
         </div>
     </div>
 );
-
 };

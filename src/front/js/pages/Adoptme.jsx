@@ -5,8 +5,6 @@ import Masonry from "react-masonry-css";
 import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from "react-router-dom";
-
-
 export const Adoptme = () => {
   const navigate = useNavigate()
   const { store, actions } = useContext(Context);
@@ -36,7 +34,6 @@ export const Adoptme = () => {
       require("../../img/imgError/20.jpg")
   ]
   const [backupImageIndex, setBackupImageIndex] = useState(0);
-
   const getAnimal = async (token) => {
     const url ='https://api.petfinder.com/v2/animals?type=dog&page=1';
     const requestOptions = {
@@ -54,7 +51,6 @@ export const Adoptme = () => {
         console.log('error', response.status, response.statusText);
     }
     }
-  
   useEffect(() => {
       actions.get_all_animals();
       actions.fetchToken().then(token => {
@@ -64,25 +60,38 @@ export const Adoptme = () => {
         }
       });
     }, []);
-
   const handleOnErrorImg = (e) => {
     const newBackupIndex = (backupImageIndex + 1) % backupImages.length;
     setBackupImageIndex(newBackupIndex);
     e.target.src = backupImages[newBackupIndex].default; // Usa .default para obtener la ruta de la imagen importada
   };
-
   const handleClick = (pet)=>{
     navigate("/details");
   }
-
   const breakpointColumnsObj = {
     default: 3
   };
-  
-  
   return (
     <div className="container mb-3">
-      <h1 className="text-success text-center mt-5 mb-5">Adopt a pet</h1>
+  <h1 className="text-success text-center pt-4">Adopt a pet</h1>
+
+  <div className="row  rounded-5">
+  {pets.slice(0, 18).map((animal, id) => (
+      <div key={id} className="card  m-3 rounded col-12 col-md-6 col-lg-4" style={{ width: "30%" }}>
+        <img
+          src={`https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/${animal.id}/1/`}
+          onError={handleOnErrorImg}
+          alt={`Image for ${animal.name}`}
+          className="card-img-top card-v"
+        />
+        <div className="card-body">
+          <h5 className="card-title d-flex justify-content-center mb-3 ">{animal.name}</h5>
+          <p><strong>Breed mixture: </strong>{animal.breeds ? animal.breeds.primary : 'N/A'}</p> 
+        </div>
+        <div className="mt-2">
+          <Link to="/details" state={ animal } >More details</Link>
+        </div>
+      </div> 
       <Masonry
         breakpointCols={breakpointColumnsObj}
         className="my-masonry-grid"
@@ -99,7 +108,7 @@ export const Adoptme = () => {
                 />
                 <div className="card-body">
                   <h5 className="card-title">{item.name}</h5>
-                  <p><strong>Breed mixture: </strong>{item.breeds ? item.breeds.primary : 'N/A'}</p> 
+                  <p><strong>Breed mixture: </strong>{item.breeds ? item.breeds.primary : 'N/A'}</p>
                   <p><strong>Age: </strong>{item.age ? item.age : 'N/A'}</p>
                   <p><strong>Gender: </strong>{item.gender ? item.gender : 'N/A'}</p>
                   <p><strong>Size: </strong>{item.size ? item.size : 'N/A'}</p>
@@ -110,7 +119,7 @@ export const Adoptme = () => {
                 <div className="d-flex justify-content-center">
                 <button className="btn btn-info w-25 mb-3" onClick={handleClick}><i className="fas fa-eye"></i></button>
                 </div>
-              </div> 
+              </div>
             ))
           ) : null}
         {store.animals ? (
@@ -123,7 +132,7 @@ export const Adoptme = () => {
               />
               <div className="card-body">
                 <h5 className="card-title">{animal.name}</h5>
-                <p><strong>City: </strong>{animal.city ? animal.city : 'N/A'}</p> 
+                <p><strong>City: </strong>{animal.city ? animal.city : 'N/A'}</p>
                 <p><strong>Animal Status: </strong>{animal.animal_status ? animal.animal_status : 'N/A'}</p>
                 <p><strong>Color: </strong>{animal.color ? animal.color : 'N/A'}</p>
                 <p><strong>Size: </strong>{animal.size ? animal.size : 'N/A'}</p>
@@ -135,10 +144,6 @@ export const Adoptme = () => {
           ))
         ) : null}
       </Masonry>
-     
     </div>
   );
-  
-  
-  
 }

@@ -5,12 +5,10 @@
     background-color: rgb(175, 212, 255);
     justify-content: center;
   }
-  
   .my-masonry-grid_column {
-    padding: 25px; 
+    padding: 25px;
     background-clip: padding-box;
   }
-  
   /* Agrega estilos para los elementos dentro de las columnas según tus necesidades */
   .my-masonry-grid_column > div {
     margin-bottom: 30px;
@@ -95,18 +93,17 @@
     width: 270px;
   }
   .my-masonry-grid_column {
-    padding: 10px; 
+    padding: 10px;
     background-clip: padding-box;
   }
 }
-
 @media (min-width:259px) and (max-width: 270px) {
   .my-masonry-grid_column > div {
     margin-bottom: 30px;
     width: 260px;
   }
   .my-masonry-grid_column {
-    padding: 10px; 
+    padding: 10px;
     background-clip: padding-box;
   }
 }
@@ -116,7 +113,7 @@
     width: 240px;
   }
   .my-masonry-grid_column {
-    padding: 10px; 
+    padding: 10px;
     background-clip: padding-box;
   }
 }
@@ -126,7 +123,7 @@
     width: 100px;
   }
   .my-masonry-grid_column {
-    padding: 5px; 
+    padding: 5px;
     background-clip: padding-box;
   }
 }
@@ -136,7 +133,7 @@
     width: 90px;
   }
   .my-masonry-grid_column {
-    padding: 5px; 
+    padding: 5px;
     background-clip: padding-box;
   }
 }
@@ -146,7 +143,7 @@
     width: 85px;
   }
   .my-masonry-grid_column {
-    padding: 5px; 
+    padding: 5px;
     background-clip: padding-box;
   }
 }
@@ -156,11 +153,10 @@
     width: 160px;
   }
   .my-masonry-grid_column {
-    padding: 5px; 
+    padding: 5px;
     background-clip: padding-box;
   }
 }
-
 .card img{
   object-fit: cover;
   object-position: center top;
@@ -186,30 +182,24 @@
 }
 .card:hover {
   transform:scale(0.98);
-} 
-
+}
 /* Estilos para la tabla */
 .table {
   font-size: 16px; /* Tamaño de fuente */
-  background-color: #f8f9fa; /* Color de fondo */
-  border-radius: 0.5rem; 
+  background-color: #F8F9FA; /* Color de fondo */
+  border-radius: 0.5rem;
   box-shadow: 0px 5px 10px rgba(31, 32, 32, 0.2), 5px 0px 10px rgba(31, 32, 32, 0.2), -5px 0px 10px rgba(31, 32, 32, 0.2);
-
-
 }
-
 /* Estilos para las filas de la tabla en hover */
 .table-hover tbody tr:hover {
-  background-color: #da0d0d; /* Color de fondo en hover */
+  background-color: #DA0D0D; /* Color de fondo en hover */
   cursor: pointer;
 }
-
 /* Estilos para las celdas de encabezado */
 .table thead th {
-  background-color: #343a40; /* Color de fondo del encabezado */
+  background-color: #343A40; /* Color de fondo del encabezado */
   color: white; /* Color del texto del encabezado */
 }
-
 /* Estilos para las celdas del cuerpo de la tabla */
 .table tbody td {
   vertical-align: middle; /* Alineación vertical en el medio */
@@ -219,13 +209,11 @@
  font-weight: bold;
  font-size: rem;
 }
-
 /* Personalización de los enlaces */
 .custom-link {
-  color: #c02e0d; /* Cambia el color de texto */
+  color: #C02E0D; /* Cambia el color de texto */
   text-decoration: none; /* Elimina el subrayado */
 }
-
 .custom-tr-tips:hover {
   background-color: rgb(63 153 125 / 10%);
 }
@@ -237,12 +225,11 @@
 #sticky-legend {
   position: -webkit-sticky; /* Para navegadores webkit (Safari, Chrome, etc.) */
   position: sticky;
-  top: 30%; /* Ajusta esto según sea necesario para la posición deseada */ 
+  top: 30%; /* Ajusta esto según sea necesario para la posición deseada */
   z-index: 100; /* Ajusta el valor de z-index según sea necesario */
 }
 ul {
   box-shadow: 0px 5px 10px rgba(31, 32, 32, 0.2), 5px 0px 10px rgba(31, 32, 32, 0.2), -5px 0px 10px rgba(31, 32, 32, 0.2);
-
 }
 .fa-paw {
   transform: rotate(24deg);
@@ -269,4 +256,173 @@ ul {
 }
 #tip6{
   background: rgb(63 153 125 / 10%);
+}
+ 
+.expandable-cell {
+  position: relative;
+  overflow: hidden;
+}
+.content {
+  max-height: 1.4rem; /* Establece la altura máxima inicial que se mostrará */
+  overflow: hidden;
+  transition: max-height 0.3s ease-out; /* Agrega una transición suave */
+}
+.content.expanded {
+  max-height: none; /* Muestra todo el contenido cuando se expande */
+}
+.expandable-cell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.fa-caret-right {
+  transition: transform 0.3s;
+}
+.expanded .fa-caret-right {
+  transform: rotate(90deg); /* Girar la flecha cuando esté expandida */
+}
+.sombra{
+  box-shadow: 0px 5px 10px rgba(31, 32, 32, 0.2), 5px 0px 10px rgba(31, 32, 32, 0.2), -5px 0px 10px rgba(31, 32, 32, 0.2);
+}
+input[type="text"]:focus {
+  outline: none;
+  border-color: rgb(16, 117, 87); /* Cambia el color del borde al rojo */
+  box-shadow: 0 0 5px rgb(20, 122, 92); /* Agrega una sombra roja alrededor del campo */
+  /* Aquí puedes agregar otros estilos según tus preferencias */
+}
+input[type="email"]:focus {
+  outline: none;
+  border-color: rgb(16, 117, 87); /* Cambia el color del borde al rojo */
+  box-shadow: 0 0 5px rgb(20, 122, 92); /* Agrega una sombra roja alrededor del campo */
+  /* Aquí puedes agregar otros estilos según tus preferencias */
+}
+input[type="password"]:focus {
+  outline: none;
+  border-color: rgb(16, 117, 87); /* Cambia el color del borde al rojo */
+  box-shadow: 0 0 5px rgb(20, 122, 92); /* Agrega una sombra roja alrededor del campo */
+  /* Aquí puedes agregar otros estilos según tus preferencias */
+}
+select:focus,
+textarea:focus {
+  outline: none !important;
+  border-color: #107558 !important;
+box-shadow: 0 0 5px #147A5C !important;
+}
+.formlabel{
+  font-size: 120%;
+}
+.corner-top-left {
+  border-top-left-radius: 1rem; /* Ajusta el valor según desees */
+}
+.corner-top-right {
+  border-top-right-radius: 1rem; /* Ajusta el valor según desees */
+}
+.lost-card {
+  background-color: transparent !important;
+}
+/* Estilos para el botón activo (verde) */
+/* Estilos para el botón activo (verde) */
+/* Estilos para el botón activo (verde) */
+.btn-green {
+  background-color: rgb(63, 153, 125) !important;
+  color: white !important; /* Texto en blanco para contraste */
+}
+/* Estilos para el botón inactivo (blanco) */
+.btn-white {
+  background-color: white !important;
+  color: rgb(63, 153, 125) !important; /* Color de texto en verde */
+  border: 2px solid rgb(63, 153, 125) !important; /* Borde verde para el botón inactivo */
+}
+.btn-green:focus, .btn-white:focus {
+  background-color: rgba(63, 153, 125, 0.8) !important; /* Color de fondo con un poco de transparencia */
+  box-shadow: 0 0 10px rgba(63, 153, 125, 0.8) !important; /* Sombra con el mismo color */
+  outline: none !important; /* Eliminar el borde de enfoque predeterminado del botón */
+}
+/* Estilos para el botón "Add Your Animal" en amarillo */
+.btn-add-animal {
+  background-color: #FFC107 !important; /* Amarillo */
+  color: white !important; /* Texto en blanco para contraste */
+  border: none !important; /* Sin borde */
+  transition: background-color 0.3s ease; /* Agregar transición suave para el color de fondo */
+}
+/* Estilos para el botón cuando está enfocado (haciendo clic en él) */
+.btn-add-animal:focus {
+  background-color: #FFA000 !important; /* Amarillo más oscuro al enfocar */
+  box-shadow: 0 0 10px #FFA000 !important; /* Sombra más oscura al enfocar */
+  outline: none; /* Eliminar el borde de enfoque predeterminado del botón */
+}
+.btn-upload{
+  background-color: #FF8F33;
+}
+/* Estilos para la vista previa de la imagen */
+.preview-image {
+  margin-top: 5%;
+  margin-left: auto;
+  margin-right:auto;}
+.preview-image img {
+  max-width: 40%; /* Asegura que la imagen no exceda el ancho del contenedor */
+  max-height: 10%; /* Establece una altura máxima para la imagen (60% del contenedor) */
+  width: auto;
+  margin-left: auto;
+  margin-right:auto; /* Permite que la imagen mantenga su relación de aspecto */
+  display: block; /* Elimina márgenes y espacios innecesarios alrededor de la imagen */
+  margin-top: 0.2%; /* Espacio superior entre la imagen y otros elementos (2% del contenedor) */
+}
+/* Estilo para el botón "Upload Image" */
+.upload-button {
+  background-color: #FF8F33;
+  width: auto; /* Establece el ancho automático para el botón */
+  display: inline-block; /* Cambia el comportamiento de bloque a en línea */
+  margin: 0 auto; /* Centra el botón horizontalmente */
+  padding: 10px 20px; /* Ajusta el relleno según tus preferencias */
+}
+/* Estilo para la vista previa de la imagen */
+.custom-preview-image {
+  margin-top: 5%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center; /* Centra el contenido de la vista previa */
+}
+.custom-preview-image img {
+  max-width: 40%; /* Establece el ancho máximo de la imagen al 100% del contenedor */
+  max-height: 10%; /* Establece una altura máxima para la imagen (60% del contenedor) */
+  width: auto;
+  margin-top: 0.2%; /* Espacio superior entre la imagen y otros elementos (2% del contenedor) */
+}
+.upload-container {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente el contenido */
+  align-items: center; /* Centra verticalmente el contenido */
+  flex-direction: column; /* Alinea verticalmente los elementos uno encima del otro */
+  text-align: center; /* Centra el texto dentro del contenedor */
+}
+.upload-container img {
+  max-width: 40%; /* Asegura que la imagen no exceda el ancho del contenedor */
+  max-height: auto; /* Permite que la imagen mantenga su relación de aspecto */
+  width: auto;
+  height: auto;
+  display: block; /* Elimina márgenes y espacios innecesarios alrededor de la imagen */
+  margin-top: 0.2%; /* Espacio superior entre la imagen y otros elementos */
+}
+
+/* --------------------------------------------------------------------------------------------------------------*/
+h1 {
+  color: rgb(26, 158, 118);
+  font-size: 400%;
+  font-weight: bold;
+}
+
+.row {
+  background-color: rgb(63 153 125 / 10%);
+}
+
+#lostanimals, 
+#voluntaryform, 
+#experiences, 
+#protectors {
+  color: rgb(26, 158, 118);
+  font-size: 400%;
+  
 }

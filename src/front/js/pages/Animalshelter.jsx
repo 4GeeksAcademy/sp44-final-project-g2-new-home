@@ -11,7 +11,6 @@ export const Animalshelter = () => {
   const [selectedCity, setSelectedCity] = useState("");
   const hostPetfinder = "https://api.petfinder.com/v2/";
   const url = hostPetfinder + "organizations/";
-
   const getShelter = async (token) => {
     const url = "https://api.petfinder.com/v2/organizations";
     const requestOptions = {
@@ -29,7 +28,6 @@ export const Animalshelter = () => {
       console.log("error", response.status, response.statusText);
     }
   };
-
   useEffect(() => {
     actions.getProtectors();
     actions.fetchToken().then((token) => {
@@ -39,13 +37,11 @@ export const Animalshelter = () => {
       }
     });
   }, []);
-
   const handleOnErrorImg = (e) => {
     const newBackupIndex = (backupImageIndex + 1) % backupImages.length;
     setBackupImageIndex(newBackupIndex);
     e.target.src = backupImages[newBackupIndex].default; // Usa .default para obtener la ruta de la imagen importada
   };
-
   const normalizeAPIShelter = () => {
     return shelter.map((item) => ({
       name: item.name,
@@ -59,15 +55,12 @@ export const Animalshelter = () => {
       // Agrega más propiedades si es necesario...
     }));
   };
-
   // Combinar y normalizar las protectoras
   const combinedShelter = [...normalizeAPIShelter(), ...store.protectors];
-
   // Función para manejar el cambio en el dropdown de la ciudad seleccionada
   const handleCityChange = (event) => {
     setSelectedCity(event.target.value);
   };
-
   // Filtrar las protectoras combinadas por ciudad
   const filteredShelter = combinedShelter.filter((item) => {
     if (selectedCity === "") {
@@ -76,7 +69,6 @@ export const Animalshelter = () => {
       return item.city === selectedCity;
     }
   });
-
   return (
     <div className="container mb-3">
       <h1 className="titulos text-right pt-4 mb-5">
