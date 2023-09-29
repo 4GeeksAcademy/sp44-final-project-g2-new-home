@@ -140,7 +140,8 @@ export const Experiences = () => {
         setTitle("");
         setBody("");
         setPhotolist([]);
-        setFileUrl(""); 
+        setFileUrl("");
+        localStorage.setItem("experienceId", 'false') 
       } else {
         alert("Failed to delete the experience. Please try again later.");
       }

@@ -3,6 +3,8 @@ import { Context } from '../store/appContext';
 import { useNavigate } from "react-router-dom";
 import "../../styles/index.css";
 import ExpandableCell from "./expansion";
+import voluntariofoto from "../../img/voluntariofoto.jpg";
+import { Link } from "react-router-dom";
 
 export const VoluntaryForm = () => {
   const { actions, store } = useContext(Context);
@@ -75,14 +77,26 @@ export const VoluntaryForm = () => {
   // || (store.user_id == "null" && !store.peopleId == "null" && !store.animalshelterId == "null"))
   return (
     <div className="custom-container my-5">
-      { (animalshelterId === 'false' || !store.user_id) ? ( 
-        
+      {!store.user_id ? (
+      <div className="card text-center fondo p-0 mx-auto"style={{maxWidth: "65%"}}>
+        <h1 className="card-title coloresmeralda">Join and help us</h1>
+        <img src={voluntariofoto} className="rounded-0"/>
+        <div className="card-body">
+          <p className="card-text text-start fs-5">Are you passionate about animals? Do you want to make a difference in their lives? Join our team of volunteers and be part of the change you want to see in the world!</p>
+          <p className="card-text text-start fs-4"><b>You choose how you want to help.</b></p>
+          <p className="card-text text-start fs-5">Every small gesture counts, and together we can create a better world for our furry friends. Sign up to volunteer today and be part of our family of animal lovers!</p>
+        </div>
+        <div className="card-footer">
+          <p className="card-text text-start fs-5">Together we make a difference. Join our team and change lives, one paw at a time. <Link to="/login"><b>Login</b></Link> and complete the form. They will call you soon..</p>
+        </div>
+      </div>
+      ) :  ( animalshelterId === 'false') || (!store.user_id  && peopleId !== 'false' && animalshelterId !== 'false' ) ? ( 
         <div className="card fondo mt-5 text-center animate__animated animate__bounceInUp" id="formcomplete">
           <div className="card-body">
-            <h1 className="card-title coloresmeralda" id="voluntaryform">
+            <h1 className="card-title coloresmeralda mb-5" id="voluntaryform">
               <b>Voluntary Form</b>
             </h1>
-            <div className="form-group row">
+            <div className="form-group row text-start">
               <div className="col-md-4">
                 <label><b>Name:</b></label>
                 <input
@@ -114,7 +128,7 @@ export const VoluntaryForm = () => {
                 />
               </div>
             </div>
-            <div className="form-group row mt-3">
+            <div className="form-group row mt-3 text-start">
               <div className="col-md-3">
                 <label><b>Zip Code:</b></label>
                 <input
@@ -158,22 +172,26 @@ export const VoluntaryForm = () => {
                 </select>
               </div>
             </div>
-            <div className="form-group mt-3">
-              <label><b>Tell us how you would like to help</b></label>
-              <textarea
-                className="form-control mt-2"
-                name="description"
-                value={formData.description}
-                onChange={handleInputChange}
-              ></textarea>
+            <div className="form-group mt-3 text-start row d-flex justify-content-center">
+              <div className="col-md-10">
+                <label><b>Tell us how you would like to help</b></label>
+                <textarea
+                  className="form-control mt-2"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleInputChange}
+                ></textarea>
+              </div>
             </div>
-              <div>
-                <button className="btn btn-success mt-3" onClick={handleFormSubmit}>
-                  <b>Submit</b>
-                </button>
-                <button onClick={handleGoHome} className="btn btn-secondary mt-3 ms-3"  style={{ width: "80px" }} id="post">
-                  <b>Cancel</b>
-                </button>
+              <div className="row d-flex justify-content-center">
+                <div className="col-md-3">
+                  <button className="btn btn-success  btn-lg mt-3" onClick={handleFormSubmit}>
+                    <b>Submit</b>
+                  </button>
+                  <button onClick={handleGoHome} className="btn btn-secondary btn-lg mt-3 ms-3">
+                    <b>Cancel</b>
+                  </button>
+                </div>
             </div>
           </div>
         </div>

@@ -116,7 +116,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("User ID:", data.user_id);
 					console.log("User Email:", data.user_email);
 					console.log("Role:", userRole);
-					console.log("People ID:", peopleId);
+					console.log("People ID:", peopleId, typeof(peopleId));
 					console.log("People Name:", peopleName);
 					console.log("Animal Shelter ID:", animalshelterId, typeof(animalshelterId));
 					console.log("Animal Shelter Name:", animalshelter_name);
