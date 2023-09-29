@@ -20,15 +20,12 @@ export const VoluntaryForm = () => {
   };
 
   const [formData, setFormData] = useState(initialFormData);
-  const [emailError, setEmailError] = useState(null);
   const [cityFilter, setCityFilter] = useState("");
   const [availabilityFilter, setAvailabilityFilter] = useState("");
 
   useEffect(() => {
     actions.getVolunteers();
-    // Guarda los datos del formulario en el almacenamiento local cada vez que cambian
-    localStorage.setItem("animalFormData", JSON.stringify(formData));
-  }, [formData]);
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -41,21 +38,11 @@ export const VoluntaryForm = () => {
     }
   };
 
-  const valitimeEmail = (email) => {
-    // Expresión regular para validar direcciones de correo electrónico
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailRegex.test(email);
-  };
+
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    // Validar el campo de email
-    if (!valitimeEmail(formData.email)) {
-      setEmailError("Please enter a valid email address.");
-      return; // No envíes el formulario si el email no es válido
-    } else {
-      setEmailError(null); // Restablecer el error si el email es válido
-    }
+    
     // Aquí puedes agregar la lógica para enviar el formulario
     await actions.volunteer(
       formData.address,
@@ -68,15 +55,14 @@ export const VoluntaryForm = () => {
       store.peopleId
       // Asegúrate de que peopleId esté definido y disponible
     );
-    navigate("/");
     // Limpiar el formulario después de enviar
     setFormData(initialFormData);
+    navigate("/");
   };
 
   return (
     <div className="custom-container my-5">
       {(store.animalshelterId || (store.user_id && !store.peopleId && !store.animalshelterId)) ? ( //si eres protectora o eres admin (no existe animalshelter id ni peopleId)
-
         <div classme="rounded-top">
           <h1 className="text-center esmeralda">Volunteers</h1>
           <div className="d-flex mt-5">
@@ -215,14 +201,10 @@ export const VoluntaryForm = () => {
                 <label><b>Email:</b></label>
                 <input
                   type="email"
-                  className={`form-control mt-2 ${emailError ? "is-invalid" : ""}`}
                   name="email"
-                  value={formData.email}
+                  value={store.user_email}
                   onChange={handleInputChange}
                 />
-                {emailError && (
-                  <div className="invalid-feedback">{emailError}</div>
-                )}
               </div>
               <div className="col-md-3">
                 <label><b>Availability:</b></label>

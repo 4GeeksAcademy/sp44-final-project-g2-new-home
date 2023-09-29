@@ -21,25 +21,21 @@ export const Experiences = () => {
   const shelterId = localStorage.getItem("animalshelterId");
 
   const handleShowForm = () => {
-    if (store.experienceId !== null) {
-      const experienceToEdit = store.experiences.find((experience) => experience.id === store.experienceId);
-      
-      if (experienceToEdit) {
-        localStorage.setItem("experienceTitle", experienceToEdit.title);
-        localStorage.setItem("experienceBody", experienceToEdit.body);
-        localStorage.setItem("experienceFileUrl", experienceToEdit.photo);
-        
-        setFileUrl(experienceToEdit.photo);
-        setTitle(experienceToEdit.title);
-        setBody(experienceToEdit.body);
-        setIsEditing(true); // Activa el modo de edición si estás editando una experiencia existente
-      } else {
-        // Manejar el caso en el que no se encuentra la experiencia correspondiente
-        console.error("Experience not found for ID:", store.experienceId);
-      }
-    } else {
+    if (peopleId) {
       setShowForm(true); // Mostrar el formulario solo si el usuario está autenticado
+    } else if (!userId) {
+      alert("You need to log in to post your experience.");
+    } else if (shelterId != null || (shelterId && peopleId === null)) {
+      alert("You do not have permission to publish");
     }
+      const experienceToEdit = store.experiences.find((experience) => experience.id === store.experienceId);
+      localStorage.setItem("experienceTitle", experienceToEdit.title);
+      localStorage.setItem("experienceBody", experienceToEdit.body);
+      localStorage.setItem("experienceFileUrl", experienceToEdit.photo);
+      setFileUrl(experienceToEdit.photo);
+      setTitle(experienceToEdit.title );
+      setBody(experienceToEdit.body );
+      ;
   };
   
   
