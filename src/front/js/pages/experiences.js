@@ -87,11 +87,6 @@ export const Experiences = () => {
 
   const handleSubmit = async (e) => {
   e.preventDefault();
-  // if (!file) {
-  //   alert("Please select a file.");
-  //   return;
-  // }
-
   try {
     const form = new FormData();
     form.append("img", file);
@@ -111,12 +106,28 @@ export const Experiences = () => {
       // Llama a la función de actualizar
       const success = await actions.update_experience(id, title, body, imageUrl);
       if (success) {
+        const experienceToEdit = store.experiences.find((experience) => experience.id === store.experienceId);
+        if(experienceToEdit){
+          localStorage.setItem("experienceTitle", experienceToEdit.title);
+          localStorage.setItem("experienceBody", experienceToEdit.body);
+          localStorage.setItem("experienceFileUrl", experienceToEdit.photo);
+          setFileUrl(experienceToEdit.photo);
+          setTitle(experienceToEdit.title );
+          setBody(experienceToEdit.body );}
         actions.get_experiences();
       }
     } else {
       // Llama a la función de publicar si no hay experiencia ID
       const success = await actions.publishExperience(title, body, imageUrl, peopleId);
       if (success) {
+        const experienceToEdit = store.experiences.find((experience) => experience.id === store.experienceId);
+        if(experienceToEdit){
+          localStorage.setItem("experienceTitle", experienceToEdit.title);
+          localStorage.setItem("experienceBody", experienceToEdit.body);
+          localStorage.setItem("experienceFileUrl", experienceToEdit.photo);
+          setFileUrl(experienceToEdit.photo);
+          setTitle(experienceToEdit.title );
+          setBody(experienceToEdit.body );}
         actions.get_experiences();
       }
     }
@@ -166,42 +177,31 @@ export const Experiences = () => {
     <div className="container">
       {showForm ? (
         // Mostrar el formulario
-        <div className="container justify-content-center d-flex">
-          <div className="">
-            <div className="card row mt-5 fondo" >
-              <h2 className="coloresmeralda text-center my-3">
+        <div className="card fondo mt-5 text-center mx-auto" style={{maxWidth: "60%"}}>
+          <div className="card-body">
+              <h2 className="card-title coloresmeralda text-center my-3">
                 <b>{ experienceId == 'false' ? "Publish an experience" : "Update your experience"}</b>
               </h2>
-              <div className="text-light p-3 mt-4 custom-preview-image text-center upload-container">
-                <label htmlFor="image-input" className="btn btn-success p-2 rounded-3 center-button" >
-                  <b>Upload Image</b>
-                </label>
-                <input
-                  type="file"
-                  id="image-input"
-                  accept="image/jpeg"
-                  onChange={handleImageChange}
-                  style={{ visibility: "hidden" }}
-                />
-              </div>
+              
               {fileUrl && (
-                <div className="custom-preview-image upload-container">
+                <div className="custom-experience-preview-image custom-upload-container">
                   <img src={fileUrl} alt="Preview" />
                 </div>
               )} 
-              <div className="input-fields">
-                <form onSubmit={handleSubmit}>
-                  <div className="row mt-5 d-flex justify-content-center">
-                      <div className="col-md-6">
+                <form className="row g-3" onSubmit={handleSubmit}>
+                  <div className="row mt-5 d-flex text-start justify-content-center">
+                      <div className="col-md-10">
+                        <label className="form-label"><b>Title:</b></label>
                         <input
                           type="text"
                           placeholder="Title"
                           value={title}
                           onChange={handleTitleChange}
-                          className="form-control"
+                          className="form-control mt-3"
                         />
                       </div>
-                      <div className="col-10">
+                      <div className="col-md-10 mt-3 mb-3">
+                        <label className="form-label"><b>Description:</b></label>
                         <textarea
                           placeholder="Description"
                           value={body}
@@ -210,37 +210,71 @@ export const Experiences = () => {
                         ></textarea>
                       </div>
                   </div>
-                </form>
-              </div>
               { experienceId === 'false' ? (
-              <div className="row">
-                <div className="col-12 py-3 d-flex justify-content-center">
-                  <button onClick={handleBackToPosts} className="btn btn-transparent mt-2 ms-4 me-3" >
-                      <i className="fas fa-arrow-left fa-2xl"></i>
-                  </button>
-                  <button onClick={handleSubmit} className="btn btn-transparent collapse-arrow text-dark mt-2 me-3">
-                      <i className="far fa-paper-plane"></i>
-                  </button>
-                </div>
-              </div> 
+              <div className="container mt-3">
+                <div className="row"> 
+                  <div className="col-md-3 text-light   custom-experience-preview-image text-center custom-upload-container">
+                    <label htmlFor="image-input" className="btn btn-dark" >
+                      <b>Upload Image</b>
+                    </label>
+                    <input
+                      type="file"
+                      id="image-input"
+                      accept="image/jpeg"
+                      onChange={handleImageChange}
+                      style={{ visibility: "hidden" }}
+                    />
+                  </div>
+                </div> 
+                <div className="row d-flex justify-content-center">
+                    <div className="col-md-2 py-2">
+                      <button onClick={handleBackToPosts} className="btn btn-secondary" >
+                          <b>Cancel</b>
+                      </button>
+                    </div>
+                    <div className="col-md-2 py-2">
+                      <button onClick={handleSubmit} className="btn btn-success">
+                          <b>Send</b>
+                      </button>
+                    </div>
+                </div> 
+              </div>
             ) : (
-              <div className="row">
-                <div className="col-12 py-3 d-flex justify-content-center">
-                  <button onClick={handleBackToPosts} className="btn btn-secondary mt-2 ms-4 me-3" >
-                      <b>Cancel</b>
-                  </button>
-               
-                  <button onClick={handleSubmit} className="btn btn-success mt-2" >
-                      <b>Update</b>
-                  </button>
-                
-                  <button onClick={handleDelete} className="btn btn-danger mt-2 ms-3"  >
-                      <b>Delete</b>
-                  </button>
+              <div className="container">
+                <div className="row"> 
+                  <div className="col-md-3 text-light py-2 mt-2 custom-experience-preview-image text-center custom-upload-container">
+                  <label htmlFor="image-input" className="btn btn-dark" >
+                    <b>Upload Image</b>
+                  </label>
+                  <input
+                    type="file"
+                    id="image-input"
+                    accept="image/jpeg"
+                    onChange={handleImageChange}
+                    style={{ visibility: "hidden" }}
+                  />
+                  </div>
+                </div> 
+                <div className="row d-flex justify-content-center">
+                  <div className="col-md-2 py-2">
+                    <button onClick={handleBackToPosts} className="btn btn-secondary" >
+                        <b>Cancel</b>
+                    </button>
+                  </div>
+                  <div className="col-md-2 py-2">
+                    <button onClick={handleSubmit} className="btn btn-success" >
+                        <b>Update</b>
+                    </button>
+                  </div>
+                  <div className="col-md-2 py-2">
+                    <button onClick={handleDelete} className="btn btn-danger"  >
+                        <b>Delete</b>
+                    </button>
+                  </div>
                 </div>
               </div>
-            )}
-            </div>
+            )}                
+            </form>
           </div>
         </div>
       ) : (

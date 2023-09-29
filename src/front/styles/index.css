@@ -399,9 +399,23 @@ box-shadow: 0 0 5px #147a5c !important;
   margin-right: auto;
   text-align: center; /* Centra el contenido de la vista previa */
 }
+/* Estilo para la vista previa de la imagen */
+.custom-experience-preview-image {
+  margin-top: 5%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center; /* Centra el contenido de la vista previa */
+}
 
 .custom-preview-image img {
-  max-width: 40%; /* Establece el ancho máximo de la imagen al 100% del contenedor */
+  max-width: 50%; /* Establece el ancho máximo de la imagen al 100% del contenedor */
+  max-height: 10%; /* Establece una altura máxima para la imagen (60% del contenedor) */
+  width: auto;
+  margin-top: 0.2%; /* Espacio superior entre la imagen y otros elementos (2% del contenedor) */
+}
+
+.custom-experience-preview-image img {
+  max-width: 45%; /* Establece el ancho máximo de la imagen al 100% del contenedor */
   max-height: 10%; /* Establece una altura máxima para la imagen (60% del contenedor) */
   width: auto;
   margin-top: 0.2%; /* Espacio superior entre la imagen y otros elementos (2% del contenedor) */
@@ -414,8 +428,23 @@ box-shadow: 0 0 5px #147a5c !important;
   flex-direction: column; /* Alinea verticalmente los elementos uno encima del otro */
   text-align: center; /* Centra el texto dentro del contenedor */
 }
+.custom-upload-container {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente el contenido */
+  align-items: center; /* Centra verticalmente el contenido */
+  flex-direction: column; /* Alinea verticalmente los elementos uno encima del otro */
+  text-align: center; /* Centra el texto dentro del contenedor */
+}
 
 .upload-container img {
+  max-width: 40%; /* Asegura que la imagen no exceda el ancho del contenedor */
+  max-height: auto; /* Permite que la imagen mantenga su relación de aspecto */
+  width: auto;
+  height: auto;
+  display: block; /* Elimina márgenes y espacios innecesarios alrededor de la imagen */
+  margin-top: 0.2%; /* Espacio superior entre la imagen y otros elementos */
+}
+.custom-upload-container img {
   max-width: 40%; /* Asegura que la imagen no exceda el ancho del contenedor */
   max-height: auto; /* Permite que la imagen mantenga su relación de aspecto */
   width: auto;
