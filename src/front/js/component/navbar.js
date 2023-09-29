@@ -90,7 +90,8 @@ export const Navbar = () => {
         closeSearch();
     };
 
-    // const user_email = store.user_email 
+    const animalshelterId = localStorage.getItem("animalshelterId");
+    const peopleId = localStorage.getItem("peopleId");
 
     return (
         <nav className="navbar navbar-expand-lg navbarcolor ">
@@ -105,11 +106,11 @@ export const Navbar = () => {
                         {!store.animalshelterId && (
                             <Link to="/animalshelter" className="navbar-brand custom-link"><b>Animal Shelter</b></Link>
                         )}
-                        
                         <Link to="/tips" className="navbar-brand custom-link"><b>Tips</b></Link>
-                        <Link to="/lostanimals" className="navbar-brand custom-link"><b>Lost animals</b></Link>
+                        <Link to="/lostanimals" className="navbar-brand custom-link"><b>Lost animals</b></Link> 
                         <Link to="/voluntaryform" className="navbar-brand custom-link">
-                            <b>{(store.animalshelterId || store.user_id && store.animalshelterId && !store.peopleId) ? "Find your volunteer" : "Voluntary Form"}</b>
+                        <b>{(!store.user_id) ? "Become a volunteer" : (animalshelterId !== 'false' || (store.user_id && peopleId === 'false' && animalshelterId === 'false')) ? 
+                        "Find your volunteer" : "Voluntary Form" }</b>
                         </Link>
                         <Link to="/experiences" className="navbar-brand custom-link"><b>Experiences</b></Link>
                         {store.user_id && store.animalshelterId == null && store.peopleId == null && (
