@@ -196,7 +196,6 @@
 
 /* Estilos para las filas de la tabla en hover */
 .table-hover tbody tr:hover {
-  background-color: #da0d0d; /* Color de fondo en hover */
   cursor: pointer;
 }
 
@@ -377,15 +376,6 @@ box-shadow: 0 0 5px #147a5c !important;
   transition: background-color 0.3s ease; /* Agregar transición suave para el color de fondo */
 }
 
-/* Estilos para el botón cuando está enfocado (haciendo clic en él) */
-.btn-add-animal:focus {
-  background-color: #FFA000 !important; /* Amarillo más oscuro al enfocar */
-  box-shadow: 0 0 10px #FFA000 !important; /* Sombra más oscura al enfocar */
-  outline: none; /* Eliminar el borde de enfoque predeterminado del botón */
-}
-.btn-upload{
-  background-color: #ff8f33;
-}
 /* Estilos para la vista previa de la imagen */
 .preview-image {
   margin-top: 5%;
@@ -400,14 +390,6 @@ box-shadow: 0 0 5px #147a5c !important;
   margin-right:auto; /* Permite que la imagen mantenga su relación de aspecto */
   display: block; /* Elimina márgenes y espacios innecesarios alrededor de la imagen */
   margin-top: 0.2%; /* Espacio superior entre la imagen y otros elementos (2% del contenedor) */
-}
-/* Estilo para el botón "Upload Image" */
-.upload-button {
-  background-color: #ff8f33;
-  width: auto; /* Establece el ancho automático para el botón */
-  display: inline-block; /* Cambia el comportamiento de bloque a en línea */
-  margin: 0 auto; /* Centra el botón horizontalmente */
-  padding: 10px 20px; /* Ajusta el relleno según tus preferencias */
 }
 
 /* Estilo para la vista previa de la imagen */

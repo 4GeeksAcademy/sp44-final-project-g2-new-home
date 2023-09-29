@@ -80,7 +80,7 @@ const Register = () => {
         <>
           <div>
             <label className="me-3 mt-3 form-label"><b>CIF:</b></label>
-            <input className="form-control" maxLength={20} type="text" name="cif" onChange={(e) => setCif(e.target.value)} required />
+            <input className="form-control" maxLength={15} type="text" name="cif" onChange={(e) => setCif(e.target.value)} required />
           </div>
           <div>
             <label className="me-3 mt-3 form-label"><b>Name:</b></label>

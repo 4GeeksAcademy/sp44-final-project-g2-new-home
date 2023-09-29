@@ -94,11 +94,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return false
 					}
 					const data = await resp.json()
-					const peopleId = data.people_id;
-					const animalshelterId = data.animalshelter_id;
 					const userRole = data.user_role;
+					const peopleId = data.people_id ? data.people_id : false;
 					const peopleName = data.people_name;
+					const animalshelterId = data.animalshelter_id ? data.animalshelter_id : false;
 					const animalshelter_name = data.animalshelter_name;
+					const experienceId = data.experience_id ? data.experience_id : false;
 
 					localStorage.setItem("token", data.access_token)
 					localStorage.setItem("user_id", data.user_id);
@@ -107,9 +108,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					localStorage.setItem("peopleName", peopleName);
 					localStorage.setItem("animalshelterId", animalshelterId);
 					localStorage.setItem("animalshelter_name", animalshelter_name);
-					localStorage.setItem("experienceId", data.experience_id);
+					localStorage.setItem("experienceId", experienceId);
 
-					setStore({ token: data.access_token, user_id: data.user_id, user_email: data.user_email, peopleId: peopleId, peopleName: peopleName, experienceId: data.experience_id, animalshelterId: animalshelterId, animalshelter_name: animalshelter_name }); // Almacena el ID del usuario en el store
+					setStore({ token: data.access_token, user_id: data.user_id, user_email: data.user_email, peopleId: peopleId, peopleName: peopleName, experienceId: experienceId, animalshelterId: animalshelterId, animalshelter_name: animalshelter_name }); // Almacena el ID del usuario en el store
 					console.log("This came the resp.json: ", data)
 					console.log("Token:", data.access_token);
 					console.log("User ID:", data.user_id);
@@ -117,9 +118,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Role:", userRole);
 					console.log("People ID:", peopleId);
 					console.log("People Name:", peopleName);
-					console.log("Animal Shelter ID:", animalshelterId);
+					console.log("Animal Shelter ID:", animalshelterId, typeof(animalshelterId));
 					console.log("Animal Shelter Name:", animalshelter_name);
-					console.log("Experience ID:", data.experience_id);
+					console.log("Experience ID:", experienceId, typeof(experienceId));
 
 					return true
 				}

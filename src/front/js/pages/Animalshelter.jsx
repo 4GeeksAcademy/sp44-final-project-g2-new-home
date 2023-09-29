@@ -83,7 +83,6 @@ export const Animalshelter = () => {
     return cityMatch && stateMatch && nameMatch;
   });
   
-
   return (
     <div className="container mb-3">
       <h1 className="titulos text-right pt-4 mb-5 esmeralda">
@@ -145,8 +144,8 @@ export const Animalshelter = () => {
         {/* Tabla */}
         <table className="table table-striped table-hover border border-4" style={{ flex: "1" }}>
           <thead>
-            <tr className="">
-              <th scope="col">WEBSITE</th>
+            <tr className="text-center">
+              <th scope="col">PHOTO</th>
               <th scope="col">ORGANIZATION</th>
               <th scope="col">EMAIL</th>
               <th scope="col">CITY</th>

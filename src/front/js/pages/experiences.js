@@ -7,13 +7,13 @@ import Masonry from "react-masonry-css";
 export const Experiences = () => {
   const { actions, store } = useContext(Context);
   // const [experiences, setExperiences] = useState([]); // Store published experiences
-  const [title, setTitle] = useState(localStorage.getItem("experienceTitle"));
-  const [body, setBody] = useState(localStorage.getItem("experienceBody"));
+  const [title, setTitle] = useState(localStorage.getItem("experienceTitle") ?? "");
+  const [body, setBody] = useState(localStorage.getItem("experienceBody") ?? "");
   const [photolist, setPhotolist] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const[file, setFile]= useState("");
-  const[fileUrl, setFileUrl]= useState(localStorage.getItem("experienceFileUrl"));
+  const[fileUrl, setFileUrl]= useState(localStorage.getItem("experienceFileUrl") ?? "");
   const [likedExperiences, setLikedExperiences] = useState(new Set());
 
   const peopleId = store.peopleId; 
@@ -22,20 +22,21 @@ export const Experiences = () => {
 
   const handleShowForm = () => {
     if (peopleId) {
-      setShowForm(true); // Mostrar el formulario solo si el usuario está autenticado
+      setShowForm(true); 
     } else if (!userId) {
       alert("You need to log in to post your experience.");
     } else if (shelterId != null || (shelterId && peopleId === null)) {
       alert("You do not have permission to publish");
     }
       const experienceToEdit = store.experiences.find((experience) => experience.id === store.experienceId);
-      localStorage.setItem("experienceTitle", experienceToEdit.title);
-      localStorage.setItem("experienceBody", experienceToEdit.body);
-      localStorage.setItem("experienceFileUrl", experienceToEdit.photo);
-      setFileUrl(experienceToEdit.photo);
-      setTitle(experienceToEdit.title );
-      setBody(experienceToEdit.body );
-      ;
+      if(experienceToEdit){
+        localStorage.setItem("experienceTitle", experienceToEdit.title);
+        localStorage.setItem("experienceBody", experienceToEdit.body);
+        localStorage.setItem("experienceFileUrl", experienceToEdit.photo);
+        setFileUrl(experienceToEdit.photo);
+        setTitle(experienceToEdit.title );
+        setBody(experienceToEdit.body );
+      }
   };
   
   
@@ -158,6 +159,8 @@ export const Experiences = () => {
       204:1
   };
 
+  const experienceId = localStorage.getItem("experienceId")
+
   return (
     <div className="container">
       {showForm ? (
@@ -166,10 +169,10 @@ export const Experiences = () => {
           <div className="">
             <div className="card row mt-5 fondo" >
               <h2 className="coloresmeralda text-center my-3">
-                <b>{ store.experienceId !== null ? "Update your experience" : "Publish an experience"}</b>
+                <b>{ experienceId == 'false' ? "Publish an experience" : "Update your experience"}</b>
               </h2>
               <div className="text-light p-3 mt-4 custom-preview-image text-center upload-container">
-                <label htmlFor="image-input" className="upload-button p-2 rounded-3 center-button" >
+                <label htmlFor="image-input" className="btn btn-success p-2 rounded-3 center-button" >
                   <b>Upload Image</b>
                 </label>
                 <input
@@ -208,23 +211,7 @@ export const Experiences = () => {
                   </div>
                 </form>
               </div>
-              { store.experienceId !== null ? (
-              <div className="row">
-                <div className="col-12 py-3 d-flex justify-content-center">
-                  <button onClick={handleBackToPosts} className="btn btn-transparent mt-2 ms-4 me-3" >
-                      <i className="fas fa-arrow-left fa-2xl"></i>
-                  </button>
-               
-                  <button onClick={handleSubmit} className="btn btn-transparent text-dark mt-2" >
-                      <i className="fas fa-2xl fa-square-check" style={{color: "#27ca1c"}}></i>
-                  </button>
-                
-                  <button onClick={handleDelete} className="btn btn-transparent mt-2 ms-3"  >
-                      <i className="fas fa-trash-can fa-2xl" style={{color: "#585555"}}></i>
-                  </button>
-                </div>
-              </div>
-            ) : (
+              { experienceId === 'false' ? (
               <div className="row">
                 <div className="col-12 py-3 d-flex justify-content-center">
                   <button onClick={handleBackToPosts} className="btn btn-transparent mt-2 ms-4 me-3" >
@@ -235,6 +222,22 @@ export const Experiences = () => {
                   </button>
                 </div>
               </div> 
+            ) : (
+              <div className="row">
+                <div className="col-12 py-3 d-flex justify-content-center">
+                  <button onClick={handleBackToPosts} className="btn btn-secondary mt-2 ms-4 me-3" >
+                      <b>Cancel</b>
+                  </button>
+               
+                  <button onClick={handleSubmit} className="btn btn-success mt-2" >
+                      <b>Update</b>
+                  </button>
+                
+                  <button onClick={handleDelete} className="btn btn-danger mt-2 ms-3"  >
+                      <b>Delete</b>
+                  </button>
+                </div>
+              </div>
             )}
             </div>
           </div>
@@ -246,7 +249,7 @@ export const Experiences = () => {
           <div className="d-flex justify-content-center mb-5">
           {!showForm && (
         <button onClick={handleShowForm} className="btn btn-add-animal text-dark mt-3">
-          { store.experienceId !== null ? <b>"Update us"</b>  : <b>"Share your experience with us"</b> }                                       
+          { (experienceId === 'false' || !store.user_id) ? <b>"Share your experience with us"</b> : <b>"Update us"</b> }                                       
         </button>
          )}
          </div>
