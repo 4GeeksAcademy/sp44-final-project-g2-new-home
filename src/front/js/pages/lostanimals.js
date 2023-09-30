@@ -169,8 +169,8 @@ export const Lostanimals = () => {
 
   const breakpointColumnsObj = {
     default: 3,
-      487:2,
-      204:1
+    470: 2,
+    380: 1
   };
 
 
@@ -181,30 +181,18 @@ export const Lostanimals = () => {
         <h1 className="esmeralda" id="lostanimals">
           Have you lost your pet?
         </h1>
-        <button onClick={handleShowForm} className="btn btn-add-animal text-dark mb-5 mt-5">
+        <button onClick={handleShowForm} className="btn btn-success btn-lg mb-5 mt-5">
           <b>Add your pet here</b>
         </button>
       </div>
     )}
-    {showForm && (
+     {showForm ? (
       <div className="container">
         <div className="">
           <div className="card row mt-5 fondo">
             <h2 className="coloresmeralda my-3">
               <b>Add Your Animal</b>
             </h2>
-            <div className="w-25 text-light p-3 mt-4 preview-image">
-              <label htmlFor="image-input" className="btn-upload p-2 rounded-3">
-                <b>Upload Image</b>
-              </label>
-              <input
-                type="file"
-                id="image-input"
-                accept="image/jpeg"
-                onChange={handleImageChange}
-                style={{ visibility: "hidden" }}
-              />
-            </div>
             {fileUrl && (
               <div className="preview-image">
                 <img src={fileUrl} alt="Preview" />
@@ -213,7 +201,7 @@ export const Lostanimals = () => {
 
             <div className="input-fields">
               <form onSubmit={handleSubmit}>
-                <div className="row mt-5 d-flex justify-content-center">
+                <div className="row mt-5 text-start d-flex justify-content-center">
                   <div className="col-md-3">
                     <label><b>Name:</b></label>
                     <input
@@ -258,7 +246,7 @@ export const Lostanimals = () => {
                     </select>
                   </div>
                 </div>
-                <div className="row mt-3 d-flex justify-content-center">
+                <div className="row mt-3 d-flex text-start justify-content-center">
                   <div className="col-md-3">
                     <label><b>Color:</b></label>
                     <input
@@ -304,22 +292,37 @@ export const Lostanimals = () => {
                     </select>
                   </div>
                 </div>
-                <div className="col-md-12 mt-3">
-                  <label><b>Description:</b></label>
-                  <textarea
-                    placeholder="Description"
-                    className="form-control mt-2"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                  ></textarea>
+                <div className="row mt-3 text-start">
+                  <div className="col-md-9">
+                    <label><b>Description:</b></label>
+                    <textarea
+                      placeholder="Description"
+                      className="form-control mt-2"
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                    ></textarea>
+                  </div>
+                  <div className="col-md-3 text-light  preview-image d-flex flex-column">
+                    <label className="form-label text-start text-dark"><b>Photo:</b></label>
+                    <label htmlFor="image-input" className="btn btn-dark p-2 rounded-3">
+                      <b>Upload Image</b>
+                    </label>
+                    <input
+                      type="file"
+                      id="image-input"
+                      accept="image/jpeg"
+                      onChange={handleImageChange}
+                      style={{ visibility: "hidden" }}
+                    />
+                  </div>
                 </div>
                 <div className="row mt-3">
                   <div className="col-md-12">
-                    <button type="submit" className="btn btn-add-animal text-dark mt-2 me-3" style={{ width: "6%", height: "83%" }}>
-                      <b>Post</b>
-                    </button>
-                    <button onClick={handleBackToPosts} className="btn btn-secondary mt-2 me-3" style={{ width: "80px" }}>
+                    <button onClick={handleBackToPosts} className="btn btn-secondary btn-lg mt-2 me-3" style={{ width: "80px" }}>
                       <b>Cancel</b>
+                    </button>
+                    <button type="submit" className="btn btn-success btn-lg mt-2 me-3" style={{ width: "6%", height: "83%" }}>
+                      <b>Post</b>
                     </button>
                   </div>
                 </div>
@@ -328,17 +331,17 @@ export const Lostanimals = () => {
           </div>
         </div>
       </div>
-    )}
-      <div className="card text-center fondo" id="cuerpo">
-        <div className="lost-card card-header border-0">
+    ) : (
+      <div className="card text-center fondo pt-4">
+        <div className="lost-card card-header border-0 py-4">
           <button
-            className={`btn me-3 ${activeTab === "lost" ? "btn-green" : "btn-white"}`}
+            className={`btn btn-lg me-3 ${activeTab === "lost" ? "btn-green" : "btn-white"}`}
             onClick={() => setActiveTab("lost")}
           >
             <b>Lost Animals</b>
           </button>
           <button
-            className={`btn ${activeTab === "found" ? "btn-green" : "btn-white"}`}
+            className={`btn btn-lg ${activeTab === "found" ? "btn-green" : "btn-white"}`}
             onClick={() => setActiveTab("found")}
           >
             <b>Found Animals</b>
@@ -424,6 +427,7 @@ export const Lostanimals = () => {
           </div>
         </div>
       </div>
+      )}
     </div>
   );
   

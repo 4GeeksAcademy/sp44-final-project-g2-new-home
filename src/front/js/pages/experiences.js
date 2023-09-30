@@ -87,6 +87,14 @@ export const Experiences = () => {
 
   const handleSubmit = async (e) => {
   e.preventDefault();
+
+  if (experienceId === 'false') {
+    if (!title || !body || !file) {
+      alert("Please fill in all required fields (Title, Description, and Image).");
+      return;
+    }
+  }
+
   try {
     const form = new FormData();
     form.append("img", file);
@@ -167,8 +175,8 @@ export const Experiences = () => {
 
   const breakpointColumnsObj = {
     default: 3,
-      487:2,
-      204:1
+    470: 2,
+    380: 1
   };
 
   const experienceId = localStorage.getItem("experienceId")
@@ -228,12 +236,12 @@ export const Experiences = () => {
                 </div> 
                 <div className="row d-flex justify-content-center">
                     <div className="col-md-2 py-2">
-                      <button onClick={handleBackToPosts} className="btn btn-secondary" >
+                      <button onClick={handleBackToPosts} className="btn btn-lg btn-secondary" >
                           <b>Cancel</b>
                       </button>
                     </div>
                     <div className="col-md-2 py-2">
-                      <button onClick={handleSubmit} className="btn btn-success">
+                      <button onClick={handleSubmit} className="btn btn-lg btn-success">
                           <b>Send</b>
                       </button>
                     </div>
@@ -243,31 +251,31 @@ export const Experiences = () => {
               <div className="container">
                 <div className="row"> 
                   <div className="col-md-3 text-light py-2 mt-2 custom-experience-preview-image text-center custom-upload-container">
-                  <label htmlFor="image-input" className="btn btn-dark" >
-                    <b>Upload Image</b>
-                  </label>
-                  <input
-                    type="file"
-                    id="image-input"
-                    accept="image/jpeg"
-                    onChange={handleImageChange}
-                    style={{ visibility: "hidden" }}
-                  />
+                    <label htmlFor="image-input" className="btn btn-dark" >
+                      <b>Upload Image</b>
+                    </label>
+                    <input
+                      type="file"
+                      id="image-input"
+                      accept="image/jpeg"
+                      onChange={handleImageChange}
+                      style={{ visibility: "hidden" }}
+                    />
                   </div>
                 </div> 
                 <div className="row d-flex justify-content-center">
                   <div className="col-md-2 py-2">
-                    <button onClick={handleBackToPosts} className="btn btn-secondary" >
+                    <button onClick={handleBackToPosts} className="btn btn-lg btn-secondary" >
                         <b>Cancel</b>
                     </button>
                   </div>
                   <div className="col-md-2 py-2">
-                    <button onClick={handleSubmit} className="btn btn-success" >
+                    <button onClick={handleSubmit} className="btn btn-success btn-lg" >
                         <b>Update</b>
                     </button>
                   </div>
                   <div className="col-md-2 py-2">
-                    <button onClick={handleDelete} className="btn btn-danger"  >
+                    <button onClick={handleDelete} className="btn btn-lg btn-danger"  >
                         <b>Delete</b>
                     </button>
                   </div>
@@ -279,51 +287,46 @@ export const Experiences = () => {
         </div>
       ) : (
         // Mostrar las vistas de todas las publicaciones
-        <div className="row">
-          <h2 className="mt-4 mb-4 esmeralda">These have been some of the experiences of our users...</h2>
-          <div className="d-flex justify-content-center mb-5">
-          {!showForm && (
-        <button onClick={handleShowForm} className="btn btn-add-animal text-dark mt-3">
-          { (experienceId === 'false' || !store.user_id) ? <b>"Share your experience with us"</b> : <b>"Update us"</b> }                                       
-        </button>
-         )}
-         </div>
-         <Masonry
-              breakpointCols={breakpointColumnsObj}
-              className="my-masonry-grid"
-              columnClassName="my-masonry-grid_column"
-            >
-          {store.experiences ? (
-            store.experiences.map((experience) => (
-              <div className="col-md-4 mb-4" key={experience.id}>
-                <div className="card custom-card">
-                  {experience.photo ? (
-                    <img
-                      src={experience.photo}
-                      alt={`Image for ${experience.title}`}
-                      className="card-img-top"
-                    />
-                  ) : (
-                    <img
-                      src="/placeholder-image.jpg"
-                      alt="Image not available"
-                      className="card-img-top"
-                    />
-                  )}
-                  <div className="card-body">
-                    <h4 className="card-text">Posted by: {experience.peopleName}</h4>
-                    <h5 className="card-title">{experience.title}</h5>
-                    <p className="card-text">{experience.body}</p>
-                  </div>
-                </div>
+          <div className="row">
+            <h2 className="mt-5 mb-4 esmeralda">These have been some of the experiences of our users...</h2>
+              {!showForm && (
+              <div className="col-md-3 mx-auto my-5">
+                <button onClick={handleShowForm} className="btn-success btn-lg mt-3">
+                  { (experienceId === 'false' || !store.user_id) ? <b>"Share your experience"</b> : <b>"Update us"</b> }                                       
+                </button>
               </div>
-            ))
-            
-          ) : (
-            <p>No experiences available.</p>
-          )}
-          </Masonry>
-        </div>
+              )}   
+            {store.experiences ? (
+              <div className="container">
+              <div className="card row fondo p-5">
+                <Masonry
+                          breakpointCols={breakpointColumnsObj}
+                          className="my-masonry-grid"
+                          columnClassName="my-masonry-grid_column"
+                        >
+                {store.experiences.map((experience) => (
+                  <div className="col-sm-6 col-lg-4 mb-4" key={experience.id}>
+                    <div className="card custom-card ">
+                      <img
+                        src={experience.photo}
+                        alt={`Image for ${experience.title}`}
+                        className="card-img-top"
+                      />
+                      <div className="card-body">
+                        <h4 className="card-title text-center">{experience.title}</h4>
+                        <p className="card-text fs-5">{experience.body}</p>
+                        <h5 className="card-text">Posted by: {experience.peopleName}</h5>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                </Masonry>
+              </div>
+              </div> 
+            ) : (
+              <p>No experiences available.</p>
+            )}
+          </div>
       )}
     </div>
   );

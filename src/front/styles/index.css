@@ -1,164 +1,27 @@
 .my-masonry-grid {
-    display: flex;
-    width: auto;
-    border-radius: 1rem;
-    background-color:transparent;
-    justify-content: center;
-  }
-  
-  .my-masonry-grid_column {
-    padding: 25px; 
-    background-clip: padding-box;
-  }
-  
-  /* Agrega estilos para los elementos dentro de las columnas según tus necesidades */
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 100%;
-  }
-  /* Ajusta el ancho de las tarjetas dentro de las columnas */
-.my-masonry-grid_column .card {
-    width: 100%; /* Establece el ancho al 100% para que las tarjetas ocupen todo el ancho de la columna */
-    max-width: 100%; /* Establece un ancho máximo para las tarjetas si lo deseas */
-    margin-bottom: 20px; /* Espacio entre tarjetas */
-    /* Otros estilos de tarjetas según tus necesidades */
-  }
-  @media (min-width: 992px) and (max-width: 1199px) {
-    .my-masonry-grid_column > div {
-      margin-bottom: 30px;
-      width: 620px;
-    }
-}
-@media (min-width:768px) and (max-width: 991px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 425px;
-  }
-}
-@media (min-width:577px) and (max-width: 767px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 300px;
-  }
-}
-@media (min-width:550px) and (max-width: 576px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 290px;
-  }
-}
-@media (min-width:533px) and (max-width: 549px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 285px;
-  }
-}
-@media (min-width:487px) and (max-width: 532px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 265px;
-  }
-}
-@media (min-width:442px) and (max-width: 486px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 380px;
-  }
-}
-@media (min-width:400px) and (max-width: 441px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 350px;
-  }
-}
-@media (min-width:380px) and (max-width: 399px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 330px;
-  }
-}
-@media (min-width:340px) and (max-width: 379px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 300px;
-  }
-}
-@media (min-width:316px) and (max-width: 339px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 270px;
-  }
-}
-@media (min-width:271px) and (max-width: 315px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 270px;
-  }
-  .my-masonry-grid_column {
-    padding: 10px; 
-    background-clip: padding-box;
-  }
+  display: flex;
+  width: auto;
+  border-radius: 1rem;
+  background-color:transparent;
+  justify-content: center;
 }
 
-@media (min-width:259px) and (max-width: 270px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 260px;
-  }
-  .my-masonry-grid_column {
-    padding: 10px; 
-    background-clip: padding-box;
-  }
+.my-masonry-grid_column {
+  padding: 1rem; 
+  background-clip: padding-box;
 }
-@media (min-width:250px) and (max-width: 258px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 240px;
-  }
-  .my-masonry-grid_column {
-    padding: 10px; 
-    background-clip: padding-box;
-  }
+
+/* Agrega estilos para los elementos dentro de las columnas según tus necesidades */
+.my-masonry-grid_column > div {
+  /* margin-bottom: 1rem; */
+  width: 100%;
 }
-@media (min-width:235px) and (max-width: 249px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 100px;
-  }
-  .my-masonry-grid_column {
-    padding: 5px; 
-    background-clip: padding-box;
-  }
-}
-@media (min-width:220px) and (max-width: 234px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 90px;
-  }
-  .my-masonry-grid_column {
-    padding: 5px; 
-    background-clip: padding-box;
-  }
-}
-@media (min-width:205px) and (max-width: 219px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 85px;
-  }
-  .my-masonry-grid_column {
-    padding: 5px; 
-    background-clip: padding-box;
-  }
-}
-@media (min-width:196px) and (max-width: 204px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 160px;
-  }
-  .my-masonry-grid_column {
-    padding: 5px; 
-    background-clip: padding-box;
-  }
+/* Ajusta el ancho de las tarjetas dentro de las columnas */
+.my-masonry-grid_column .card {
+  width: 100%; /* Establece el ancho al 100% para que las tarjetas ocupen todo el ancho de la columna */
+  max-width: 100%; /* Establece un ancho máximo para las tarjetas si lo deseas */
+  margin-bottom: 20px; /* Espacio entre tarjetas */
+  /* Otros estilos de tarjetas según tus necesidades */
 }
 
 .card img{
@@ -177,10 +40,10 @@
   box-shadow: 0px 5px 10px rgba(31, 32, 32, 0.2), 5px 0px 10px rgba(31, 32, 32, 0.2), -5px 0px 10px rgba(31, 32, 32, 0.2);
   transition: 0.3s;
 }
-.card img.card-v{
+/* .card img.card-v{
   width:100%;
   height:100%;
-}
+} */
 .card:hover{
   box-shadow: inset 10px 10px 24px -12px (0,0,0,0.75);
 }
@@ -452,3 +315,7 @@ box-shadow: 0 0 5px #147a5c !important;
   display: block; /* Elimina márgenes y espacios innecesarios alrededor de la imagen */
   margin-top: 0.2%; /* Espacio superior entre la imagen y otros elementos */
 }
+
+
+
+

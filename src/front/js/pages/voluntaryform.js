@@ -78,7 +78,7 @@ export const VoluntaryForm = () => {
   return (
     <div className="custom-container my-5">
       {!store.user_id ? (
-      <div className="card text-center fondo p-0 mx-auto"style={{maxWidth: "65%"}}>
+      <div className="card text-center fondo p-0 mx-auto"style={{maxWidth: "60%"}}>
         <h1 className="card-title coloresmeralda py-3">Join and help us</h1>
         <img src={voluntariofoto} className="rounded-0"/>
         <div className="card-body">
@@ -248,7 +248,7 @@ export const VoluntaryForm = () => {
             </div>
           </div>
           <div className="form-group mt-3 text-start row d-flex justify-content-center">
-            <div className="col-md-10">
+            <div className="col-md-12">
               <label><b>Tell us how you would like to help</b></label>
               <textarea
                 className="form-control mt-2"
