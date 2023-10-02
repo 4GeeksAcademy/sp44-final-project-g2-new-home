@@ -46,13 +46,16 @@ export const Lostanimals = () => {
 
   const handleImageChange = (e) => {
     if (e.target.files.length) {
+      const imageUrl = URL.createObjectURL(e.target.files[0]);
+      setFileUrl(imageUrl); // Actualizar el estado de la vista previa de la imagen
       setFile(e.target.files[0]);
-      console.log("evento imagen: ", e.target.files);
     }
   };
-
+  
+ 
   const handleBackToPosts = () => {
-    setShowForm(false); // Volver a las vistas de todas las publicaciones
+    setShowForm(false); 
+    setFileUrl(false);
   };
 
   const handleSubmit = async (e) => {
@@ -155,6 +158,7 @@ export const Lostanimals = () => {
       setEditData({ ...editData, photo: e.target.files[0] });
     }
   };
+ 
 
   const handleCancelEdit = (animalId) => {
     // Cancela el modo de edición para el animal con el ID dado
@@ -165,211 +169,266 @@ export const Lostanimals = () => {
 
   const breakpointColumnsObj = {
     default: 3,
-      487:2,
-      204:1
+    470: 2,
+    380: 1
   };
 
 
   return (
-    <div id="lostanimals-container" className="container text-center">
-      <h1 id="lostanimals">{activeTab === "lost" ? "Lost Animals" : "Found Animals"}</h1>
-      {!showForm && (
-        <button onClick={handleShowForm} className="btn btn-primary mb-5 mt-5">
-          Add your animal here
+    <div className="container text-center">
+    {!showForm && (
+      <div>
+        <h1 className="esmeralda" id="lostanimals">
+          Have you lost your pet?
+        </h1>
+        <button onClick={handleShowForm} className="btn btn-success btn-lg mb-5 mt-5">
+          <b>Add your pet here</b>
         </button>
-      )}
-      {showForm && (
-        <div className="container">
-          <div className="experiences-container">
-            <div className="experience-post">
-              <h2>
-                <b>Add Your Animal</b>
-              </h2>
-              <div className="image-upload">
-                <input
-                  type="file"
-                  id="image-input"
-                  accept="image/jpeg"
-                  onChange={handleImageChange}
-                />
+      </div>
+    )}
+     {showForm ? (
+      <div className="container">
+        <div className="">
+          <div className="card row mt-5 fondo">
+            <h2 className="coloresmeralda my-3">
+              <b>Add Your Animal</b>
+            </h2>
+            {fileUrl && (
+              <div className="preview-image">
+                <img src={fileUrl} alt="Preview" />
               </div>
-              <div className="input-fields">
-                <input
-                  type="text"
-                  placeholder="Name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-                <input
-                  type="text"
-                  placeholder="City"
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
-                />
-                <input
-                  type="text"
-                  placeholder="Phone"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                />
-                <select
-                  className="form-control mb-3"
-                  value={size}
-                  onChange={(e) => setSize(e.target.value)}
-                >
-                  <option value="" disabled>Select a Size</option>
-                  <option value="Large">Large</option>
-                  <option value="Medium">Medium</option>
-                  <option value="Small">Small</option>
-                </select>
-                <input
-                  type="text"
-                  placeholder="Color"
-                  value={color}
-                  onChange={(e) => setColor(e.target.value)}
-                />
-                <select
-                  className="form-control mb-3"
-                  value={type}
-                  onChange={(e) => setType(e.target.value)}
-                >
-                  <option value="" disabled>Select a type of animal</option>
-                  <option value="Dog">Dog</option>
-                  {/* <option value="Cat">Cat</option> */}
-                </select>
-                <textarea
-                  placeholder="Description"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                ></textarea>
-                <select
-                  className="form-control mb-3"
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
-                >
-                  <option value="" disabled>Select the status of animal</option>
-                  <option value="Lost">Lost</option>
-                  <option value="Found">Found</option>
-                </select>
-                <input
-                  type="hidden"
-                  name="date"
-                  value={new Date().toLocaleDateString()}
-                />
-                <input
-                  type="text"
-                  placeholder="Contact information"
-                  value={contact}
-                  onChange={(e) => setContact(e.target.value)}
-                />
-                <div>
-                  <button onClick={handleBackToPosts} className="me-3" style={{ width: "80px" }} id="post">
-                    Cancel
-                  </button>
-                  <button onClick={handleSubmit} style={{ width: "80px" }} id="post">
-                    Post
-                  </button>
+            )} 
+
+            <div className="input-fields">
+              <form onSubmit={handleSubmit}>
+                <div className="row mt-5 text-start d-flex justify-content-center">
+                  <div className="col-md-3">
+                    <label><b>Name:</b></label>
+                    <input
+                      type="text"
+                      className="form-control mt-2"
+                      placeholder="Name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                  </div>
+                  <div className="col-md-3">
+                    <label><b>City:</b></label>
+                    <input
+                      type="text"
+                      className="form-control mt-2"
+                      placeholder="City"
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
+                    />
+                  </div>
+                  <div className="col-md-3">
+                    <label><b>Phone:</b></label>
+                    <input
+                      type="text"
+                      className="form-control mt-2"
+                      placeholder="Phone"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                    />
+                  </div>
+                  <div className="col-md-3">
+                    <label><b>Size Type:</b></label>
+                    <select
+                      className="form-control mt-2"
+                      value={size}
+                      onChange={(e) => setSize(e.target.value)}
+                    >
+                      <option value="" disabled>Select a Size</option>
+                      <option value="Large">Large</option>
+                      <option value="Medium">Medium</option>
+                      <option value="Small">Small</option>
+                    </select>
+                  </div>
                 </div>
-              </div>
+                <div className="row mt-3 d-flex text-start justify-content-center">
+                  <div className="col-md-3">
+                    <label><b>Color:</b></label>
+                    <input
+                      type="text"
+                      className="form-control mt-2"
+                      placeholder="Color"
+                      value={color}
+                      onChange={(e) => setColor(e.target.value)}
+                    />
+                  </div>
+                  <div className="col-md-3">
+                    <label><b>Type of Animal:</b></label>
+                    <select
+                      className="form-control mt-2"
+                      value={type}
+                      onChange={(e) => setType(e.target.value)}
+                    >
+                      <option value="" disabled>Select a type of animal</option>
+                      <option value="Dog">Dog</option>
+                      <option value="Cat">Cat</option>
+                    </select>
+                  </div>
+                  <div className="col-md-3">
+                    <label><b>Contact information:</b></label>
+                    <input
+                      type="text"
+                      className="form-control mt-2"
+                      placeholder="Contact information"
+                      value={contact}
+                      onChange={(e) => setContact(e.target.value)}
+                    />
+                  </div>
+                  <div className="col-md-3">
+                    <label><b>Status:</b></label>
+                    <select
+                      className="form-control mt-2"
+                      value={status}
+                      onChange={(e) => setStatus(e.target.value)}
+                    >
+                      <option value="" disabled>Select the status of animal</option>
+                      <option value="Lost">Lost</option>
+                      <option value="Found">Found</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="row mt-3 text-start">
+                  <div className="col-md-9">
+                    <label><b>Description:</b></label>
+                    <textarea
+                      placeholder="Description"
+                      className="form-control mt-2"
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                    ></textarea>
+                  </div>
+                  <div className="col-md-3 text-light  preview-image d-flex flex-column">
+                    <label className="form-label text-start text-dark"><b>Photo:</b></label>
+                    <label htmlFor="image-input" className="btn btn-dark p-2 rounded-3">
+                      <b>Upload Image</b>
+                    </label>
+                    <input
+                      type="file"
+                      id="image-input"
+                      accept="image/jpeg"
+                      onChange={handleImageChange}
+                      style={{ visibility: "hidden" }}
+                    />
+                  </div>
+                </div>
+                <div className="row mt-3">
+                  <div className="col-md-12">
+                    <button onClick={handleBackToPosts} className="btn btn-secondary btn-lg mt-2 me-3" style={{ width: "80px" }}>
+                      <b>Cancel</b>
+                    </button>
+                    <button type="submit" className="btn btn-success btn-lg mt-2 me-3" style={{ width: "6%", height: "83%" }}>
+                      <b>Post</b>
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
-      )}
-      <div className="card text-center" id="cuerpo">
-        <div className="card-header">
+      </div>
+    ) : (
+      <div className="card text-center fondo pt-4">
+        <div className="lost-card card-header border-0 py-4">
           <button
-            className={`btn me-3 ${activeTab === "lost" ? "btn-primary" : "btn-secondary"}`}
+            className={`btn btn-lg me-3 ${activeTab === "lost" ? "btn-green" : "btn-white"}`}
             onClick={() => setActiveTab("lost")}
           >
-            Lost Animals
+            <b>Lost Animals</b>
           </button>
           <button
-            className={`btn ${activeTab === "found" ? "btn-primary" : "btn-secondary"}`}
+            className={`btn btn-lg ${activeTab === "found" ? "btn-green" : "btn-white"}`}
             onClick={() => setActiveTab("found")}
           >
-            Found Animals
+            <b>Found Animals</b>
           </button>
         </div>
         <div className="card-body">
           <div className="row">
-          <Masonry
+            <Masonry
               breakpointCols={breakpointColumnsObj}
               className="my-masonry-grid"
               columnClassName="my-masonry-grid_column"
             >
-            {store.animals.map((animal) => {
-              // Filtrar los animales según el estado activo
-              if (activeTab === "lost" && animal.animal_status === "Lost") {
-                return (
-                  <div className="col-md-4 mb-4" key={animal.id}>
-                    <div className="card">
-                      {animal.photo ? (
-                        <img
-                          src={animal.photo}
-                          alt={`Image for ${animal.name}`}
-                          className="card-img-top"
-                        />
-                      ) : (
-                        <img
-                          src="/placeholder-image.jpg"
-                          alt="Image not available"
-                          className="card-img-top"
-                        />
-                      )}
-                      <div className="card-body">
-                        <h4 className="card-title">Name: {animal.name}</h4>
-                        <p className="card-text">City: {animal.city}</p>
-                        <p className="card-text">Phone: {animal.phone}</p>
-                        <p className="card-text">Size Type: {animal.size}</p>
-                        <p className="card-text">Color: {animal.color}</p>
-                        <p className="card-text">Type of Animal: {animal.type_of_animal}</p>
-                        <p className="card-text">Description: {animal.description}</p>
-                        <p className="card-text">Animal Status: {animal.animal_status}</p>
-                        <p className="card-text">Contact: {animal.contact}</p>
-                        <p className="card-text">Date: {animal.date}</p>
+              {store.animals.map((animal) => {
+                // Filtrar los animales según el estado activo
+                if (activeTab === "lost" && animal.animal_status === "Lost") {
+                  return (
+                    <div className="col-md-4 mb-4" key={animal.id}>
+                      <div className="custom-card card">
+                        {animal.photo ? (
+                          <img
+                            src={animal.photo}
+                            alt={`Image for ${animal.name}`}
+                            className="card-img-top"
+                          />
+                        ) : (
+                          <img
+                            src="/placeholder-image.jpg"
+                            alt="Image not available"
+                            className="card-img-top"
+                          />
+                        )}
+                        <div className="card-body">
+                          <h4 className="card-title">Name: {animal.name}</h4>
+                          <p className="card-text">City: {animal.city}</p>
+                          <p className="card-text">Phone: {animal.phone}</p>
+                          <p className="card-text">Size Type: {animal.size}</p>
+                          <p className="card-text">Color: {animal.color}</p>
+                          <p className="card-text">Type of Animal: {animal.type_of_animal}</p>
+                          <p className="card-text">Description: {animal.description}</p>
+                          <p className="card-text">Animal Status: {animal.animal_status}</p>
+                          <p className="card-text">Contact: {animal.contact}</p>
+                          <p className="card-text">Date: {animal.date}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              } else if (activeTab === "found" && animal.animal_status === "Found") {
-                return (
-                  <div className="col-md-4 mb-4" key={animal.id}>
-                    <div className="card">
-                      {animal.photo ? (
-                        <img
-                          src={animal.photo}
-                          alt={`Image for ${animal.name}`}
-                          className="card-img-top"
-                        />
-                      ) : (
-                        <img
-                          src="/placeholder-image.jpg"
-                          alt="Image not available"
-                          className="card-img-top"
-                        />
-                      )}
-                      <div className="card-body">
-                        <h4 className="card-title">Name: {animal.name}</h4>
-                        <p className="card-text">City: {animal.city}</p>
-                        <p className="card-text">Phone: {animal.phone}</p>
-                        <p className="card-text">Size Type: {animal.size}</p>
-                        <p className="card-text">Color: {animal.color}</p>
-                        <p className="card-text">Type of Animal: {animal.type_of_animal}</p>
-                        <p className="card-text">Description: {animal.description}</p>
-                        <p className="card-text">Animal Status: {animal.animal_status}</p>
-                        <p className="card-text">Contact: {animal.contact}</p>
-                        <p className="card-text">Date: {animal.date}</p>
+                  );
+                } else if (activeTab === "found" && animal.animal_status === "Found") {
+                  return (
+                    <div className="col-md-4 mb-4" key={animal.id}>
+                      <div className="card custom-card">
+                        {animal.photo ? (
+                          <img
+                            src={animal.photo}
+                            alt={`Image for ${animal.name}`}
+                            className="card-img-top"
+                          />
+                        ) : (
+                          <img
+                            src="/placeholder-image.jpg"
+                            alt="Image not available"
+                            className="card-img-top"
+                          />
+                        )}
+                        <div className="card-body">
+                          <h4 className="card-title">Name: {animal.name}</h4>
+                          <p className="card-text">City: {animal.city}</p>
+                          <p className="card-text">Phone: {animal.phone}</p>
+                          <p className="card-text">Size Type: {animal.size}</p>
+                          <p className="card-text">Color: {animal.color}</p>
+                          <p className="card-text">Type of Animal: {animal.type_of_animal}</p>
+                          <p className="card-text">Description: {animal.description}</p>
+                          <p className="card-text">Animal Status: {animal.animal_status}</p>
+                          <p className="card-text">Contact: {animal.contact}</p>
+                          <p className="card-text">Date: {animal.date}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              }
-              return null; // No mostrar la tarjeta si no coincide con activeTab y animal_status
-            })}
+                  );
+                }
+                return null; // No mostrar la tarjeta si no coincide con activeTab y animal_status
+              })}
             </Masonry>
           </div>
         </div>
       </div>
+      )}
     </div>
   );
+  
 };

@@ -6,8 +6,8 @@ from flask_admin.contrib.sqla import ModelView
 class CustomUsersModelView(ModelView):
     column_list = ['id', 'email', 'is_active', 'role', 'sum_total_votes', 'vote_count', 'calculated_rating']
 
-class CustomPeopleModelView(ModelView):
-    column_list = ['user', 'id', 'name', 'lastname', 'trophy']
+# class CustomPeopleModelView(ModelView):
+#     column_list = ['user', 'id', 'name', 'lastname', 'trophy']
 
 class CustomRatingModelView(ModelView):
     column_list = ['rater', 'rated', 'rating']
@@ -39,9 +39,10 @@ def setup_admin(app):
     admin.add_view(CustomReportModelView(Report, db.session))
     admin.add_view(CustomExperiencesModelView(ExperiencesBlog, db.session))
     admin.add_view(ModelView(AnimalShelter, db.session))
+    admin.add_view(ModelView(People, db.session))
     admin.add_view(ModelView(TipsPets, db.session))
     admin.add_view(CustomAnimalModelView(Animal, db.session))
-    admin.add_view(CustomPeopleModelView(People, db.session))
+    # admin.add_view(CustomPeopleModelView(People, db.session))
     admin.add_view(CustomVolunteersModelView(Volunteer, db.session))
     # You can duplicate that line to add mew models
     # admin.add_view(ModelView(YourModelName, db.session))

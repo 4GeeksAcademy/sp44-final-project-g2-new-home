@@ -143,7 +143,7 @@ if (adminIndex !== -1) {
 
 return (
   <div className="container mb-3">
-    <h1 className="titulos text-center pt-4 mb-5">List of Users</h1>
+    <h1 className="titulos text-center pt-4 mb-5 esmeralda">List of Users</h1>
     <table className="table table-striped border border-4 text-center">
       <thead>
         <tr className="text-center custom-row">

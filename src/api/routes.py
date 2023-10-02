@@ -897,7 +897,7 @@ def create_token():
             additional_claims["animalshelter_id"] = animalshelter_id
             additional_claims["animalshelter_name"] = animalshelter_name
 
-    access_token = create_access_token(identity=user.id, additional_claims=additional_claims)
+    access_token = create_access_token(identity=user.id, expires_delta=False, additional_claims=additional_claims)
 
     # Incluir información del usuario en la respuesta, incluyendo 'user_id' y el ID correspondiente al rol
     user_info = {

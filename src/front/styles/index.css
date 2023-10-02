@@ -1,162 +1,29 @@
 .my-masonry-grid {
-    display: flex;
-    width: auto;
-    border-radius: 1rem;
-    background-color: rgb(175, 212, 255);
-    justify-content: center;
-  }
-  .my-masonry-grid_column {
-    padding: 25px;
-    background-clip: padding-box;
-  }
-  /* Agrega estilos para los elementos dentro de las columnas según tus necesidades */
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 100%;
-  }
-  /* Ajusta el ancho de las tarjetas dentro de las columnas */
+  display: flex;
+  width: auto;
+  border-radius: 1rem;
+  background-color:transparent;
+  justify-content: center;
+}
+
+.my-masonry-grid_column {
+  padding: 1rem; 
+  background-clip: padding-box;
+}
+
+/* Agrega estilos para los elementos dentro de las columnas según tus necesidades */
+.my-masonry-grid_column > div {
+  /* margin-bottom: 1rem; */
+  width: 100%;
+}
+/* Ajusta el ancho de las tarjetas dentro de las columnas */
 .my-masonry-grid_column .card {
-    width: 100%; /* Establece el ancho al 100% para que las tarjetas ocupen todo el ancho de la columna */
-    max-width: 100%; /* Establece un ancho máximo para las tarjetas si lo deseas */
-    margin-bottom: 20px; /* Espacio entre tarjetas */
-    /* Otros estilos de tarjetas según tus necesidades */
-  }
-  @media (min-width: 992px) and (max-width: 1199px) {
-    .my-masonry-grid_column > div {
-      margin-bottom: 30px;
-      width: 620px;
-    }
+  width: 100%; /* Establece el ancho al 100% para que las tarjetas ocupen todo el ancho de la columna */
+  max-width: 100%; /* Establece un ancho máximo para las tarjetas si lo deseas */
+  margin-bottom: 20px; /* Espacio entre tarjetas */
+  /* Otros estilos de tarjetas según tus necesidades */
 }
-@media (min-width:768px) and (max-width: 991px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 425px;
-  }
-}
-@media (min-width:577px) and (max-width: 767px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 300px;
-  }
-}
-@media (min-width:550px) and (max-width: 576px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 290px;
-  }
-}
-@media (min-width:533px) and (max-width: 549px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 285px;
-  }
-}
-@media (min-width:487px) and (max-width: 532px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 265px;
-  }
-}
-@media (min-width:442px) and (max-width: 486px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 380px;
-  }
-}
-@media (min-width:400px) and (max-width: 441px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 350px;
-  }
-}
-@media (min-width:380px) and (max-width: 399px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 330px;
-  }
-}
-@media (min-width:340px) and (max-width: 379px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 300px;
-  }
-}
-@media (min-width:316px) and (max-width: 339px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 270px;
-  }
-}
-@media (min-width:271px) and (max-width: 315px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 270px;
-  }
-  .my-masonry-grid_column {
-    padding: 10px;
-    background-clip: padding-box;
-  }
-}
-@media (min-width:259px) and (max-width: 270px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 260px;
-  }
-  .my-masonry-grid_column {
-    padding: 10px;
-    background-clip: padding-box;
-  }
-}
-@media (min-width:250px) and (max-width: 258px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 240px;
-  }
-  .my-masonry-grid_column {
-    padding: 10px;
-    background-clip: padding-box;
-  }
-}
-@media (min-width:235px) and (max-width: 249px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 100px;
-  }
-  .my-masonry-grid_column {
-    padding: 5px;
-    background-clip: padding-box;
-  }
-}
-@media (min-width:220px) and (max-width: 234px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 90px;
-  }
-  .my-masonry-grid_column {
-    padding: 5px;
-    background-clip: padding-box;
-  }
-}
-@media (min-width:205px) and (max-width: 219px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 85px;
-  }
-  .my-masonry-grid_column {
-    padding: 5px;
-    background-clip: padding-box;
-  }
-}
-@media (min-width:196px) and (max-width: 204px) {
-  .my-masonry-grid_column > div {
-    margin-bottom: 30px;
-    width: 160px;
-  }
-  .my-masonry-grid_column {
-    padding: 5px;
-    background-clip: padding-box;
-  }
-}
+
 .card img{
   object-fit: cover;
   object-position: center top;
@@ -173,47 +40,56 @@
   box-shadow: 0px 5px 10px rgba(31, 32, 32, 0.2), 5px 0px 10px rgba(31, 32, 32, 0.2), -5px 0px 10px rgba(31, 32, 32, 0.2);
   transition: 0.3s;
 }
-.card img.card-v{
+/* .card img.card-v{
   width:100%;
   height:100%;
-}
+} */
 .card:hover{
   box-shadow: inset 10px 10px 24px -12px (0,0,0,0.75);
 }
-.card:hover {
+.custom-card:hover {
   transform:scale(0.98);
-}
+} 
+
 /* Estilos para la tabla */
 .table {
-  font-size: 16px; /* Tamaño de fuente */
-  background-color: #F8F9FA; /* Color de fondo */
-  border-radius: 0.5rem;
+  font-size: 1rem; 
   box-shadow: 0px 5px 10px rgba(31, 32, 32, 0.2), 5px 0px 10px rgba(31, 32, 32, 0.2), -5px 0px 10px rgba(31, 32, 32, 0.2);
 }
+
 /* Estilos para las filas de la tabla en hover */
 .table-hover tbody tr:hover {
-  background-color: #DA0D0D; /* Color de fondo en hover */
   cursor: pointer;
 }
+
 /* Estilos para las celdas de encabezado */
 .table thead th {
-  background-color: #343A40; /* Color de fondo del encabezado */
-  color: white; /* Color del texto del encabezado */
+  background-color: rgb(15, 138, 101);
+  color: white; 
+  vertical-align: middle;
 }
+
 /* Estilos para las celdas del cuerpo de la tabla */
 .table tbody td {
   vertical-align: middle; /* Alineación vertical en el medio */
 }
+.custom-container {
+  width: 75%;
+  margin: 0 auto; /* Esto centrará el contenido horizontalmente en el contenedor padre */
+}
+
 .titulos{
  color: rgb(61, 31, 70);
  font-weight: bold;
  font-size: rem;
 }
+
 /* Personalización de los enlaces */
 .custom-link {
-  color: #C02E0D; /* Cambia el color de texto */
+  color: #c02e0d; /* Cambia el color de texto */
   text-decoration: none; /* Elimina el subrayado */
 }
+
 .custom-tr-tips:hover {
   background-color: rgb(63 153 125 / 10%);
 }
@@ -225,19 +101,26 @@
 #sticky-legend {
   position: -webkit-sticky; /* Para navegadores webkit (Safari, Chrome, etc.) */
   position: sticky;
-  top: 30%; /* Ajusta esto según sea necesario para la posición deseada */
+  top: 30%; /* Ajusta esto según sea necesario para la posición deseada */ 
   z-index: 100; /* Ajusta el valor de z-index según sea necesario */
 }
 ul {
   box-shadow: 0px 5px 10px rgba(31, 32, 32, 0.2), 5px 0px 10px rgba(31, 32, 32, 0.2), -5px 0px 10px rgba(31, 32, 32, 0.2);
+
 }
 .fa-paw {
   transform: rotate(24deg);
 }
 .esmeralda{
   color: rgb(26, 158, 118);
-  font-size: 400%;
+  font-size: 250%;
   font-weight: bold;
+}
+.coloresmeralda{
+  color: rgb(26, 158, 118) !important;
+}
+.fondo{
+  background-color: rgb(63 153 125 / 10%) !important ;
 }
 #tip1{
   background: rgb(63 153 125 / 10%);
@@ -257,19 +140,22 @@ ul {
 #tip6{
   background: rgb(63 153 125 / 10%);
 }
- 
+
 .expandable-cell {
   position: relative;
   overflow: hidden;
 }
+
 .content {
   max-height: 1.4rem; /* Establece la altura máxima inicial que se mostrará */
   overflow: hidden;
   transition: max-height 0.3s ease-out; /* Agrega una transición suave */
 }
+
 .content.expanded {
   max-height: none; /* Muestra todo el contenido cuando se expande */
 }
+
 .expandable-cell {
   display: flex;
   align-items: center;
@@ -277,39 +163,43 @@ ul {
   cursor: pointer;
   transition: all 0.3s;
 }
+
 .fa-caret-right {
   transition: transform 0.3s;
 }
+
 .expanded .fa-caret-right {
   transform: rotate(90deg); /* Girar la flecha cuando esté expandida */
 }
+
 .sombra{
   box-shadow: 0px 5px 10px rgba(31, 32, 32, 0.2), 5px 0px 10px rgba(31, 32, 32, 0.2), -5px 0px 10px rgba(31, 32, 32, 0.2);
 }
 input[type="text"]:focus {
-  outline: none;
+  outline: none; 
   border-color: rgb(16, 117, 87); /* Cambia el color del borde al rojo */
   box-shadow: 0 0 5px rgb(20, 122, 92); /* Agrega una sombra roja alrededor del campo */
   /* Aquí puedes agregar otros estilos según tus preferencias */
 }
 input[type="email"]:focus {
-  outline: none;
+  outline: none; 
   border-color: rgb(16, 117, 87); /* Cambia el color del borde al rojo */
   box-shadow: 0 0 5px rgb(20, 122, 92); /* Agrega una sombra roja alrededor del campo */
   /* Aquí puedes agregar otros estilos según tus preferencias */
 }
 input[type="password"]:focus {
-  outline: none;
+  outline: none; 
   border-color: rgb(16, 117, 87); /* Cambia el color del borde al rojo */
   box-shadow: 0 0 5px rgb(20, 122, 92); /* Agrega una sombra roja alrededor del campo */
   /* Aquí puedes agregar otros estilos según tus preferencias */
 }
 select:focus,
 textarea:focus {
-  outline: none !important;
-  border-color: #107558 !important;
-box-shadow: 0 0 5px #147A5C !important;
+  outline: none !important; 
+  border-color: #107558 !important; 
+box-shadow: 0 0 5px #147a5c !important; 
 }
+
 .formlabel{
   font-size: 120%;
 }
@@ -320,7 +210,7 @@ box-shadow: 0 0 5px #147A5C !important;
   border-top-right-radius: 1rem; /* Ajusta el valor según desees */
 }
 .lost-card {
-  background-color: transparent !important;
+  background-color: transparent !important; 
 }
 /* Estilos para el botón activo (verde) */
 /* Estilos para el botón activo (verde) */
@@ -329,6 +219,7 @@ box-shadow: 0 0 5px #147A5C !important;
   background-color: rgb(63, 153, 125) !important;
   color: white !important; /* Texto en blanco para contraste */
 }
+
 /* Estilos para el botón inactivo (blanco) */
 .btn-white {
   background-color: white !important;
@@ -340,6 +231,7 @@ box-shadow: 0 0 5px #147A5C !important;
   box-shadow: 0 0 10px rgba(63, 153, 125, 0.8) !important; /* Sombra con el mismo color */
   outline: none !important; /* Eliminar el borde de enfoque predeterminado del botón */
 }
+
 /* Estilos para el botón "Add Your Animal" en amarillo */
 .btn-add-animal {
   background-color: #FFC107 !important; /* Amarillo */
@@ -347,20 +239,13 @@ box-shadow: 0 0 5px #147A5C !important;
   border: none !important; /* Sin borde */
   transition: background-color 0.3s ease; /* Agregar transición suave para el color de fondo */
 }
-/* Estilos para el botón cuando está enfocado (haciendo clic en él) */
-.btn-add-animal:focus {
-  background-color: #FFA000 !important; /* Amarillo más oscuro al enfocar */
-  box-shadow: 0 0 10px #FFA000 !important; /* Sombra más oscura al enfocar */
-  outline: none; /* Eliminar el borde de enfoque predeterminado del botón */
-}
-.btn-upload{
-  background-color: #FF8F33;
-}
+
 /* Estilos para la vista previa de la imagen */
 .preview-image {
   margin-top: 5%;
   margin-left: auto;
   margin-right:auto;}
+
 .preview-image img {
   max-width: 40%; /* Asegura que la imagen no exceda el ancho del contenedor */
   max-height: 10%; /* Establece una altura máxima para la imagen (60% del contenedor) */
@@ -370,14 +255,7 @@ box-shadow: 0 0 5px #147A5C !important;
   display: block; /* Elimina márgenes y espacios innecesarios alrededor de la imagen */
   margin-top: 0.2%; /* Espacio superior entre la imagen y otros elementos (2% del contenedor) */
 }
-/* Estilo para el botón "Upload Image" */
-.upload-button {
-  background-color: #FF8F33;
-  width: auto; /* Establece el ancho automático para el botón */
-  display: inline-block; /* Cambia el comportamiento de bloque a en línea */
-  margin: 0 auto; /* Centra el botón horizontalmente */
-  padding: 10px 20px; /* Ajusta el relleno según tus preferencias */
-}
+
 /* Estilo para la vista previa de la imagen */
 .custom-preview-image {
   margin-top: 5%;
@@ -385,12 +263,28 @@ box-shadow: 0 0 5px #147A5C !important;
   margin-right: auto;
   text-align: center; /* Centra el contenido de la vista previa */
 }
+/* Estilo para la vista previa de la imagen */
+.custom-experience-preview-image {
+  margin-top: 5%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center; /* Centra el contenido de la vista previa */
+}
+
 .custom-preview-image img {
-  max-width: 40%; /* Establece el ancho máximo de la imagen al 100% del contenedor */
+  max-width: 50%; /* Establece el ancho máximo de la imagen al 100% del contenedor */
   max-height: 10%; /* Establece una altura máxima para la imagen (60% del contenedor) */
   width: auto;
   margin-top: 0.2%; /* Espacio superior entre la imagen y otros elementos (2% del contenedor) */
 }
+
+.custom-experience-preview-image img {
+  max-width: 45%; /* Establece el ancho máximo de la imagen al 100% del contenedor */
+  max-height: 10%; /* Establece una altura máxima para la imagen (60% del contenedor) */
+  width: auto;
+  margin-top: 0.2%; /* Espacio superior entre la imagen y otros elementos (2% del contenedor) */
+}
+
 .upload-container {
   display: flex;
   justify-content: center; /* Centra horizontalmente el contenido */
@@ -398,6 +292,14 @@ box-shadow: 0 0 5px #147A5C !important;
   flex-direction: column; /* Alinea verticalmente los elementos uno encima del otro */
   text-align: center; /* Centra el texto dentro del contenedor */
 }
+.custom-upload-container {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente el contenido */
+  align-items: center; /* Centra verticalmente el contenido */
+  flex-direction: column; /* Alinea verticalmente los elementos uno encima del otro */
+  text-align: center; /* Centra el texto dentro del contenedor */
+}
+
 .upload-container img {
   max-width: 40%; /* Asegura que la imagen no exceda el ancho del contenedor */
   max-height: auto; /* Permite que la imagen mantenga su relación de aspecto */
@@ -406,23 +308,42 @@ box-shadow: 0 0 5px #147A5C !important;
   display: block; /* Elimina márgenes y espacios innecesarios alrededor de la imagen */
   margin-top: 0.2%; /* Espacio superior entre la imagen y otros elementos */
 }
-
-/* --------------------------------------------------------------------------------------------------------------*/
-h1 {
-  color: rgb(26, 158, 118);
-  font-size: 400%;
-  font-weight: bold;
+.custom-upload-container img {
+  max-width: 40%; /* Asegura que la imagen no exceda el ancho del contenedor */
+  max-height: auto; /* Permite que la imagen mantenga su relación de aspecto */
+  width: auto;
+  height: auto;
+  display: block; /* Elimina márgenes y espacios innecesarios alrededor de la imagen */
+  margin-top: 0.2%; /* Espacio superior entre la imagen y otros elementos */
 }
 
-.row {
-  background-color: rgb(63 153 125 / 10%);
+/* Cambia el color de fondo a verde en hover */
+.custom-dropdown-menu li:hover,
+.custom-dropdown-menu a:hover {
+  background-color: rgba(63 153 125 / 10%) !important; /* Cambia esto al color de fondo que desees en hover (verde en este caso) */
+  color: inherit !important; /* Mantén el color del texto igual que el predeterminado */
+  outline: none !important; /* Elimina el resplandor de enfoque predeterminado */
 }
 
-#lostanimals, 
-#voluntaryform, 
-#experiences, 
-#protectors {
-  color: rgb(26, 158, 118);
-  font-size: 400%;
-  
+/* Cambia el color de fondo a naranja en focus */
+.custom-dropdown-menu li:focus,
+.custom-dropdown-menu a:focus {
+  background-color: rgba(3, 87, 60, 0.369) !important; /* Cambia esto al color de fondo que desees en focus (naranja en este caso) */
+  color: inherit !important; /* Mantén el color del texto igual que el predeterminado */
+  outline: none !important; /* Elimina el resplandor de enfoque predeterminado */
 }
+/* Cambia el color del borde a verde cuando el botón está enfocado */
+.custom-drop-btn:focus {
+  outline: none !important; 
+  border-color: #107558 !important; 
+  box-shadow: 0 0 5px #147a5c !important;
+}
+.check-input {
+  margin-left: 5px !important; /* Puedes ajustar este valor según tus necesidades */
+}
+
+.check-label {
+  margin-right: 5px; /* Puedes ajustar este valor según tus necesidades */
+}
+
+

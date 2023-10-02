@@ -56,91 +56,104 @@ const Register = () => {
   
   return (
     <div className="text-center">
-      <h1 className="pt-5">Register</h1>
+      
       <div className="container d-flex justify-content-center">
-      <div className="card w-50 verde-claro">
+      <div className="card fondo w-50">
+        <h1 className="pt-3 esmeralda">Register</h1>
       <div className="card-body">
       <form onSubmit={handleRegister}>
-      <div>
-        <label className="me-3 form-label"><b>Email:</b></label>
-        <input className="form-control" type="email" onChange={(e) => setEmail(e.target.value)} />
-      </div>
-      <div>
-        <label className="me-3 mt-3 form-label"><b>Contraseña:</b></label>
-        <input className="me-5 form-control" type="password" onChange={(e) => setPassword(e.target.value)} />
-      </div>
-      <div>
-        <label className="me-3 mt-3 form-label"><b>Tipo de usuario:</b></label>
-        <select className="form-control" value={userType} onChange={(e) => setUserType(e.target.value)}>
-          <option value="Person">Person</option>
-          <option value="AnimalShelter">AnimalShelter</option>
-        </select>
-      </div>
+        <div className="row text-start d-flex justify-content-center">
+          <div className="col-md-4">
+            <label className="mt-3 form-label"><b>Tipo de usuario:</b></label>
+            <select className="form-control" value={userType} onChange={(e) => setUserType(e.target.value)}>
+              <option value="Person">Person</option>
+              <option value="AnimalShelter">AnimalShelter</option>
+            </select>
+          </div>
+        </div>
+        <div className="row text-start mt-4 mb-2 d-flex justify-content-center">
+          <div className="col-md-6">
+            <label className=" form-label"><b>Email:</b></label>
+            <input className="form-control" type="email" onChange={(e) => setEmail(e.target.value)} />
+          </div>
+          <div className="col-md-6">
+            <label className=" form-label"><b>Contraseña:</b></label>
+            <input className="me-5 form-control" type="password" onChange={(e) => setPassword(e.target.value)} />
+          </div>
+        </div>
       {userType === "AnimalShelter" && (
         <>
-          <div>
+        <div className="row text-start mb-2 d-flex justify-content-center">        
+          <div className="col-md-6">
             <label className="me-3 mt-3 form-label"><b>CIF:</b></label>
-            <input className="form-control" maxLength={20} type="text" name="cif" onChange={(e) => setCif(e.target.value)} required />
+            <input className="form-control" maxLength={15} type="text" name="cif" onChange={(e) => setCif(e.target.value)} required />
           </div>
-          <div>
+          <div className="col-md-6">
             <label className="me-3 mt-3 form-label"><b>Name:</b></label>
             <input className="form-control" maxLength={20} type="text" name="name" onChange={(e) => setName(e.target.value)} required />
           </div>
-          <div>
+        </div> 
+        <div className="row text-start mb-2 d-flex justify-content-center">
+          <div className="col-md-6">
             <label className="me-3 mt-3 form-label"><b>Address:</b></label>
             <input className="form-control" maxLength={80} type="text" name="address" onChange={(e) => setAddress(e.target.value)} required />
           </div>
-          <div>
+          <div className="col-md-6 mb-2">
             <label className="me-3 mt-3 form-label"><b>City:</b></label>
             <input className="form-control" maxLength={30} type="text" name="city" onChange={(e) => setCity(e.target.value)} required />
           </div>
-          <div>
+          <div className="col-md-6 mb-2">
             <label className="me-3 mt-3 form-label"><b>Zipcode:</b></label>
             <input className="form-control" maxLength={10} type="text" name="zipCode" onChange={(e) => setZipCode(e.target.value)} required />
           </div>
-          <div>
+          <div className="col-md-6">
             <label className="me-3 mt-3 form-label"><b>Web:</b></label>
             <input className="form-control" maxLength={100} type="text" name="web" onChange={(e) => setWeb(e.target.value)} required />
           </div>
-          <div className="d-flex align-items-center">
-            <div className="d-flex align-items-center">
+        </div>
+        <div className="row  text-start d-flex mt-4">
+            <div className="col-md-1 ">
               <input
                 type="checkbox"
-                className="mt-3"
+                className="ms-4"
+                check-row
                 checked={isActive}
                 onChange={() => setIsActive(!isActive)} // Cambia el estado de isActive cuando se hace clic en el checkbox
               />
             </div>
-              <div className="d-flex align-items-center">
-                <label className="mt-5 me-3 form-label">
+              <div className="col-md-11 ">
+                <label className="form-label text-start check-label">
                   I have read and accept the <a href="/policy">terms and conditions</a> and declare that I am
                   of legal age.
                 </label>
             </div>
-          </div>
+        </div>
         </>
       )}
       {userType === "Person" && (
         <>
-          <div>
-            <label className="me-3 mt-3 form-label"><b>Name:</b></label>
-            <input className="form-control" maxLength={20} type="text" onChange={(e) => setName(e.target.value)} required />
+          <div className="row text-start d-flex justify-content-center">
+            <div className="col-md-6">
+              <label className=" mt-3 form-label"><b>Name:</b></label>
+              <input className="form-control" maxLength={20} type="text" onChange={(e) => setName(e.target.value)} required />
+            </div>
+            <div className="col-md-6">
+              <label className=" mt-3 form-label"><b>Last Name:</b></label>
+              <input className="form-control" maxLength={20} type="text" onChange={(e) => setLastname(e.target.value)} required />
+            </div>
           </div>
-          <div>
-            <label className="me-3 mt-3 form-label"><b>Last Name:</b></label>
-            <input className="form-control" maxLength={20} type="text" onChange={(e) => setLastname(e.target.value)} required />
-          </div>
-          <div className="d-flex align-items-center">
-            <div className="d-flex align-items-center">
+          <div className="row  text-start d-flex mt-4">
+            <div className="col-md-1 ">
               <input
                 type="checkbox"
-                className="mt-3"
+                className="ms-4"
+                check-row
                 checked={isActive}
                 onChange={() => setIsActive(!isActive)} // Cambia el estado de isActive cuando se hace clic en el checkbox
               />
             </div>
-              <div className="d-flex align-items-center">
-                <label className="mt-5 me-3 form-label">
+              <div className="col-md-11 ">
+                <label className="form-label text-start check-label">
                   I have read and accept the <a href="/policy">terms and conditions</a> and declare that I am
                   of legal age.
                 </label>
@@ -148,9 +161,13 @@ const Register = () => {
           </div>
         </>
       )}
-      <button className="btn btn-dark ms-5 mt-3">
-        Registrarse
-      </button>
+    <div className="row d-flex justify-content-center mt-3">
+      <div className="col-md-11 px-0 mx-0">
+        <button className="btn btn-dark">
+          <b>Register</b>
+        </button>
+      </div>
+    </div>
       </form>
       </div>
       </div>
