@@ -79,7 +79,7 @@ export const VoluntaryForm = () => {
     <div className="custom-container my-5">
       {!store.user_id ? (
       <div className="card text-center fondo p-0 mx-auto"style={{maxWidth: "60%"}}>
-        <h1 className="card-title coloresmeralda py-3">Join and help us</h1>
+        <h1 className="card-title coloresmeralda esmeralda py-3">Join and help us</h1>
         <img src={voluntariofoto} className="rounded-0"/>
         <div className="card-body">
           <p className="card-text text-start pt-3 px-3 fs-5">Are you passionate about animals? Do you want to make a difference in their lives? Join our team of volunteers and be part of the change you want to see in the world!</p>
@@ -92,7 +92,7 @@ export const VoluntaryForm = () => {
       </div>
       ) :  ( animalshelterId !== 'false') || (store.user_id  && peopleId === 'false' && animalshelterId === 'false' ) ? ( 
         <div classme="rounded-top">
-          <h1 className="text-center esmeralda">Volunteers</h1>
+          <h1 className="text-center coloresmeralda esmeralda">Find your volunteer</h1>
           <div className="d-flex mt-5">
             <div className="me-5 border border-4 sombra rounded-2" style={{ width: "20%", maxHeight: "300px", overflowY: "auto" }}>
               <div className="leyendadifuminado p-3 text-center" style={{ width: "100%" }}>
@@ -168,8 +168,8 @@ export const VoluntaryForm = () => {
       ) : (
         <div className="card fondo mt-5 text-center animate__animated animate__bounceInUp" id="formcomplete">
         <div className="card-body">
-          <h1 className="card-title coloresmeralda mb-5" id="voluntaryform">
-            <b>Voluntary Form</b>
+          <h1 className="card-title esmeralda coloresmeralda mb-5" id="voluntaryform">
+            Voluntary Form
           </h1>
           <div className="form-group row text-start">
             <div className="col-md-4">

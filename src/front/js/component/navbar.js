@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { useContext } from "react";
+import "../../styles/index.css";
 
 
 export const Navbar = () => {
@@ -201,7 +202,7 @@ export const Navbar = () => {
                         <div className="d-flex me-3">
                             <div className="dropdown">
                             <button
-                                className="btn btn-transparent dropdown-toggle"
+                                className="btn btn-transparent dropdown-toggle custom-drop-btn"
                                 type="button"
                                 id="userDropdown"
                                 data-bs-toggle="dropdown"
@@ -210,7 +211,7 @@ export const Navbar = () => {
                                 <i className="fas fa-user me-2"></i>
                                 <b>{store.user_email}</b>
                             </button>
-                                <ul className="dropdown-menu dropdown-menu-lg-end" aria-labelledby="userDropdown">
+                                <ul className="dropdown-menu dropdown-menu-lg-end custom-dropdown-menu" aria-labelledby="userDropdown">
                                     <li>
                                         <Link to="/" onClick={() => actions.logout()} className="dropdown-item">
                                             Logout

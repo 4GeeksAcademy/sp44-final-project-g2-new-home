@@ -12,7 +12,8 @@ const UploadAnimal = () => {
   const [phone, setPhone] = useState("");
   const [size, setSize] = useState("");
   const [color, setColor] = useState("");
-  const [type, setType] = useState("");
+  const initialType = localStorage.getItem("selectedType") || "Dog";
+  const [type, setType] = useState(initialType);
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("");
   const [date, setDate] = useState("");
@@ -49,8 +50,10 @@ const UploadAnimal = () => {
     if (e.target.files.length) {
       const imageUrl = URL.createObjectURL(e.target.files[0]);
       // setFileUrl(imageUrl); // Actualizar el estado de la vista previa de la imagen
+      setFileUrl(imageUrl);
        // Actualiza la URL de la imagen solo para el animal en edición
       setFileUrls({ ...fileUrls, [animalId]: imageUrl });
+      
       setFile(e.target.files[0]);
     }
   };
@@ -165,11 +168,11 @@ const UploadAnimal = () => {
   
 
   const handleCancelEdit = (animalId) => {
-    // Cancela el modo de edición para el animal con el ID dado
-    setEditModeAnimals({ ...editModeAnimals, [animalId]: false });
- // Restaura la URL de la imagen original desde el estado editData
-   setFileUrls({ ...fileUrls, [animalId]: editData[animalId] });    // setFileUrl("");
-    
+  // Cancela el modo de edición para el animal con el ID dado
+  setEditModeAnimals({ ...editModeAnimals, [animalId]: false });
+  // Restaura la URL de la imagen original desde el estado editData
+  setFileUrls({ ...fileUrls, [animalId]: editData[animalId] });    
+  setFileUrl("");
   };
   
   const handleSavechanges = async (e) => {
@@ -217,6 +220,7 @@ const UploadAnimal = () => {
   };
 
   useEffect(() => {
+    localStorage.setItem("selectedType", type);
     actions.get_shelter_animals().then(() => {
       const initialFileUrls = {};
       filteredAnimals.forEach((animal) => {
@@ -268,6 +272,11 @@ const UploadAnimal = () => {
               <h2 className="coloresmeralda">
                 <b>Upload an Animal</b>
               </h2> 
+              {fileUrl && (
+                <div className="custom-experience-preview-image custom-upload-container">
+                  <img src={fileUrl} alt="" />
+                </div>
+              )}
             <form className="row g-3" onSubmit={handleSubmit}>
               <div className="row mt-5 d-flex text-start justify-content-center">
                 <div className="col-md-4">
@@ -332,7 +341,7 @@ const UploadAnimal = () => {
                     value={type}
                     onChange={(e) => setType(e.target.value)}
                   >
-                    <option value="" disabled>Select a type of animal</option>
+                    {/* <option value="" disabled>Select a type of animal</option> */}
                     <option value="Dog">Dog</option>
                     {/* <option value="Cat">Cat</option> */}
                   </select>
@@ -389,12 +398,12 @@ const UploadAnimal = () => {
                 <div className="row d-flex justify-content-center">
                   <div className="col-md-2 mt-3 py-2">
                     <button onClick={handleBackToPosts} className=" btn btn-secondary btn-lg me-3">
-                      Cancel
+                      <b>Cancel</b>
                     </button>
                   </div>
                   <div className="col-md-2 mt-3 py-2">
                     <button onClick={handleSubmit} className="btn btn-success btn-lg">
-                      Post
+                      <b>Post</b>
                     </button>
                   </div>
                 </div>    
@@ -496,7 +505,7 @@ const UploadAnimal = () => {
                             </div>
                             <div className="row d-flex text-start justify-content-center">
                               <div className="col-md-10">
-                                <label htmlFor="size"><b>Size Type:</b></label>
+                                <label htmlFor="size"><b>Size:</b></label>
                                 <select
                                   id="size"
                                   className="form-control mb-3"

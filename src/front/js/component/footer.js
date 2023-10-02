@@ -18,12 +18,12 @@ export const Footer = () => {
   const googleMapsLink = "https://www.google.com/maps/place/4+Erizas+Road,+Málaga,+29011";
 
   return (
-    <footer className="footer margen  text-center">
-      <div className="container" id="main">
-        
+ 
+    <footer className="footer mt-auto text-center fixed-bottom">
+      <div className="container ">
         <div className="row">
           <div className="col-md-4">
-            <div className="contact">
+            <div>
               <h4><b>Contact Us</b></h4>
               <ul className="contact-list">
                 <li>
@@ -119,5 +119,6 @@ export const Footer = () => {
         </div>
       </div>
     </footer>
+  
   );
 };

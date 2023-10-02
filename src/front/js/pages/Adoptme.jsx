@@ -71,51 +71,51 @@ export const Adoptme = () => {
     e.target.src = backupImages[newBackupIndex].default; // Usa .default para obtener la ruta de la imagen importada
   };
 
-  const handleClick = (pet)=>{
-    navigate("/details");
-  }
 
   const breakpointColumnsObj = {
-    default: 3
+    default: 3,
+    485:2,
+    320:1
   };
   
   
   return (
     <div className="container mb-3">
-      <h1 className="text-success text-center mt-5 mb-5">Adopt a pet</h1>
+      <h1 className="esmeralda text-center mt-5 mb-5">Adopt a pet</h1>
+      <div className="card row fondo p-3 py-5">
       <Masonry
         breakpointCols={breakpointColumnsObj}
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column"
       >
           {pets ? (
-            pets.slice(0, 18).map((item, id) => (
-              <div key={id} className="card rounded col-12 col-md-6 col-lg-4">
+            pets.slice(0, 18).map((animal, id) => (
+              <div key={id} className="card custom-card rounded col-12 col-md-6 col-lg-4">
                 <img
-                  src={`https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/${item.id}/1/`}
+                  src={`https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/${animal.id}/1/`}
                   onError={handleOnErrorImg}
-                  alt={`Image for ${item.name}`}
+                  alt={`Image for ${animal.name}`}
                   className="card-img-top card-v"
                 />
                 <div className="card-body">
-                  <h5 className="card-title">{item.name}</h5>
-                  <p><strong>Breed mixture: </strong>{item.breeds ? item.breeds.primary : 'N/A'}</p> 
-                  <p><strong>Age: </strong>{item.age ? item.age : 'N/A'}</p>
-                  <p><strong>Gender: </strong>{item.gender ? item.gender : 'N/A'}</p>
-                  <p><strong>Size: </strong>{item.size ? item.size : 'N/A'}</p>
-                  <p><strong>Descriptions: </strong>{item.description ? item.description : 'N/A'}</p>
-                  <p><strong>City: </strong>{item.city ? item.city : 'N/A'}</p>
-                  <p><strong>Contact: </strong>{item.contact && item.contact.phone ? item.contact.phone : 'N/A'}</p>
+                  <h5 className="card-title">{animal.name}</h5>
+                  <p><strong>Breed mixture: </strong>{animal.breeds ? animal.breeds.primary : 'N/A'}</p> 
+                  <p><strong>Age: </strong>{animal.age ? animal.age : 'N/A'}</p>
+                  <p><strong>Gender: </strong>{animal.gender ? animal.gender : 'N/A'}</p>
+                  <p><strong>Size: </strong>{animal.size ? animal.size : 'N/A'}</p>
+                  <p><strong>Descriptions: </strong>{animal.description ? animal.description : 'N/A'}</p>
+                  <p><strong>City: </strong>{animal.city ? animal.city : 'N/A'}</p>
+                  <p><strong>Contact: </strong>{animal.contact && animal.contact.phone ? animal.contact.phone : 'N/A'}</p>
                 </div>
                 <div className="d-flex justify-content-center">
-                <button className="btn btn-info w-25 mb-3" onClick={handleClick}><i className="fas fa-eye"></i></button>
+                <Link to="/details" state = {animal} className="btn btn-info text-light mb-2" ><b>More details</b></Link>
                 </div>
               </div> 
             ))
           ) : null}
         {store.animals ? (
           store.animals.map((animal, index) => (
-            <div key={animal.id} className="card rounded col-12 col-md-6 col-lg-4">
+            <div key={animal.id} className="card custom-card rounded col-12 col-md-6 col-lg-4">
               <img
                 src={animal.photo || backupImages[backupImageIndex].default}
                 alt={`Image for ${animal.name}`}
@@ -128,14 +128,14 @@ export const Adoptme = () => {
                 <p><strong>Color: </strong>{animal.color ? animal.color : 'N/A'}</p>
                 <p><strong>Size: </strong>{animal.size ? animal.size : 'N/A'}</p>
                 <p><strong>Descriptions: </strong>{animal.description ? animal.description : 'N/A'}</p>
-                <p><strong>City: </strong>{animal.contact ? animal.contact : 'N/A'}</p>
-                <p><strong>Contact: </strong>{animal.phone ? animal.phone : 'N/A'}</p>
+                <p><strong>Contact: </strong>{animal.contact ? animal.contact : 'N/A'}</p>
+                <p><strong>Phone: </strong>{animal.phone ? animal.phone : 'N/A'}</p>
               </div>
             </div>
           ))
         ) : null}
       </Masonry>
-     
+     </div>
     </div>
   );
   

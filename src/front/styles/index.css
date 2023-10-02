@@ -199,6 +199,7 @@ textarea:focus {
   border-color: #107558 !important; 
 box-shadow: 0 0 5px #147a5c !important; 
 }
+
 .formlabel{
   font-size: 120%;
 }
@@ -316,6 +317,33 @@ box-shadow: 0 0 5px #147a5c !important;
   margin-top: 0.2%; /* Espacio superior entre la imagen y otros elementos */
 }
 
+/* Cambia el color de fondo a verde en hover */
+.custom-dropdown-menu li:hover,
+.custom-dropdown-menu a:hover {
+  background-color: rgba(63 153 125 / 10%) !important; /* Cambia esto al color de fondo que desees en hover (verde en este caso) */
+  color: inherit !important; /* Mantén el color del texto igual que el predeterminado */
+  outline: none !important; /* Elimina el resplandor de enfoque predeterminado */
+}
 
+/* Cambia el color de fondo a naranja en focus */
+.custom-dropdown-menu li:focus,
+.custom-dropdown-menu a:focus {
+  background-color: rgba(3, 87, 60, 0.369) !important; /* Cambia esto al color de fondo que desees en focus (naranja en este caso) */
+  color: inherit !important; /* Mantén el color del texto igual que el predeterminado */
+  outline: none !important; /* Elimina el resplandor de enfoque predeterminado */
+}
+/* Cambia el color del borde a verde cuando el botón está enfocado */
+.custom-drop-btn:focus {
+  outline: none !important; 
+  border-color: #107558 !important; 
+  box-shadow: 0 0 5px #147a5c !important;
+}
+.check-input {
+  margin-left: 5px !important; /* Puedes ajustar este valor según tus necesidades */
+}
+
+.check-label {
+  margin-right: 5px; /* Puedes ajustar este valor según tus necesidades */
+}
 
 
