@@ -1,13 +1,10 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Context } from "../store/appContext";
-import Masonry from "react-masonry-css";
+import React, { useState} from "react";
 import { Link, useLocation } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate } from "react-router-dom";
 import { Row, Col, Card } from 'react-bootstrap';
 
 
-export const Details = () => {
+export const Detailsdb = () => {
   let { state } = useLocation();
   console.log(state)
   const [pet, setPet] = useState(state);
@@ -26,9 +23,9 @@ export const Details = () => {
     <Card className="h-100 d-flex flex-column justify-content-between w-75 mx-auto" style={{ width: "100%" }}>
       <Card.Img
       variant="top"
-        src={`https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/${pet.id}/1/`}
-        alt={`Image for ${pet.name}`}
-        style={{ objectFit: "cover" }}
+      src={pet.photo || backupImages[backupImageIndex].default}
+      alt={`Image for ${pet.name}`}
+        // style={{ objectFit: "cover" }}
       />
       </Card>
       </Col>
