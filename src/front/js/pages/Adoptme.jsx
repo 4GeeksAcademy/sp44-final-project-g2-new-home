@@ -137,8 +137,5 @@ export const Adoptme = () => {
       </Masonry>
      </div>
     </div>
-  );
-  
-  
-  
+  );  
 }
