@@ -84,105 +84,113 @@ export const Animalshelter = () => {
   });
   
   return (
-    <div className="container mb-3">
-      <h1 className="titulos text-right pt-4 mb-5 esmeralda">
+    <div className="container-fluid p-4 mb-3" >
+      <h1 className="titulos text-center pt-4 mb-5 esmeralda">
         Find a Shelter: Animal Shelters and Rescues Near You
       </h1>
-      {/* Dropdown para seleccionar la ciudad */}
-      <div className="d-flex">
-      <div className="me-5 border border-4 sombra rounded-2" style={{ maxHeight: "370px", overflowY: "auto" }}>
-        <div className="leyendadifuminado p-3 text-center" style={{width:"100%"}}>
-          <h5 className="text-light"><b>Find faster here{"\u00A0"}{"\u00A0"}{"\u00A0"}<i className="fas fa-paw text-light"></i></b></h5>
+        {/* Dropdown para seleccionar la ciudad */}
+        <div className="row d-flex justify-content-center p-5">
+          <div className="col-md-3 px-0 pt-0 pb-0 card  border border-4 sombra rounded-2" style={{ maxHeight: "360px", overflowY: "auto" }}>
+            <div className="leyendadifuminado card-header p-3 text-center" style={{width:"100%"}}>
+              <h5 className="text-light"><b>Find faster here{"\u00A0"}{"\u00A0"}{"\u00A0"}<i className="fas fa-paw text-light"></i></b></h5>
+            </div>
+            <div className="card-body p-3" style={{ flex: "0 0 auto" }}>
+              <div className="row d-flex justify-content-center mt-3">
+                <div className="col-md-12 d-flex justify-content-center flex-column">
+                  <label className="form-label"><b>Select a state</b></label>
+                  <select
+                    className="form-select "
+                    value={selectedState}
+                    onChange={handleStateChange}
+                  >
+                    <option value="">All States</option>
+                    {[...new Set(filteredShelter.map(item => item.state))]
+                      .sort()
+                      .map((state, id) => (
+                        <option key={id} value={state}>
+                          {state}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+              </div>
+              <div className="row mt-3">
+                <div className="col-md-12">
+                  <label className="form-label"><b>Select a city</b></label>
+                  <select
+                    className="form-select"
+                    value={selectedCity}
+                    onChange={handleCityChange}
+                  >
+                    <option value="">All Cities</option>
+                  {[...new Set(filteredShelter.map(item => item.city))]
+                  .sort() // Ordenar las ciudades alfabéticamente
+                  .map((city, id) => (
+                  <option key={id} value={city}>
+                    {city}
+                  </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div className="row mt-4">
+                <div className="col-md-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Search by name"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-md-9">
+            <div className="table-responsive">
+              <table className="table  table-striped table-hover border border-4" style={{ flex: "1" }}>
+                <thead>
+                  <tr className="text-center">
+                    <th scope="col">PHOTO</th>
+                    <th scope="col">ORGANIZATION</th>
+                    <th scope="col">EMAIL</th>
+                    <th scope="col">CITY</th>
+                    <th scope="col">STATE</th>
+                    <th scope="col">COUNTRY</th>
+                    <th scope="col">POST CODE</th>
+                    <th scope="col">PHONE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredShelter.map((item, id) => (
+                    <tr
+                      className="text-center"
+                      key={id}
+                      onClick={() => window.open(item.web, "_blank")}
+                    >
+                      <td>
+                        <a href={item.web} target="_blank" rel="noopener noreferrer">
+                          <img
+                            src={ImgProtector}
+                            onError={handleOnErrorImg}
+                            style={{ width: "60%" }}
+                          />
+                        </a>
+                      </td>
+                      <td>{item.name}</td>
+                      <td>{item.email}</td>
+                      <td>{item.city}</td>
+                      <td>{item.state}</td>
+                      <td>{item.country}</td>
+                      <td>{item.zip_code}</td>
+                      <td>{item.phone}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>  
+          </div>
         </div>
-        <div className="me-5 p-3" style={{ flex: "0 0 auto" }}>
-          <p className="ms-4"><b>Select a state</b></p>
-          <select
-            className="form-select ms-4"
-            value={selectedState}
-            onChange={handleStateChange}
-            style={{ margin: "0 auto" }}
-          >
-            <option value="">All States</option>
-            {[...new Set(filteredShelter.map(item => item.state))]
-              .sort()
-              .map((state, id) => (
-                <option key={id} value={state}>
-                  {state}
-                </option>
-              ))}
-          </select>
-        </div>
-        <div className="me-5 p-3" style={{ flex: "0 0 auto" }}>
-          <p className="ms-4"><b>Select a city</b></p>
-          <select
-            className="form-select ms-4"
-            value={selectedCity}
-            onChange={handleCityChange}
-            style={{ margin: "0 auto" }}
-          >
-             <option value="">All Cities</option>
-      {[...new Set(filteredShelter.map(item => item.city))]
-        .sort() // Ordenar las ciudades alfabéticamente
-        .map((city, id) => (
-          <option key={id} value={city}>
-            {city}
-          </option>
-            ))}
-          </select>
-        </div>
-        <div className="d-flex justify-content-center">
-        <input
-          type="text"
-          className="form-control mt-3"
-          placeholder="Search by name"
-          value={searchTerm}
-          style={{ maxWidth: "74%"}}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        </div>
-      </div>
-        {/* Tabla */}
-        <table className="table table-striped table-hover border border-4" style={{ flex: "1" }}>
-          <thead>
-            <tr className="text-center">
-              <th scope="col">PHOTO</th>
-              <th scope="col">ORGANIZATION</th>
-              <th scope="col">EMAIL</th>
-              <th scope="col">CITY</th>
-              <th scope="col">STATE</th>
-              <th scope="col">COUNTRY</th>
-              <th scope="col">POST CODE</th>
-              <th scope="col">PHONE</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredShelter.map((item, id) => (
-              <tr
-                className="text-center"
-                key={id}
-                onClick={() => window.open(item.web, "_blank")}
-              >
-                <td>
-                  <a href={item.web} target="_blank" rel="noopener noreferrer">
-                    <img
-                      src={ImgProtector}
-                      onError={handleOnErrorImg}
-                      style={{ width: "60%" }}
-                    />
-                  </a>
-                </td>
-                <td>{item.name}</td>
-                <td>{item.email}</td>
-                <td>{item.city}</td>
-                <td>{item.state}</td>
-                <td>{item.country}</td>
-                <td>{item.zip_code}</td>
-                <td>{item.phone}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
     </div>
   );
 };

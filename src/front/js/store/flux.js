@@ -640,34 +640,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 			}
 			},
 			getUsers: async () => {
-				const token = localStorage.getItem("token");
-				
-				const opts = {
-				  method: 'GET',
-				  headers: {
-					'Authorization': `Bearer ${token}`,
-					'Content-Type': 'application/json',
-				  },
-				};
-				
 				try {
+				  const token = localStorage.getItem("token");
+				  
+				  const opts = {
+					method: 'GET',
+					headers: {
+					  'Authorization': `Bearer ${token}`,
+					  'Content-Type': 'application/json',
+					},
+				  };
+				  
 				  const resp = await fetch(`${process.env.BACKEND_URL}/api/users`, opts);
-				
+				  
 				  if (resp.status !== 200) {
 					console.error("Error fetching users");
 					return;
 				  }
-				
+				  
 				  const data = await resp.json();
-				
-				  // Establece la lista de usuarios en el almacenamiento
-				  setStore({ users: data.results });
-				  console.log("daaaaataaaaaa: ",data.results)
+				  
+				  // Aquí puedes hacer lo que necesites con los datos obtenidos, como almacenarlos en un estado o realizar alguna acción en tu aplicación
+				  console.log("Data: ", data);
+				  setStore({users: data})
+				  
 				} catch (error) {
 				  console.error("Error during users fetch", error);
-				  // Puedes despachar una acción de error si lo deseas
+				  // Puedes manejar el error de acuerdo a tus necesidades, por ejemplo, mostrando un mensaje de error en tu aplicación o despachando una acción de error.
 				}
-			},
+			  },
+			  
 			deleteVolunteer: async (volunteerId) => {
 			try {
 				const token = getStore().token;

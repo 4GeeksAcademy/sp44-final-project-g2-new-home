@@ -4,11 +4,10 @@ import "../../styles/index.css";
 import Masonry from "react-masonry-css";
 import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate } from "react-router-dom";
 
 
 export const Adoptme = () => {
-  const navigate = useNavigate()
+
   const { store, actions } = useContext(Context);
   const [pets, setPets] = useState([]);
   const hostPetfinder = 'https://api.petfinder.com/v2/';
@@ -67,66 +66,67 @@ export const Adoptme = () => {
     setBackupImageIndex(newBackupIndex);
     e.target.src = backupImages[newBackupIndex].default; // Usa .default para obtener la ruta de la imagen importada
   };
-  const handleClick = (pet) => {
-    navigate("/details");
-  }
+  
   const breakpointColumnsObj = {
-    default: 3
+    default: 3,
+    470: 2,
+    380: 1
   };
   return (
     <div className="container mb-3">
-      <h1 className="text-success text-center mt-5 mb-5">Adopt a pet</h1>
-      <Masonry
-        breakpointCols={breakpointColumnsObj}
-        className="my-masonry-grid"
-        columnClassName="my-masonry-grid_column"
-      >
-        
-        {store.animals ? (
-          store.animals.map((animal, index) => (
-            <div key={animal.id} className="card rounded col-12 col-md-6 col-lg-4">
-              <img
-                src={animal.photo || backupImages[backupImageIndex].default}
-                alt={`Image for ${animal.name}`}
-                className="card-img-top card-v"
-              />
-              <div className="card-body">
-                <h4 className="card-title d-flex justify-content-center"><strong >{animal.name}</strong></h4>
-                <p className="card-text fs-5"><strong >Breed mixture: </strong>{animal.breeds ? animal.breeds.primary : 'N/A'}</p>
-                {/* <p><strong>City: </strong>{animal.city ? animal.city : 'N/A'}</p> */}
-                {/* <p ><strong>Animal Status: </strong>{animal.animal_status ? animal.animal_status : 'N/A'}</p> */}
-                {/* <p><strong>Color: </strong>{animal.color ? animal.color : 'N/A'}</p>
-                <p><strong>Size: </strong>{animal.size ? animal.size : 'N/A'}</p>
-                <p><strong>Descriptions: </strong>{animal.description ? animal.description : 'N/A'}</p>
-                <p><strong>City: </strong>{animal.contact ? animal.contact : 'N/A'}</p>
-                <p><strong>Contact: </strong>{animal.phone ? animal.phone : 'N/A'}</p> */}
+      <h1 className="esmeralda text-center mt-5 mb-5">Adopt a pet</h1>
+      <div className="card fondo py-5 px-4">
+        <Masonry
+          breakpointCols={breakpointColumnsObj}
+          className="my-masonry-grid"
+          columnClassName="my-masonry-grid_column"
+        >
+          {store.animals ? (
+            store.animals.map((animal, index) => (
+              <div key={animal.id} className="card  rounded col-12 col-md-6 col-lg-4">
+                <img
+                  src={animal.photo || backupImages[backupImageIndex].default}
+                  alt={`Image for ${animal.name}`}
+                  className="card-img-top card-v"
+                />
+                <div className="card-body">
+                  <h2 className="card-title d-flex justify-content-center"><strong >{animal.name}</strong></h2>
+                  <p className="card-text fs-5"><strong >Breed mixture: </strong>{animal.breeds ? animal.breeds.primary : 'N/A'}</p>
+                  {/* <p><strong>City: </strong>{animal.city ? animal.city : 'N/A'}</p> */}
+                  {/* <p ><strong>Animal Status: </strong>{animal.animal_status ? animal.animal_status : 'N/A'}</p> */}
+                  {/* <p><strong>Color: </strong>{animal.color ? animal.color : 'N/A'}</p>
+                  <p><strong>Size: </strong>{animal.size ? animal.size : 'N/A'}</p>
+                  <p><strong>Descriptions: </strong>{animal.description ? animal.description : 'N/A'}</p>
+                  <p><strong>City: </strong>{animal.contact ? animal.contact : 'N/A'}</p>
+                  <p><strong>Contact: </strong>{animal.phone ? animal.phone : 'N/A'}</p> */}
+                  <div className="mt-2 d-flex justify-content-center mb-2">
+                  <Link to="/animal" state={animal} className="btn btn-success btn-lg"><strong>More details</strong></Link>
+                </div>
+                </div>
+              </div>
+            ))
+          ) : null}
+          {pets ? (
+            pets.slice(0, 18).map((animal, id) => (
+              <div key={id} className="card rounded col-12 col-md-6 col-lg-4">
+                <img
+                  src={`https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/${animal.id}/1/`}
+                  onError={handleOnErrorImg}
+                  alt={`Image for ${animal.name}`}
+                  className="card-img-top card-v"
+                />
+                <div className="card-body">
+                  <h4 className="card-title d-flex justify-content-center mb-3 "><strong>{animal.name}</strong></h4>
+                  <p className="card-text fs-5"><strong>Breed mixture: </strong>{animal.breeds ? animal.breeds.primary : 'N/A'}</p>
+                </div>
                 <div className="mt-2 d-flex justify-content-center mb-2">
-                <Link to="/animal" state={animal} className="btn btn-success btn-lg"><strong>More details</strong></Link>
+                  <Link to="/animalapi" state={animal} className="btn btn-success btn-lg"><strong>More details</strong></Link>
+                </div>
               </div>
-              </div>
-            </div>
-          ))
-        ) : null}
-        {pets ? (
-          pets.slice(0, 18).map((animal, id) => (
-            <div key={id} className="card rounded col-12 col-md-6 col-lg-4">
-              <img
-                src={`https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/${animal.id}/1/`}
-                onError={handleOnErrorImg}
-                alt={`Image for ${animal.name}`}
-                className="card-img-top card-v"
-              />
-              <div className="card-body">
-                <h4 className="card-title d-flex justify-content-center mb-3 "><strong>{animal.name}</strong></h4>
-                <p className="card-text fs-5"><strong>Breed mixture: </strong>{animal.breeds ? animal.breeds.primary : 'N/A'}</p>
-              </div>
-              <div className="mt-2 d-flex justify-content-center mb-2">
-                <Link to="/animalapi" state={animal} className="btn btn-success btn-lg"><strong>More details</strong></Link>
-              </div>
-            </div>
-          ))
-        ) : null}
-      </Masonry>
+            ))
+          ) : null}
+        </Masonry>
+      </div>
     </div>
   );
 }

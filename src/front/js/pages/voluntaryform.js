@@ -76,31 +76,36 @@ export const VoluntaryForm = () => {
   const animalshelterId = localStorage.getItem("animalshelterId")
   const peopleId = localStorage.getItem("peopleId");
   return (
-    <div className="custom-container my-5">
+<div className={`container${(animalshelterId !== 'false' || (store.user_id && peopleId === 'false' && animalshelterId === 'false')) ? '-fluid px-5' : ''} my-5`}>
       {!store.user_id ? (
-      <div className="card text-center fondo p-0 mx-auto"style={{maxWidth: "60%"}}>
-        <h1 className="card-title coloresmeralda esmeralda py-3">Join and help us</h1>
-        <img src={voluntariofoto} className="rounded-0"/>
-        <div className="card-body">
-          <p className="card-text text-start pt-3 px-3 fs-5">Are you passionate about animals? Do you want to make a difference in their lives? Join our team of volunteers and be part of the change you want to see in the world!</p>
-          <p className="card-text text-start px-3 fs-4"><b>You choose how you want to help.</b></p>
-          <p className="card-text text-start  px-3 pb-3 fs-5">Every small gesture counts, and together we can create a better world for our furry friends. Sign up to volunteer today and be part of our family of animal lovers!</p>
-        </div>
-        <div className="card-footer">
-          <p className="card-text text-start p-3 fs-5">Together we make a difference. Join our team and change lives, one paw at a time. <Link to="/register"><b>Register</b></Link> and complete the form. They will call you soon..</p>
+        <div className="container">
+          <h1 className="card-title text-center coloresmeralda esmeralda my-5">Join and help us</h1>
+          <div className="card text-center fondo p-0 mx-auto"style={{maxWidth: "50%"}}>
+          <img src={voluntariofoto} className="rounded-0 p-3"/>
+          <div className="card-body">
+            <p className="card-text text-start pt-3 px-3 fs-5">Are you passionate about animals? Do you want to make a difference in their lives? Join our team of volunteers and be part of the change you want to see in the world!</p>
+            <p className="card-text text-start px-3 fs-4"><b>You choose how you want to help.</b></p>
+            <p className="card-text text-start  px-3 pb-3 fs-5">Every small gesture counts, and together we can create a better world for our furry friends. Sign up to volunteer today and be part of our family of animal lovers!</p>
+          </div>
+          <div className="card-footer">
+            <p className="card-text text-start p-3 fs-5">Together we make a difference. Join our team and change lives, one paw at a time. <Link to="/register"><b>Register</b></Link> and complete the form. They will call you soon..</p>
+          </div>
         </div>
       </div>
       ) :  ( animalshelterId !== 'false') || (store.user_id  && peopleId === 'false' && animalshelterId === 'false' ) ? ( 
-        <div classme="rounded-top">
-          <h1 className="text-center coloresmeralda esmeralda">Find your volunteer</h1>
-          <div className="d-flex mt-5">
-            <div className="me-5 border border-4 sombra rounded-2" style={{ width: "20%", maxHeight: "300px", overflowY: "auto" }}>
-              <div className="leyendadifuminado p-3 text-center" style={{ width: "100%" }}>
-                <h5 className="text-light">Find faster{"\u00A0"}{"\u00A0"}{"\u00A0"}<i className="fas fa-paw text-light"></i></h5>
+        <div className="container-fluid pb-5 mb-3">
+          <h1 className="titulos text-center mt-2 mb-5 esmeralda">
+            Find your volunteer
+          </h1>
+          <div className="row d-flex justify-content-center" style={{maxWidth: "120%"}}>
+            <div className="col-md-2 px-0 pt-0 pb-0 card border border-4 sombra rounded-2 mt-5" style={{ maxHeight: "360px", overflowY: "auto" }}>
+              <div className="leyendadifuminado card-header p-3 text-center" style={{width:"100%"}}>
+                <h5 className="text-light"><b>Find faster here{"\u00A0"}{"\u00A0"}{"\u00A0"}<i className="fas fa-paw text-light"></i></b></h5>
               </div>
-              <div className="mt-2 p-3">
-                <div>
-                  <label><b>Select a city</b></label>
+              <div className="card-body p-3" style={{ flex: "0 0 auto" }}>
+                <div className="row d-flex justify-content-center mt-3">
+                  <div className="col-md-12 d-flex justify-content-center flex-column">
+                  <label className="form-label"><b>Select a city</b></label>
                   <input
                     type="text"
                     className="form-control mt-3"
@@ -109,9 +114,11 @@ export const VoluntaryForm = () => {
                     value={cityFilter}
                     onChange={handleInputChange}
                   />
-                </div>
-                <div className="mt-3">
-                  <label><b>Availability</b></label>
+                 </div>
+              </div>
+              <div className="row mt-3">
+                <div className="col-md-12">
+                  <label className="form-label"><b>Availability</b></label>
                   <select
                     className="form-select mt-3"
                     name="availabilityFilter"
@@ -125,8 +132,11 @@ export const VoluntaryForm = () => {
                   </select>
                 </div>
               </div>
+              </div>
             </div>
-            <table className="table table-striped border border-4 text-center  ">
+            <div className="col-md-10 mt-5">
+            <div className="table-responsive">
+              <table className="table  table-striped table-hover border border-4" style={{ flex: "1" }}>
               <thead>
                 <tr className="text-center">
                   <th scope="col">Email</th>
@@ -150,7 +160,7 @@ export const VoluntaryForm = () => {
                     return cityMatch && availabilityMatch;
                   })
                   .map((item) => (
-                    <tr className="text-center" key={item.id}>
+                    <tr className="text-center custom-table-row" key={item.id}>
                       <td>{item.email}</td>
                       <td className=""><ExpandableCell content={item.address} /></td>
                       <td>{item.phone}</td>
@@ -163,13 +173,17 @@ export const VoluntaryForm = () => {
                   ))}
               </tbody>
             </table>
+            </div>
+          </div>
           </div>
         </div>
       ) : (
+        <div className="container">
+          <h1 className="text-center esmeralda">Send your form and the animal shelters will call you soon</h1>
         <div className="card fondo mt-5 text-center animate__animated animate__bounceInUp" id="formcomplete">
         <div className="card-body">
-          <h1 className="card-title esmeralda coloresmeralda mb-5" id="voluntaryform">
-            Voluntary Form
+          <h1 className="card-title  coloresmeralda mb-5" id="voluntaryform">
+             Voluntary Form
           </h1>
           <div className="form-group row text-start">
             <div className="col-md-4">
@@ -259,19 +273,19 @@ export const VoluntaryForm = () => {
             </div>
           </div>
             <div className="row d-flex justify-content-center">
-              <div className="col-md-3">
-                <button className="btn btn-success  btn-lg mt-3" onClick={handleFormSubmit}>
+              <div className="col-md-12">
+                <button className="btn btn-success mx-2 btn-lg mt-3" onClick={handleFormSubmit}>
                   <b>Submit</b>
                 </button>
-                <button onClick={handleGoHome} className="btn btn-secondary btn-lg mt-3 ms-3">
+                <button onClick={handleGoHome} className="btn btn-secondary btn-lg mt-3 mx-2">
                   <b>Cancel</b>
                 </button>
               </div>
           </div>
         </div>
       </div>
+      </div>
       )}
     </div>
   );
-
 };
