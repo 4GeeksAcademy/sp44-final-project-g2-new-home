@@ -52,7 +52,7 @@ export const Login = () => {
                                 </div>
                                 <div className="row my-3 d-flex justify-content-center">
                                     <div className="col-md-6 mt-3 d-flex justify-content-center">
-                                        <button className="btn btn-dark btn" onClick={handleClick}><b>Login</b></button>
+                                        <button className="btn btn-success" onClick={handleClick}><b>Login</b></button>
                                     </div>
                                 </div>   
                             </form>
@@ -62,7 +62,7 @@ export const Login = () => {
                 <div className="col-md-4 d-flex justify-content-start" >
                     <div className="row d-flex justify-content-start">
                         <div className="col-md-12 d-flex justify-content-start">
-                            <img src="https://tse1.mm.bing.net/th?id=OIP.Yaf0PrYnrgyOw939nocKwAHaE7&pid=Api" alt="Puppy" alt="Puppy" style={{ marginTop: "150px", marginLeft: "-280px" }}/>
+                            <img src="https://tse1.mm.bing.net/th?id=OIP.Yaf0PrYnrgyOw939nocKwAHaE7&pid=Api"  alt="Puppy" style={{ marginTop: "150px", marginLeft: "-280px" }}/>
                         </div>
                     </div>
                 </div>

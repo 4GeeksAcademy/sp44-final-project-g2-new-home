@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../store/appContext';
-import { Link } from "react-router-dom";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -82,7 +81,9 @@ export const Profile = () => {
             });
     };
     
-    
+    const handleGoHome = () => {
+        navigate("/");
+    }
 
     useEffect(() => {
         const userDataFromLocalStorage = JSON.parse(localStorage.getItem("user_data"));
@@ -114,11 +115,11 @@ export const Profile = () => {
 
     return (
       <div className="container mt-5">
-          <h1 className="text-center">User Profile</h1>
-          <div className="card mx-auto" style={{ maxWidth: "500px" }}>
-              <div className="card-header">
-                  {userData.role === 'Person' && <h2>User nº: {userData.details.user_id}</h2>}
-                  {userData.role === 'AnimalShelter' && <h2>User nº: {userData.details.user_id}</h2>}
+          <h1 className="text-center esmeralda  my-3">My Profile</h1>
+          <div className="card fondo mx-auto mt-5" style={{ maxWidth: "500px" }}>
+              <div className="card-body">
+                  {userData.role === 'Person' && <h2 className="text-center coloresmeralda">You are the user nº: <b>{userData.details.user_id}</b></h2>}
+                  {userData.role === 'AnimalShelter' && <h2 className="text-center coloresmeralda">You are the user nº: <b>{userData.details.user_id}</b></h2>}
               </div>
               <div className="card-body">
                   {isEditing ? (
@@ -127,7 +128,7 @@ export const Profile = () => {
                           {userData.role === 'Person' && (
                             <div>
                               <div className="mb-3">
-                                  <label htmlFor="email" className="form-label">Email:</label>
+                                  <label htmlFor="email" className="form-label"><b>Email:</b></label>
                                   <input
                                       type="text"
                                       className="form-control"
@@ -137,7 +138,7 @@ export const Profile = () => {
                                   />
                               </div>
                               <div className="mb-3">
-                                  <label htmlFor="name" className="form-label">Name:</label>
+                                  <label htmlFor="name" className="form-label"><b>Name:</b></label>
                                   <input
                                       type="text"
                                       className="form-control"
@@ -147,7 +148,7 @@ export const Profile = () => {
                                   />
                               </div>
                               <div className="mb-3">
-                                  <label htmlFor="lastname" className="form-label">Last Name:</label>
+                                  <label htmlFor="lastname" className="form-label"><b>Last Name:</b></label>
                                   <input
                                       type="text"
                                       className="form-control"
@@ -161,7 +162,7 @@ export const Profile = () => {
                           {userData.role === 'AnimalShelter' && (
                               <div>
                                   <div className="mb-3">
-                                      <label htmlFor="email" className="form-label">Email:</label>
+                                      <label htmlFor="email" className="form-label"><b>Email:</b></label>
                                       <input
                                           type="text"
                                           className="form-control"
@@ -171,7 +172,7 @@ export const Profile = () => {
                                       />
                                   </div>
                                   <div className="mb-3">
-                                  <label htmlFor="name" className="form-label">Name:</label>
+                                  <label htmlFor="name" className="form-label"><b>Name:</b></label>
                                   <input
                                       type="text"
                                       className="form-control"
@@ -181,7 +182,7 @@ export const Profile = () => {
                                   />
                               </div>
                                   <div className="mb-3">
-                                      <label htmlFor="cif" className="form-label">CIF:</label>
+                                      <label htmlFor="cif" className="form-label"><b>CIF:</b></label>
                                       <input
                                           type="text"
                                           className="form-control"
@@ -191,7 +192,7 @@ export const Profile = () => {
                                       />
                                   </div>
                                   <div className="mb-3">
-                                      <label htmlFor="address" className="form-label">Address:</label>
+                                      <label htmlFor="address" className="form-label"><b>Address:</b></label>
                                       <input
                                           type="text"
                                           className="form-control"
@@ -201,7 +202,7 @@ export const Profile = () => {
                                       />
                                   </div>
                                   <div className="mb-3">
-                                      <label htmlFor="zip_code" className="form-label">Zip Code:</label>
+                                      <label htmlFor="zip_code" className="form-label"><b>Zip Code:</b></label>
                                       <input
                                           type="text"
                                           className="form-control"
@@ -211,7 +212,7 @@ export const Profile = () => {
                                       />
                                   </div>
                                   <div className="mb-3">
-                                      <label htmlFor="city" className="form-label">City:</label>
+                                      <label htmlFor="city" className="form-label"><b>City:</b></label>
                                       <input
                                           type="text"
                                           className="form-control"
@@ -221,7 +222,7 @@ export const Profile = () => {
                                       />
                                   </div>
                                   <div className="mb-3">
-                                      <label htmlFor="web" className="form-label">Web:</label>
+                                      <label htmlFor="web" className="form-label"><b>Web:</b></label>
                                       <input
                                           type="text"
                                           className="form-control"
@@ -232,42 +233,60 @@ export const Profile = () => {
                                   </div>
                               </div>
                           )}
-                          <button type="submit" className="btn btn-primary me-3">Save</button>
-                          <button type="button" className="btn btn-secondary" onClick={() => setIsEditing(false)}>Cancel</button>
+                          <div className='col-md-12 d-flex justify-content-center'>
+                            <button type="button" className="btn btn-secondary me-3" onClick={() => setIsEditing(false)}><b>Cancel</b></button>
+                            <button type="submit" className="btn btn-success "><b>Save</b></button>
+                          </div>
                       </form>
                   ) : (
-                    <div>
-                        {/* Mostrar datos no editables aquí */}
-                        <p>Email: {userData.email}</p>
-                        <p>Role: {userData.role}</p>
-                        {userData.role === 'Person' && (
-                            <>
-                                <p>Name: {userData.details.name}</p>
-                                <p>Last name: {userData.details.lastname}</p>
-                            </>
-                        )}
-                        {userData.role === 'AnimalShelter' && (
-                            <>
-                                <p>Name: {userData.details.name}</p>
-                                <p>CIF: {userData.details.cif}</p>
-                                <p>City: {userData.details.city}</p>
-                                <p>Address: {userData.details.address}</p>
-                                <p>Zip_code: {userData.details.zip_code}</p>
-                                <p>Web: {userData.details.web}</p>
-                                {/* Otros detalles específicos de protectora de animales */}
-                            </>
-                        )}
-                        {userData.details.trophy && (
-                            <p>
-                                Trophy: <i className="fas fa-award"></i>
-                            </p>
-                        )}
-                        <button onClick={handleEditClick} className="btn btn-primary">Edit Profile</button>
-                        {/* <button onClick={handleUnsubscribe} className="btn btn-primary ms-3">Unsubscribe</button> */}
-                        <button onClick={handleToggleActiveClick} className="btn btn-primary ms-3">
-                           'Desactivate account'
-                        </button>
-                    </div>
+                    <div className='container'>
+                        <div className="row d-flex justify-content-center">
+                            {userData.role === 'AnimalShelter' ? (
+                                <>
+                                <div className="col-md-2"></div>
+                                <div className="col-md-8">
+                                    {/* Contenido para el rol de Protectora */}
+                                    <p className='fs-5'><b>Role</b>: {userData.role}</p>
+                                    <p className='fs-5'><b>Email:</b> {userData.email}</p>
+                                    <p className='fs-5'><b>Name:</b> {userData.details.name}</p>
+                                    <p className='fs-5'><b>CIF:</b> {userData.details.cif}</p>
+                                    <p className='fs-5'><b>City:</b> {userData.details.city}</p>
+                                    <p className='fs-5'><b>Address:</b> {userData.details.address}</p>
+                                    <p className='fs-5'><b>Zip_code:</b> {userData.details.zip_code}</p>
+                                    <p className='fs-5'><b>Web:</b> {userData.details.web}</p>
+                                    {userData.details.trophy && (
+                                    <p>
+                                        Trophy: <i className="fas fa-award"></i>
+                                    </p>
+                                    )}
+                                </div>
+                                <div className="col-md-2"></div>
+                                </>
+                            ) : (
+                                <>
+                                <div className="col-md-2"></div>
+                                <div className="col-md-8">
+                                    {/* Contenido para otros roles */}
+                                    <p className='fs-5 ms-4'><b>Role</b>: {userData.role}</p>
+                                    <p className='fs-5 ms-4'><b>Email:</b> {userData.email}</p>
+                                    <p className='fs-5 ms-4'><b>Name:</b> {userData.details.name}</p>
+                                    <p className='fs-5 ms-4'><b>Last name:</b> {userData.details.lastname}</p>
+                                </div>
+                                <div className="col-md-2"></div>
+                                </>
+                            )}
+                        </div>
+                        <div className='row d-flex justify-content-center mt-5'>
+                            <div className='col-md-6 '>
+                                {/* <button onClick={handleToggleActiveClick} className="btn btn-danger">
+                                <b>'Desactivate account'</b>
+                                </button> */}
+                                {/* <button onClick={handleUnsubscribe} className="btn btn-primary ms-3">Unsubscribe</button> */}
+                                <button onClick={handleGoHome} className="btn btn-secondary btn lg me-3"><b>Back</b></button>
+                                <button onClick={handleEditClick} className="btn btn-success btn lg"><b>Edit Profile</b></button>
+                            </div>
+                        </div>
+                   </div> 
                 )}
             </div>
         </div>

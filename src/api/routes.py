@@ -31,36 +31,29 @@ def upload_image():
 @api.route('/users', methods=['POST', 'GET'])
 def handle_users():
    if request.method == 'GET':
-    # Consulta para obtener los usuarios con detalles según su rol
-    users_with_details = db.session.query(User, People, AnimalShelter).\
-        outerjoin(People, User.id == People.user_id).\
-        outerjoin(AnimalShelter, User.id == AnimalShelter.user_id).\
-        all()
+    users = User.query.all()  # Obtén todos los usuarios
+    user_data = []
 
-    # Serializar los resultados en el formato deseado
-    results = []
-    for user, person, shelter in users_with_details:
-        user_details = {
-            "id": user.id,
-            "email": user.email,
-            "role": user.role,
-            "is_active": user.is_active,
+    for user in users:
+        user_info = {
+            'email': user.email,
+            'role': user.role
         }
+
         if user.role == 'Person':
-            user_details.update(person.serialize())
+            person = People.query.filter_by(user_id=user.id).first()
+            if person:
+                user_info['name'] = person.name
+                user_info['lastname'] = person.lastname
+
         elif user.role == 'AnimalShelter':
-            user_details.update(shelter.serialize())
+            shelter = AnimalShelter.query.filter_by(user_id=user.id).first()
+            if shelter:
+                user_info.update(shelter.serialize())
 
-        results.append(user_details)
+        user_data.append(user_info)
 
-    # Crear la respuesta
-    response_body = {
-        "message": "Esto devuelve el endpoint de users GET con detalles",
-        "results": results,
-        "status": "ok"
-    }
-
-    return response_body, 200
+    return jsonify(user_data)
    if request.method =='POST':
       request_body = request.get_json()
       print(request_body)

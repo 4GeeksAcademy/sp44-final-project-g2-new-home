@@ -26,14 +26,11 @@ const UploadAnimal = () => {
   const [editData, setEditData] = useState({});
   const [editModeAnimals, setEditModeAnimals] = useState({});
   const [fileUrls, setFileUrls] = useState({}); // Agregar este estado para almacenar las URL de las imágenes
-
+  const [imageChange, setImageChange] = useState(false);
 
 
   const userId = store.user_id;
-  const shelterId = store.animalshelterId;
-  const peopleId = store.peopleId
   const filteredAnimals = store.filteredAnimals;
-  console.log("user_id delc componente:", userId);
   console.log("filteredAnimals en mi componente upload:", store.filteredAnimals);
  
   
@@ -46,17 +43,42 @@ const UploadAnimal = () => {
   } 
   };
 
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     if (e.target.files.length) {
       const imageUrl = URL.createObjectURL(e.target.files[0]);
-      // setFileUrl(imageUrl); // Actualizar el estado de la vista previa de la imagen
       setFileUrl(imageUrl);
-       // Actualiza la URL de la imagen solo para el animal en edición
       setFileUrls({ ...fileUrls, [animalId]: imageUrl });
-      
+  
+      try {
+        const form = new FormData();
+        form.append("img", e.target.files[0]);
+  
+        const response = await fetch(process.env.BACKEND_URL + "/api/img", {
+          method: "POST",
+          body: form,
+        });
+  
+        const data = await response.json();
+        const cloudinaryUrl = data["img_url: "];
+  
+        // Establece la URL de Cloudinary en el estado
+        setFile(cloudinaryUrl);
+        setImageChange(true);
+      } catch (error) {
+        console.error("Error al cargar la imagen en Cloudinary", error);
+      }
+    }
+  };
+
+  const handlePostImageChange = (e) => {
+    if (e.target.files.length) {
+      const imageUrl = URL.createObjectURL(e.target.files[0]);
+      setFileUrl(imageUrl);
+      setFileUrls({ ...fileUrls, [animalId]: imageUrl });
       setFile(e.target.files[0]);
     }
   };
+  
 
   const handleBackToPosts = () => {
     setShowForm(false); // Volver a las vistas de todas las publicaciones
@@ -123,6 +145,7 @@ const UploadAnimal = () => {
         setPhoto("");
         setFileUrl(""); 
         setIsActive(true); 
+        setImageChange(false)
       }
     } catch (e) {
       console.error("ERROR IMAGEN", e);
@@ -156,16 +179,11 @@ const UploadAnimal = () => {
     console.log("animal.contact: ", animal.contact)
     setPhoto(animal.photo);
     console.log("animal.photo: ", animal.photo)
+    setFile(animal.photo);
     setAnimalId(animal.id);
     console.log("animal.id: ", animal.id)
     setFileUrls({ ...fileUrls, [animalId]: animal.photo });
   };
-  const handleEditImage = (e) => {
-    if (e.target.files.length) {
-      setEditData({ ...editData, photo: e.target.files[0] });
-    }
-  };
-  
 
   const handleCancelEdit = (animalId) => {
   // Cancela el modo de edición para el animal con el ID dado
@@ -177,35 +195,48 @@ const UploadAnimal = () => {
   
   const handleSavechanges = async (e) => {
     e.preventDefault();
-
+  
     try {
-      const form = new FormData();
-      form.append("img", file);
-      console.log("Este es el form:", form)
-
-      const response = await fetch(process.env.BACKEND_URL + "/api/img", {
-        method: "POST",
-        body: form
-      });
-
-      const data = await response.json();
-      const imageUrl = data["img_url: "];
       const currentDate = new Date().toISOString().split('T')[0];
-
-      console.log("data fetch img: ", data);
-      console.log("imageUUUUUUUUURL: ", imageUrl)
+  
       
-
-      const success = await actions.update_animal(animalId, name, city, phone, size, currentDate, color, type, description, status, contact, imageUrl, isActive);
-      if (success) {
-
-        actions.get_shelter_animals();
-      }
-      setEditModeAnimals({ ...editModeAnimals, [animalId]: false });
+        const success = await actions.update_animal(
+          animalId,
+          name,
+          city,
+          phone,
+          size,
+          currentDate,
+          color,
+          type,
+          description,
+          status,
+          contact,
+          file, // Cambia esto para pasar la URL de Cloudinary
+          isActive
+        );
+        if (success) {
+          actions.get_shelter_animals();
+        }
+        setEditModeAnimals({ ...editModeAnimals, [animalId]: false });
+        setFile("")
+        setName(""); 
+        setCity(""); 
+        setPhone(""); 
+        setSize(""); 
+        setColor(""); 
+        setType(""); 
+        setDescription(""); 
+        setStatus("");
+        setDate(""); 
+        setContact(""); 
+        setFileUrl("");  
+        setImageChange(false)
     } catch (e) {
       console.error("ERROR IMAGEN", e);
     }
   };
+  
 
   const handleDelete = async (animalId) => {
     if (window.confirm("Are you sure you want to delete this animal?")) {
@@ -259,8 +290,8 @@ const UploadAnimal = () => {
 
   const breakpointColumnsObj = {
   default: 3,
-  470: 2,
-  380: 1
+  840: 2,
+  680: 1
   };
   
   return (
@@ -325,7 +356,7 @@ const UploadAnimal = () => {
                   </select>
                 </div>
                 <div className="col-md-4">
-                  <label className="form-label"><b>Color::</b></label>
+                  <label className="form-label"><b>Color:</b></label>
                   <input
                     type="text"
                     placeholder="Color"
@@ -372,14 +403,14 @@ const UploadAnimal = () => {
                   </div>
                   <div className="col-md-4  d-flex flex-column">
                     <label className="form-label text-start"><b>Photo:</b></label>
-                    <label htmlFor="image-input" className="btn btn-dark" >
-                      <b>Upload Image</b>
+                    <label htmlFor="image-input" className="btn btn-outline-dark form-control mt-1 text-start p-2 rounded-3" >
+                     Upload Image
                     </label>
                     <input
                       type="file"
                       id="image-input"
                       accept="image/jpeg"
-                      onChange={handleImageChange}
+                      onChange={handlePostImageChange}
                       style={{ visibility: "hidden" }}
                     />
                   </div>
@@ -395,15 +426,13 @@ const UploadAnimal = () => {
                     ></textarea>
                   </div>
                 </div>
-                <div className="row d-flex justify-content-center">
-                  <div className="col-md-2 mt-3 py-2">
-                    <button onClick={handleBackToPosts} className=" btn btn-secondary btn-lg me-3">
-                      <b>Cancel</b>
-                    </button>
-                  </div>
-                  <div className="col-md-2 mt-3 py-2">
-                    <button onClick={handleSubmit} className="btn btn-success btn-lg">
+                <div className="row mt-3">
+                  <div className="col-md-12">
+                  <button type="submit" className="btn btn-success btn-lg mt-2 mx-3" >
                       <b>Post</b>
+                    </button>
+                    <button onClick={handleBackToPosts} className="btn btn-secondary btn-lg mt-2 mx-3">
+                      <b>Cancel</b>
                     </button>
                   </div>
                 </div>    
@@ -431,7 +460,7 @@ const UploadAnimal = () => {
               >
                 {filteredAnimals.map((animal) => (
                   <div className="col-sm-6 col-lg-4 mb-4" key={animal.id}>
-                    <div className="card custom-card ">
+                    <div className="card col-sm-6 col-lg-4 custom-card ">
 
 
                     {editModeAnimals[animal.id] ? (
@@ -439,7 +468,7 @@ const UploadAnimal = () => {
                       fileUrls[animal.id] && (
                         <div className="custom-experience-preview-image custom-upload-container">
                           <img
-                            src={(fileUrls[animal.id] || fileUrls[animal.id] !== null || fileUrls[animal.id] !== "" ) ? fileUrls[animal.id] : animal.photo}
+                            src={(fileUrls[animal.id] || fileUrls[animal.id] !== null || fileUrls[animal.id] !== ""  || file) ? fileUrls[animal.id] : animal.photo}
                             alt="Preview"
                             className="card-img-top"
                           />
@@ -453,20 +482,17 @@ const UploadAnimal = () => {
                         alt={`Image for ${animal.name}`}
                         className="card-img-top"
                       />
-                    )}
-
-
-                    
-
-                      <div className="card-body">
-                          
+                    )}             
+                      <div className="card-body">                         
                         {editModeAnimals[animal.id] ? (
                           // Mostrar campos editables cuando está en modo de edición
                           <form className="row g-3" onSubmit={handleSubmit}>
-                            <div className="row d-flex text-start justify-content-center">
-                              <div className="col-md-6 mt-4 text-light text-center">
-                                <label htmlFor="image-input" className="btn btn-dark" >
-                                  <b>Upload Image</b>
+                            <div className="row d-flex text-start justify-content-start">
+                              <div className="col-1"></div>
+                              <div className="col-md-6 mt-4 text-light text-start">
+                                <label className="form-label text-dark text-start"><b>Photo:</b></label>
+                                <label htmlFor="image-input" className="btn btn-outline-dark" >
+                                 Upload Image
                                 </label>
                                 <input
                                   type="file"
@@ -585,23 +611,21 @@ const UploadAnimal = () => {
                                 ></textarea>
                               </div>
                             </div>
-                            <div className="row">
-                              <div className="col-md-3 d-flex justify-content-center mx-auto">
+                            <div className="row">                          
+                              <div className="col-md-12 text-center">
                                 <button
-                                  className="btn btn-secondary me-4"
-                                  onClick={() => handleCancelEdit(animal.id)}
-                                  style={{height: "38px"}}
-                                >
-                                  <b>Cancel</b>
-                                </button>
-                                <button
-                                  className="btn btn-success"
+                                  className="btn btn-success mt-2 mx-2"
                                   onClick={(e) => handleSavechanges(e, animal.id)}
-                                  style={{height: "38px"}}
                                 >
                                   <b>Save</b>
                                 </button>
-                              </div>
+                                <button
+                                  className="btn btn-secondary mt-2 mx-2"
+                                  onClick={() => handleCancelEdit(animal.id)}
+                                >
+                                  <b>Cancel</b>
+                                </button>
+                              </div>                                               
                             </div> 
                           </form>
                         ) : (
@@ -619,20 +643,21 @@ const UploadAnimal = () => {
                             <p className="card-text">Date: {animal.date}</p>
                             <div className="card-body">
                               <div className="row">
-                                <div className="col-md-3 d-flex justify-content-center mx-auto">
+                                <div className="col-md-12  text-center">
                                   <button
-                                    className="btn btn-danger me-4"
-                                    onClick={() => handleDelete(animal.id)}
-                                  >
-                                    <b>Delete</b>
-                                  </button>
-                                  <button
-                                    className="btn btn-success"
+                                    className="btn btn-success mt-2 mx-2"
                                     onClick={() => handleEdit(animal.id)}
                                   >
                                     <b>Edit</b>
                                   </button>
+                                  <button
+                                    className="btn btn-danger mt-2 mx-2"
+                                    onClick={() => handleDelete(animal.id)}
+                                  >
+                                    <b>Delete</b>
+                                  </button>                                
                                 </div>
+                                                              
                               </div>
                             </div>
                           </div>

@@ -19,6 +19,7 @@ export const Experiences = () => {
   const peopleId = store.peopleId; 
   const userId = store.user_id;
   const shelterId = localStorage.getItem("animalshelterId");
+  const experienceId = localStorage.getItem("experienceId")
 
   const handleShowForm = () => {
     if (peopleId) {
@@ -62,28 +63,6 @@ export const Experiences = () => {
     }
   };
   
-  const handleEdit = () => {
-  if (isEditing) {
-    // Si estamos en modo de edición, desactiva la edición
-    setIsEditing(false);
-    // También podrías restablecer los valores de los campos aquí si lo deseas
-  } else {
-    // Si no estamos en modo de edición, activa la edición
-    setIsEditing(true);
-    // Aquí puedes cargar los detalles de la experiencia actual en los campos de entrada
-    // Por ejemplo, puedes buscar la experiencia en 'experiences' por su ID y establecer 'title' y 'body' en los estados correspondientes
-  }
-};
-
-
-  const handleLikeClick = (id) => {
-    if (likedExperiences.has(id)) {
-      likedExperiences.delete(id);
-    } else {
-      likedExperiences.add(id);
-    }
-    setLikedExperiences(new Set(likedExperiences)); // Update to trigger a re-render
-  };
 
   const handleSubmit = async (e) => {
   e.preventDefault();
@@ -110,21 +89,8 @@ export const Experiences = () => {
     console.log("data fetch img: ", data);
     console.log("imageUUUUUUUUURL: ", imageUrl)
 
-    if (store.experienceId) {
-      // Llama a la función de actualizar
-      const success = await actions.update_experience(id, title, body, imageUrl);
-      if (success) {
-        const experienceToEdit = store.experiences.find((experience) => experience.id === store.experienceId);
-        if(experienceToEdit){
-          localStorage.setItem("experienceTitle", experienceToEdit.title);
-          localStorage.setItem("experienceBody", experienceToEdit.body);
-          localStorage.setItem("experienceFileUrl", experienceToEdit.photo);
-          setFileUrl(experienceToEdit.photo);
-          setTitle(experienceToEdit.title );
-          setBody(experienceToEdit.body );}
-        actions.get_experiences();
-      }
-    } else {
+    if (experienceId === 'false' || !experienceId) {
+      
       // Llama a la función de publicar si no hay experiencia ID
       const success = await actions.publishExperience(title, body, imageUrl, peopleId);
       if (success) {
@@ -136,14 +102,27 @@ export const Experiences = () => {
           setFileUrl(experienceToEdit.photo);
           setTitle(experienceToEdit.title );
           setBody(experienceToEdit.body );}
-        actions.get_experiences();
+          actions.get_experiences();
+          setTitle("");
+          setBody("");
+          setFileUrl("");
       }
+    } else {
+       // Llama a la función de actualizar
+       const success = await actions.update_experience(id, title, body, imageUrl);
+       if (success) {
+         const experienceToEdit = store.experiences.find((experience) => experience.id === store.experienceId);
+         if(experienceToEdit){
+           localStorage.setItem("experienceTitle", experienceToEdit.title);
+           localStorage.setItem("experienceBody", experienceToEdit.body);
+           localStorage.setItem("experienceFileUrl", experienceToEdit.photo);
+           setFileUrl(experienceToEdit.photo);
+           setTitle(experienceToEdit.title );
+           setBody(experienceToEdit.body );}
+         actions.get_experiences();
+       }
     }
-
     setShowForm(false);
-    setTitle("");
-    setBody("");
-    setFileUrl(""); // Limpia la URL de la imagen después de usarla
   } catch (e) {
     console.error("ERROR IMAGEN", e);
   }
@@ -151,16 +130,18 @@ export const Experiences = () => {
 
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete this experience?")) {
-      // La confirmación del usuario es requerida para evitar eliminaciones accidentales
-      const success = await actions.delete_experience(store.experienceId);
+      const success = await actions.delete_experience(experienceId);
       if (success) {
-        actions.get_experiences(); // Vuelve a cargar las experiencias después de eliminar
-        setShowForm(false); // Oculta el formulario después de eliminar
+        actions.get_experiences(); 
+        setShowForm(false); 
         setTitle("");
         setBody("");
         setPhotolist([]);
         setFileUrl("");
-        localStorage.setItem("experienceId", 'false') 
+        localStorage.removeItem("experienceId")
+        localStorage.removeItem("experienceTitle") 
+        localStorage.removeItem("experienceBody")
+        localStorage.removeItem("experienceFileUrl")
       } else {
         alert("Failed to delete the experience. Please try again later.");
       }
@@ -169,8 +150,6 @@ export const Experiences = () => {
 
   useEffect(() => {
     actions.get_experiences();
-    console.log("store.experienceId:", store.experienceId);
-
   }, []);
 
   const breakpointColumnsObj = {
@@ -179,7 +158,7 @@ export const Experiences = () => {
     380: 1
   };
 
-  const experienceId = localStorage.getItem("experienceId")
+  
 
   return (
     <div className="container">
@@ -188,7 +167,7 @@ export const Experiences = () => {
         <div className="card fondo mt-5 text-center mx-auto" style={{maxWidth: "60%"}}>
           <div className="card-body">
               <h2 className="card-title coloresmeralda text-center my-3">
-                <b>{ experienceId == 'false' ? "Publish an experience" : "Update your experience"}</b>
+                <b>{( experienceId == 'false' || !experienceId) ? "Publish an experience" : "Update your experience"}</b>
               </h2>
               
               {fileUrl && (
@@ -218,69 +197,51 @@ export const Experiences = () => {
                         ></textarea>
                       </div>
                   </div>
-              { experienceId === 'false' ? (
-              <div className="container mt-3">
-                <div className="row"> 
-                  <div className="col-md-3 text-light   custom-experience-preview-image text-center custom-upload-container">
-                    <label htmlFor="image-input" className="btn btn-dark" >
-                      <b>Upload Image</b>
-                    </label>
-                    <input
-                      type="file"
-                      id="image-input"
-                      accept="image/jpeg"
-                      onChange={handleImageChange}
-                      style={{ visibility: "hidden" }}
-                    />
-                  </div>
-                </div> 
+                  <div className="row"> 
+                    <div className="col-1" style={{maxWidth: "9%"}}></div>
+                    <div className="col-md-3 text-light text-start">
+                      <label className="form-label  text-dark "><b>Photo:</b></label>
+                      <label htmlFor="image-input" className="btn btn-outline-dark" >
+                        Upload Image
+                      </label>
+                      <input
+                        type="file"
+                        id="image-input"
+                        accept="image/jpeg"
+                        onChange={handleImageChange}
+                        style={{ visibility: "hidden" }}
+                      />
+                    </div>
+                  </div> 
+              { (experienceId === 'false'  || !experienceId) ? (
                 <div className="row d-flex justify-content-center">
-                    <div className="col-md-2 py-2">
-                      <button onClick={handleBackToPosts} className="btn btn-lg btn-secondary" >
+                    <div className="col-md-12">
+                      <button onClick={handleBackToPosts} className="btn btn-lg btn-secondary mx-2" >
                           <b>Cancel</b>
                       </button>
-                    </div>
-                    <div className="col-md-2 py-2">
-                      <button onClick={handleSubmit} className="btn btn-lg btn-success">
+                      <button onClick={handleSubmit} className="btn btn-lg btn-success mx-2">
                           <b>Send</b>
                       </button>
                     </div>
                 </div> 
-              </div>
             ) : (
-              <div className="container">
-                <div className="row"> 
-                  <div className="col-md-3 text-light py-2 mt-2 custom-experience-preview-image text-center custom-upload-container">
-                    <label htmlFor="image-input" className="btn btn-dark" >
-                      <b>Upload Image</b>
-                    </label>
-                    <input
-                      type="file"
-                      id="image-input"
-                      accept="image/jpeg"
-                      onChange={handleImageChange}
-                      style={{ visibility: "hidden" }}
-                    />
-                  </div>
-                </div> 
                 <div className="row d-flex justify-content-center">
-                  <div className="col-md-2 py-2">
+                  <div className="col-md-2 mx-4 py-2">
                     <button onClick={handleBackToPosts} className="btn btn-lg btn-secondary" >
                         <b>Cancel</b>
                     </button>
                   </div>
-                  <div className="col-md-2 py-2">
+                  <div className="col-md-2 mx-4 py-2">
                     <button onClick={handleSubmit} className="btn btn-success btn-lg" >
                         <b>Update</b>
                     </button>
                   </div>
-                  <div className="col-md-2 py-2">
+                  <div className="col-md-2 mx-4 py-2">
                     <button onClick={handleDelete} className="btn btn-lg btn-danger"  >
                         <b>Delete</b>
                     </button>
                   </div>
                 </div>
-              </div>
             )}                
             </form>
           </div>
@@ -288,12 +249,11 @@ export const Experiences = () => {
       ) : (
         // Mostrar las vistas de todas las publicaciones
           <div className="row">
-            <h2 className="mt-5 mb-4 esmeralda">These have been some of the experiences of our users...</h2>
+            <h2 className="mt-5 mb-4 esmeralda text-center">These have been some of the experiences of our users...</h2>
               {!showForm && (
               <div className="col-md-3 mx-auto my-5">
                 <button onClick={handleShowForm} className="btn-success btn-lg mt-3">
-                  { (experienceId === 'false' || !store.user_id) ? <b>"Share your experience"</b> : <b>"Update us"</b> }                                       
-                </button>
+                  { (experienceId === 'false' || !store.user_id || !experienceId) ? <b>Share your experience</b> : <b>Update us</b> }                                                       </button>
               </div>
               )}   
             {store.experiences ? (

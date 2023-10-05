@@ -9,7 +9,6 @@ import tip_5 from "../../img/tip_5.png";
 import tip_6 from "../../img/tip_6.png";
 import "../../styles/index.css";
 
-
 export const Tips = () => {
   const { store, actions } = useContext(Context);
 

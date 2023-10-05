@@ -178,7 +178,7 @@ export const Lostanimals = () => {
     <div className="container text-center">
     {!showForm && (
       <div>
-        <h1 className="esmeralda" id="lostanimals">
+        <h1 className="esmeralda mt-5" id="lostanimals">
           Have you lost your pet?
         </h1>
         <button onClick={handleShowForm} className="btn btn-success btn-lg mb-5 mt-5">
@@ -304,8 +304,8 @@ export const Lostanimals = () => {
                   </div>
                   <div className="col-md-3 text-light  preview-image d-flex flex-column">
                     <label className="form-label text-start text-dark"><b>Photo:</b></label>
-                    <label htmlFor="image-input" className="btn btn-dark p-2 rounded-3">
-                      <b>Upload Image</b>
+                    <label htmlFor="image-input" className="btn btn-outline-dark text-start  border-1 p-2 rounded-3">
+                      Upload Image
                     </label>
                     <input
                       type="file"
@@ -318,11 +318,11 @@ export const Lostanimals = () => {
                 </div>
                 <div className="row mt-3">
                   <div className="col-md-12">
-                    <button onClick={handleBackToPosts} className="btn btn-secondary btn-lg mt-2 me-3" style={{ width: "80px" }}>
-                      <b>Cancel</b>
-                    </button>
-                    <button type="submit" className="btn btn-success btn-lg mt-2 me-3" style={{ width: "6%", height: "83%" }}>
+                    <button type="submit" className="btn btn-success btn-lg mt-2 mx-3" >
                       <b>Post</b>
+                    </button>
+                    <button onClick={handleBackToPosts} className="btn btn-secondary btn-lg mt-2 mx-3">
+                      <b>Cancel</b>
                     </button>
                   </div>
                 </div>
@@ -381,7 +381,6 @@ export const Lostanimals = () => {
                           <p className="card-text">Color: {animal.color}</p>
                           <p className="card-text">Type of Animal: {animal.type_of_animal}</p>
                           <p className="card-text">Description: {animal.description}</p>
-                          <p className="card-text">Animal Status: {animal.animal_status}</p>
                           <p className="card-text">Contact: {animal.contact}</p>
                           <p className="card-text">Date: {animal.date}</p>
                         </div>

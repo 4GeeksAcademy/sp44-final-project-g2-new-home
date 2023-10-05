@@ -57,7 +57,7 @@ const Register = () => {
   return (
     <div className="text-center">
       
-      <div className="container d-flex justify-content-center">
+      <div className="container d-flex justify-content-center mt-5">
       <div className="card fondo w-50">
         <h1 className="pt-3 esmeralda">Register</h1>
       <div className="card-body">
@@ -66,7 +66,7 @@ const Register = () => {
           <div className="col-md-4">
             <label className="mt-3 form-label"><b>Tipo de usuario:</b></label>
             <select className="form-control" value={userType} onChange={(e) => setUserType(e.target.value)}>
-              <option value="Person">Person</option>
+              <option  value="Person">Person</option>
               <option value="AnimalShelter">AnimalShelter</option>
             </select>
           </div>
@@ -147,7 +147,6 @@ const Register = () => {
               <input
                 type="checkbox"
                 className="ms-4"
-                check-row
                 checked={isActive}
                 onChange={() => setIsActive(!isActive)} // Cambia el estado de isActive cuando se hace clic en el checkbox
               />
@@ -163,7 +162,7 @@ const Register = () => {
       )}
     <div className="row d-flex justify-content-center mt-3">
       <div className="col-md-11 px-0 mx-0">
-        <button className="btn btn-dark">
+        <button className="btn btn-success">
           <b>Register</b>
         </button>
       </div>
