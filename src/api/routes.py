@@ -767,6 +767,9 @@ def handle_animals():
          type_of_animal = request_body["typeOfAnimal"],
          description = request_body["description"],
          animal_status = request_body["animalStatus"],
+         gender = request_body["gender"],
+         age = request_body["age"],
+         mixture = request_body["mixture"],
          date = request_body["date"],
          contact = request_body["contact"],
          photo = request_body["photo"],
@@ -803,6 +806,9 @@ def handle_animal(id):
     animal.type_of_animal = request_body["typeOfAnimal"]
     animal.description = request_body["description"]
     animal.animal_status = request_body["animalStatus"]
+    animal.gender = request_body["gender"]
+    animal.age = request_body["age"]
+    animal.mixture = request_body["mixture"]
     animal.date = request_body["date"]
     animal.contact = request_body["contact"]
     animal.photo = request_body["photo"]

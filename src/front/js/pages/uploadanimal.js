@@ -16,6 +16,9 @@ const UploadAnimal = () => {
   const [type, setType] = useState(initialType);
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("");
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [mixture, setMixture] = useState("");
   const [date, setDate] = useState("");
   const [contact, setContact] = useState("");
   const [photo, setPhoto] = useState("");
@@ -89,7 +92,7 @@ const UploadAnimal = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
      
-    if (!name || !city || !phone || !type || !description || !status || !contact || !file) {
+    if (!name || !city || !phone || !type || !description || !status || !contact) {
       alert("Please fill in all required fields.");
       return;
     }
@@ -120,6 +123,9 @@ const UploadAnimal = () => {
         typeOfAnimal: type,
         description,
         animalStatus: status,
+        gender: gender,
+        age: age,
+        mixture: mixture,
         date: currentDate,
         contact,
         photo: imageUrl, 
@@ -138,7 +144,10 @@ const UploadAnimal = () => {
         setCity(""); 
         setPhone(""); 
         setSize(""); 
-        setColor(""); 
+        setColor("");
+        setAge("") ;
+        setGender("");
+        setMixture("");
         setType(""); 
         setDescription(""); 
         setStatus("");
@@ -184,6 +193,9 @@ const UploadAnimal = () => {
     setFile(animal.photo);
     setAnimalId(animal.id);
     console.log("animal.id: ", animal.id)
+    setAge(animal.age);
+    setGender(animal.gender);
+    setMixture(animal.mixture);
     setFileUrls({ ...fileUrls, [animalId]: animal.photo });
   };
 
@@ -213,6 +225,9 @@ const UploadAnimal = () => {
           type,
           description,
           status,
+          gender,
+          age,
+          mixture,
           contact,
           file, // Cambia esto para pasar la URL de Cloudinary
           isActive
@@ -230,6 +245,9 @@ const UploadAnimal = () => {
         setType(""); 
         setDescription(""); 
         setStatus("");
+        setAge("") ;
+        setGender("");
+        setMixture("");
         setDate(""); 
         setContact(""); 
         setFileUrl("");  
@@ -278,6 +296,9 @@ const UploadAnimal = () => {
         setContact(editedAnimal.contact);
         setPhoto(editedAnimal.photo);
         setAnimalId(editedAnimal.id);
+        setAge(editedAnimal.age);
+        setGender(editedAnimal.gender);
+        setMixture(editedAnimal.mixture);
         
         // Verifica si la URL de la imagen original está en fileUrls
         // Si no está, agrégala al estado
@@ -341,6 +362,44 @@ const UploadAnimal = () => {
                     onChange={(e) => setPhone(e.target.value)}
                     className="form-control mt-1"
                   />
+                </div>
+              </div>
+              <div className="row mt-3 mb-0 d-flex text-start justify-content-center">
+                <div className="col-md-4">
+                  <label className="form-label"><b>Breed mixture:</b></label>
+                  <input
+                    type="text"
+                    placeholder="Breed mixture"
+                    value={mixture}
+                    onChange={(e) => setMixture(e.target.value)}
+                    className="form-control mt-1"
+                  />
+                </div>
+                <div className="col-md-4">
+                  <label className="form-label"><b>Age:</b></label>
+                  <select
+                    className="form-control mt-1"
+                    value={age}
+                    onChange={(e) => setAge(e.target.value)}
+                  >
+                    <option value="" disabled>Select age</option>
+                    <option value="Baby">Baby</option>
+                    <option value="Young">Young</option>
+                    <option value="Adult">Adult</option>
+                    <option value="Senio">Senior</option>
+                  </select>
+                </div>
+                <div className="col-md-4">
+                  <label className="form-label"><b>Gender:</b></label>
+                  <select
+                    className="form-control mt-1"
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                  >
+                    <option value="" disabled>Select a gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
                 </div>
               </div>
               <div className="row mt-3 mb-0 d-flex text-start justify-content-center">
@@ -523,6 +582,51 @@ const UploadAnimal = () => {
                             </div>
                             <div className="row d-flex text-start justify-content-center">
                               <div className="col-md-10">
+                                <label htmlFor="mixture"><b>Breed mixture:</b></label>
+                                <input
+                                  type="text"
+                                  id="mixture"
+                                  placeholder="Breed mixture"
+                                  className="form-control mb-3"
+                                  value={mixture}
+                                  onChange={(e) => setMixture(e.target.value)}
+                                />
+                              </div>
+                            </div>
+                            <div className="row d-flex text-start justify-content-center">
+                              <div className="col-md-10">
+                                <label htmlFor="age"><b>Age:</b></label>
+                                <select
+                                  id="age"
+                                  className="form-control mb-3"
+                                  value={age}
+                                  onChange={(e) => setAge(e.target.value)}
+                                >
+                                  <option value="" disabled>Select age</option> 
+                                  <option value="Baby">Baby</option>
+                                  <option value="Young">Young</option>
+                                  <option value="Adult">Adult</option>
+                                  <option value="Senior">Senior</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div className="row d-flex text-start justify-content-center">
+                              <div className="col-md-10">
+                                <label htmlFor="gender"><b>Gender:</b></label>
+                                <select
+                                  id="gender"
+                                  className="form-control mb-3"
+                                  value={gender}
+                                  onChange={(e) => setGender(e.target.value)}
+                                >
+                                  <option value="" disabled>Select a gender</option> 
+                                  <option value="Male">Male</option>
+                                  <option value="Female">Female</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div className="row d-flex text-start justify-content-center">
+                              <div className="col-md-10">
                                 <label htmlFor="city"><b>City:</b></label>
                                 <input
                                   type="text"
@@ -642,15 +746,18 @@ const UploadAnimal = () => {
                           // Mostrar información no editable cuando no está en modo de edición
                           <div className=" my-0">
                             <h4 className="card-title text-center mb-4"><b>{animal.name}</b></h4>
-                            <p className="card-text fs-5 text-start"><b>City: </b>{animal.city}</p>
-                            <p className="card-text fs-5 text-start"><b>Size Type: </b>{animal.size}</p>
-                            <p className="card-text fs-5 text-start"><b>Color: </b>{animal.color}</p>
-                            {/* <p className="card-text fs-5 text-start">Type of Animal: {animal.type_of_animal}</p> */}
-                            <p className="card-text fs-5 text-start"><b>Animal Status: </b>{animal.animal_status}</p>
-                            <p className="card-text fs-5 text-start"><b>Phone: </b>{animal.phone}</p>
-                            <p className="card-text fs-5 text-start"><b>Contact: </b>{animal.contact}</p>
-                            <p className="card-text fs-5 text-start"><b>Description: </b>{animal.description}</p>
-                            <p className="card-text fs-5 text-start"><b>Date: </b>{animal.date}</p>
+                            <p className="card-text text-start "><b>Breed Mixture: </b>{animal.mixture}</p>
+                            <p className="card-text text-start "><b>Gender: </b>{animal.gender}</p>
+                            <p className="card-text text-start "><b>Age: </b>{animal.age}</p>
+                            <p className="card-text  text-start"><b>City: </b>{animal.city}</p>
+                            <p className="card-text  text-start"><b>Size Type: </b>{animal.size}</p>
+                            <p className="card-text  text-start"><b>Color: </b>{animal.color}</p>
+                            {/* <p className="card-text  text-start">Type of Animal: {animal.type_of_animal}</p> */}
+                            <p className="card-text  text-start"><b>Animal Status: </b>{animal.animal_status}</p>
+                            <p className="card-text  text-start"><b>Phone: </b>{animal.phone}</p>
+                            <p className="card-text  text-start"><b>Contact: </b>{animal.contact}</p>
+                            <p className="card-text  text-start"><b>Description: </b>{animal.description}</p>
+                            <p className="card-text  text-start"><b>Date: </b>{animal.date}</p>
                             <div className="card-body">
                               <div className="row">
                                 <div className="col-md-12  text-center">

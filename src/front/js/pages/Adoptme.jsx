@@ -79,10 +79,10 @@ export const Adoptme = () => {
   };
 
   const filteredAnimals = store.animals.filter((animal) => {
-    // const ageMatch = selectedAge.length === 0 || selectedAge.includes(animal.age);
-    // const genderMatch = selectedGender === "" || selectedGender === animal.gender;
+    const ageMatch = selectedAge.length === 0 || selectedAge.includes(animal.age);
+    const genderMatch = selectedGender === "" || selectedGender === animal.gender;
     const sizeMatch = selectedSize === "" || selectedSize === animal.size;
-    return  sizeMatch;
+    return  sizeMatch && genderMatch && ageMatch;
   });
 
   const filteredPets = pets.filter((animal) => {
@@ -167,9 +167,9 @@ export const Adoptme = () => {
                     className="card-img-top card-v"
                   />
                   <div className="card-body">
-                    <h2 className="card-title d-flex justify-content-center"><strong >{animal.name}</strong></h2>
-                    <p className="card-text fs-5"><strong >Breed mixture: </strong>{animal.breeds ? animal.breeds.primary : 'N/A'}</p>
-                    <p><strong>Size: </strong>{animal.size ? animal.size : 'N/A'}</p>
+                    <h4 className="card-title d-flex justify-content-center"><strong >{animal.name}</strong></h4>
+                    <p className="card-text fs-5"><strong >Breed mixture: </strong>{animal.mixture ? animal.mixture : 'N/A'}</p>
+                    {/* <p><strong>Size: </strong>{animal.size ? animal.size : 'N/A'}</p> */}
                     {/* <p><strong>City: </strong>{animal.city ? animal.city : 'N/A'}</p> */}
                     {/* <p ><strong>Animal Status: </strong>{animal.animal_status ? animal.animal_status : 'N/A'}</p> */}
                     {/* <p><strong>Color: </strong>{animal.color ? animal.color : 'N/A'}</p>
@@ -194,9 +194,9 @@ export const Adoptme = () => {
                   <div className="card-body">
                     <h4 className="card-title d-flex justify-content-center mb-3 "><strong>{animal.name}</strong></h4>
                     <p className="card-text fs-5"><strong>Breed mixture: </strong>{animal.breeds ? animal.breeds.primary : 'N/A'}</p>
-                    <p className="card-text fs-4"><strong>Size: </strong>{animal.size ? animal.size : 'N/A'}</p>
+                    {/* <p className="card-text fs-4"><strong>Size: </strong>{animal.size ? animal.size : 'N/A'}</p>
                     <p className="card-text fs-4"><strong>Age: </strong>{animal.age ? animal.age : 'N/A'}</p>
-                  <p className="card-text fs-4"><strong>Gender: </strong>{animal.gender ? animal.gender : 'N/A'}</p>
+                  <p className="card-text fs-4"><strong>Gender: </strong>{animal.gender ? animal.gender : 'N/A'}</p> */}
                   </div>
                   <div className="mt-2 d-flex justify-content-center mb-2">
                     <Link to="/animalapi" state={animal} className="btn btn-success btn-lg"><strong>More details</strong></Link>
