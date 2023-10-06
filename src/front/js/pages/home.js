@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
-import logo from "../../img/logo.png";
+import logo from "../../img/NewHomeLetras.png";
 import portada from "../../img/portada.png";
 import "../../styles/index.css";
 import { Link, useNavigate } from "react-router-dom";

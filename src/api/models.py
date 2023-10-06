@@ -181,7 +181,7 @@ class Animal(db.Model):
     color = db.Column(db.String(20), nullable=False)
     type_of_animal = db.Column(db.Enum('Dog', 'Cat', name='type_of_animal'), nullable=False)
     description = db.Column(db.String(1000), nullable=False)
-    animal_status = db.Column(db.Enum('Lost', 'Found', name='animal_status'), nullable=False)
+    animal_status = db.Column(db.Enum('Lost', 'Found', 'Adoption', name='animal_status'), nullable=False)
     date = db.Column(DateTime, default=datetime.utcnow, nullable=True)
     contact = db.Column(db.String(1000),  nullable=False)
     photo = db.Column(db.String(1250), nullable=False)

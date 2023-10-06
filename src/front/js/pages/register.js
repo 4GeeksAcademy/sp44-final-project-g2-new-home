@@ -55,10 +55,10 @@ const Register = () => {
   
   
   return (
-    <div className="text-center">
+    <div className="text-center mt-5">
       
       <div className="container d-flex justify-content-center mt-5">
-      <div className="card fondo w-50">
+      <div className="card fondo mb-2 mt-5 w-50">
         <h1 className="pt-3 esmeralda">Register</h1>
       <div className="card-body">
       <form onSubmit={handleRegister}>

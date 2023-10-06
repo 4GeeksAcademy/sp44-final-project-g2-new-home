@@ -6,7 +6,19 @@ export const Admin = () => {
   const { actions, store } = useContext(Context);
 
  
-  
+   
+   const sortUsersByRole = (users) => {
+    return users.sort((a, b) => {
+     
+      const roleOrder = {
+        Admin: 1,
+        AnimalShelter: 2,
+        Person: 3,
+      };
+
+      return roleOrder[a.role] - roleOrder[b.role];
+    });
+  };
   
 
   useEffect(() => {
@@ -15,7 +27,8 @@ export const Admin = () => {
     console.log("Esto tiene estoreeeeee useeeeeerS: ",store.users)
   }, []); // El segundo argumento vacío asegura que esta función se ejecute solo una vez al montar el componente
 
- 
+  const sortedUsers = sortUsersByRole(store.users);
+
 
 return (
     <div className="container mb-3">
@@ -36,7 +49,7 @@ return (
             </tr>
           </thead>
           <tbody>
-            {store.users.map((user) => (
+            {sortedUsers.map((user) => (
               <tr className="text-center" key={user.id}>
                 <td>{user.email}</td>
                 <td>{user.role}</td>

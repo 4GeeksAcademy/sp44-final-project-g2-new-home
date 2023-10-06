@@ -30,6 +30,8 @@ const UploadAnimal = () => {
 
 
   const userId = store.user_id;
+  const animalshelterId = localStorage.getItem("animalshelterId");
+  const peopleId = localStorage.getItem("peopleId");
   const filteredAnimals = store.filteredAnimals;
   console.log("filteredAnimals en mi componente upload:", store.filteredAnimals);
  
@@ -396,7 +398,10 @@ const UploadAnimal = () => {
                       value={status}
                       onChange={(e) => setStatus(e.target.value)}
                     >
-                      <option value="" disabled>Select the status of animal</option> 
+                      <option value="" disabled>Select the status of animal</option>
+                      {(animalshelterId !== 'false' || userId && animalshelterId === 'false' && peopleId === 'false') && (
+                        <option value="Adoption">Adoption</option>
+                      )} 
                       <option value="Lost">Lost</option>
                       <option value="Found">Found</option>
                     </select>
@@ -568,8 +573,13 @@ const UploadAnimal = () => {
                                   onChange={(e) => setStatus(e.target.value)}
                                 >
                                   <option value="" disabled>Select the status of animal</option> 
-                                  <option value="Lost">Lost</option>
+                                  {(animalshelterId !== 'false' || userId && animalshelterId === 'false' && peopleId === 'false') && (
+                                    <option value="Adoption">Adoption</option>
+                                  )}
                                   <option value="Found">Found</option>
+                                  <option value="Lost">Lost</option>
+
+                                  
                                 </select>
                               </div>
                             </div>
@@ -630,17 +640,17 @@ const UploadAnimal = () => {
                           </form>
                         ) : (
                           // Mostrar información no editable cuando no está en modo de edición
-                          <div className="card-body">
-                            <h4 className="card-title">Name: {animal.name}</h4>
-                            <p className="card-text">City: {animal.city}</p>
-                            <p className="card-text">Size Type: {animal.size}</p>
-                            <p className="card-text">Color: {animal.color}</p>
-                            {/* <p className="card-text">Type of Animal: {animal.type_of_animal}</p> */}
-                            <p className="card-text">Animal Status: {animal.animal_status}</p>
-                            <p className="card-text">Phone: {animal.phone}</p>
-                            <p className="card-text">Contact: {animal.contact}</p>
-                            <p className="card-text">Description: {animal.description}</p>
-                            <p className="card-text">Date: {animal.date}</p>
+                          <div className=" my-0">
+                            <h4 className="card-title text-center mb-4"><b>{animal.name}</b></h4>
+                            <p className="card-text fs-5 text-start"><b>City: </b>{animal.city}</p>
+                            <p className="card-text fs-5 text-start"><b>Size Type: </b>{animal.size}</p>
+                            <p className="card-text fs-5 text-start"><b>Color: </b>{animal.color}</p>
+                            {/* <p className="card-text fs-5 text-start">Type of Animal: {animal.type_of_animal}</p> */}
+                            <p className="card-text fs-5 text-start"><b>Animal Status: </b>{animal.animal_status}</p>
+                            <p className="card-text fs-5 text-start"><b>Phone: </b>{animal.phone}</p>
+                            <p className="card-text fs-5 text-start"><b>Contact: </b>{animal.contact}</p>
+                            <p className="card-text fs-5 text-start"><b>Description: </b>{animal.description}</p>
+                            <p className="card-text fs-5 text-start"><b>Date: </b>{animal.date}</p>
                             <div className="card-body">
                               <div className="row">
                                 <div className="col-md-12  text-center">

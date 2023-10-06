@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: e57208e8113a
+Revision ID: 232606434319
 Revises: 
-Create Date: 2023-09-29 08:54:26.262095
+Create Date: 2023-10-06 18:36:43.475736
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e57208e8113a'
+revision = '232606434319'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -39,7 +39,7 @@ def upgrade():
     sa.Column('color', sa.String(length=20), nullable=False),
     sa.Column('type_of_animal', sa.Enum('Dog', 'Cat', name='type_of_animal'), nullable=False),
     sa.Column('description', sa.String(length=1000), nullable=False),
-    sa.Column('animal_status', sa.Enum('Lost', 'Found', name='animal_status'), nullable=False),
+    sa.Column('animal_status', sa.Enum('Lost', 'Found', 'Adoption', name='animal_status'), nullable=False),
     sa.Column('date', sa.DateTime(), nullable=True),
     sa.Column('contact', sa.String(length=1000), nullable=False),
     sa.Column('photo', sa.String(length=1250), nullable=False),
@@ -52,9 +52,9 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=20), nullable=False),
     sa.Column('address', sa.String(length=80), nullable=True),
-    sa.Column('city', sa.String(length=120), nullable=False),
-    sa.Column('zip_code', sa.Integer(), nullable=False),
-    sa.Column('cif', sa.Integer(), nullable=False),
+    sa.Column('city', sa.String(length=30), nullable=False),
+    sa.Column('zip_code', sa.String(length=15), nullable=False),
+    sa.Column('cif', sa.String(length=20), nullable=False),
     sa.Column('web', sa.String(length=100), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
@@ -118,7 +118,6 @@ def upgrade():
     sa.Column('people_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['people_id'], ['people.id'], ),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('email'),
     sa.UniqueConstraint('people_id'),
     sa.UniqueConstraint('phone')
     )

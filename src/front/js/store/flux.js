@@ -128,7 +128,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			sync_token_from_local_storage: () => {
 				const token = localStorage.getItem("token")
-				console.log("You are login out successfully!!!!!!!!")
+				console.log("Estoy obteniendo el token del localStorage", token)
 				if (token && token != "" && token != undefined) setStore({ token: token })
 			},
 			logout: () => {
@@ -381,9 +381,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return { success: false, message: 'Ha ocurrido un error al actualizar la experiencia' };
 				}
 			},
-			delete_experience: async (id) => {
+			// Supongamos que tienes una función para obtener el token (getStore().token)
+
+			deleteExperience: async (experienceId) => {
 				try {
-					const token = localStorage.getItem('token');
+					const token = getStore().token; // Obtener el token de autenticación
 					const opts = {
 						method: 'DELETE',
 						headers: {
@@ -392,19 +394,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 						},
 					};
 
-					const resp = await fetch(`${process.env.BACKEND_URL}/api/experiences/${id}`, opts);
+					const resp = await fetch(`${process.env.BACKEND_URL}/api/experiences/${experienceId}`, opts);
 
 					if (resp.status === 200) {
-						// Obtén el estado actual de experiences utilizando getStore()
-						const currentExperiences = getStore().experiences;
-						localStorage.removeItem("experienceId")
-
-						// Filtra las experiencias para eliminar la que coincida con el ID
-						const updatedExperiences = currentExperiences.filter(experience => experience.id !== id);
-						console.log("Experiencias actualizadas: ", updatedExperiences)
-						// Establece el nuevo estado de experiences utilizando setStore()
-						setStore({ experiences: updatedExperiences, experienceId: null });
-
+						// Eliminación exitosa, puedes realizar alguna acción adicional si es necesario.
 						return { success: true, message: 'Experiencia eliminada exitosamente' };
 					} else {
 						const responseData = await resp.json();

@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import "../../styles/index.css";
 import ExpandableCell from "./expansion";
 import voluntariofoto from "../../img/voluntariofoto.jpg";
-import { Link } from "react-router-dom";
 
 export const VoluntaryForm = () => {
   const { actions, store } = useContext(Context);
@@ -48,7 +47,9 @@ export const VoluntaryForm = () => {
     navigate("/");
   }
 
- 
+  const handleGoRegister = () => {
+    navigate("/register");
+ }
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -88,7 +89,8 @@ export const VoluntaryForm = () => {
             <p className="card-text text-start  px-3 pb-3 fs-5">Every small gesture counts, and together we can create a better world for our furry friends. Sign up to volunteer today and be part of our family of animal lovers!</p>
           </div>
           <div className="card-footer">
-            <p className="card-text text-start p-3 fs-5">Together we make a difference. Join our team and change lives, one paw at a time. <Link to="/register"><b>Register</b></Link> and complete the form. They will call you soon..</p>
+            <p className="card-text text-start pb-0 p-3 fs-5" >Together we make a difference. Join our team and change lives, one paw at a time. Register and complete the form. They will call you soon..</p>
+            <button className="btn-success btn-lg mb-3" onClick={handleGoRegister}><b>Register</b></button>
           </div>
         </div>
       </div>
