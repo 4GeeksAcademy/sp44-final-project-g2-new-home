@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/index.css";
 import Masonry from "react-masonry-css";
+import { set } from "date-fns";
 
 export const Lostanimals = () => {
   const { store, actions } = useContext(Context);
@@ -15,6 +16,9 @@ export const Lostanimals = () => {
   const [city, setCity] = useState("");
   const [phone, setPhone] = useState("");
   const [size, setSize] = useState("");
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [mixture, setMixture] = useState("");
   const [color, setColor] = useState("");
   const initialType = localStorage.getItem("selectedType") || "Dog";
   const [type, setType] = useState(initialType);
@@ -94,6 +98,9 @@ export const Lostanimals = () => {
         typeOfAnimal: type,
         description,
         animalStatus: status,
+        gender: gender,
+        age: age,
+        mixture: mixture,
         date: currentDate,
         contact,
         photo: imageUrl,
@@ -114,6 +121,9 @@ export const Lostanimals = () => {
         setSize("");
         setColor("");
         setType("");
+        setMixture("");
+        setAge("");
+        setGender("");
         setDescription("");
         setStatus("");
         setDate("");
@@ -154,6 +164,9 @@ export const Lostanimals = () => {
     console.log("animal.photo: ", animal.photo)
     setAnimalId(animal.id);
     console.log("animal.id: ", animal.id)
+    setGender(animal.gender);
+    setAge(animal.age);
+    setMixture(animal.mixture);
   };
   const handleEditImage = (e) => {
     if (e.target.files.length) {
@@ -248,7 +261,57 @@ export const Lostanimals = () => {
                     </select>
                   </div>
                 </div>
-                <div className="row mt-3 d-flex text-start justify-content-center">
+                <div className="row mt-3 text-start">
+                <div className="col-md-3">
+                    <label><b>Mixture:</b></label>
+                    <input
+                      type="text"
+                      className="form-control mt-2"
+                      placeholder="Breed  mixture"
+                      value={mixture}
+                      onChange={(e) => setMixture(e.target.value)}
+                    />
+                  </div>
+                  <div className="col-md-3">
+                    <label><b>Gender:</b></label>
+                    <select
+                      className="form-control mt-2"
+                      value={gender}
+                      onChange={(e) => setGender(e.target.value)}
+                    >
+                      <option value="" disabled>Select age</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                    </select>
+                  </div>
+                  <div className="col-md-3">
+                      <label><b>Age:</b></label>
+                      <select
+                        className="form-control mt-2"
+                        value={age}
+                        onChange={(e) => setAge(e.target.value)}
+                      >
+                        <option value="" disabled>Select age</option>
+                        <option value="Baby">Baby</option>
+                        <option value="Young">Young</option>
+                        <option value="Adult">Adult</option>
+                        <option value="Senior">Senior</option>
+                      </select>
+                    </div>
+                    <div className="col-md-3">
+                    <label><b>Status:</b></label>
+                    <select
+                      className="form-control mt-2"
+                      value={status}
+                      onChange={(e) => setStatus(e.target.value)}
+                    >
+                      <option value="" disabled>Select the status of animal</option>
+                      <option value="Lost">Lost</option>
+                      <option value="Found">Found</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="row mt-4 mb-0 pb-0 d-flex text-start justify-content-center">
                   <div className="col-md-3">
                     <label><b>Color:</b></label>
                     <input
@@ -281,29 +344,6 @@ export const Lostanimals = () => {
                       onChange={(e) => setContact(e.target.value)}
                     />
                   </div>
-                  <div className="col-md-3">
-                    <label><b>Status:</b></label>
-                    <select
-                      className="form-control mt-2"
-                      value={status}
-                      onChange={(e) => setStatus(e.target.value)}
-                    >
-                      <option value="" disabled>Select the status of animal</option>
-                      <option value="Lost">Lost</option>
-                      <option value="Found">Found</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="row mt-3 text-start">
-                  <div className="col-md-9">
-                    <label><b>Description:</b></label>
-                    <textarea
-                      placeholder="Description"
-                      className="form-control mt-2"
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                    ></textarea>
-                  </div>
                   <div className="col-md-3 text-light  preview-image d-flex flex-column">
                     <label className="form-label text-start text-dark"><b>Photo:</b></label>
                     <label htmlFor="image-input" className="btn btn-outline-dark text-start  border-1 p-2 rounded-3">
@@ -316,6 +356,17 @@ export const Lostanimals = () => {
                       onChange={handleImageChange}
                       style={{ visibility: "hidden" }}
                     />
+                  </div>
+                </div>
+                <div className="row text-start mt-0 pt-0">
+                  <div className="col-md-12">
+                    <label><b>Description:</b></label>
+                    <textarea
+                      placeholder="Description"
+                      className="form-control mt-2"
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                    ></textarea>
                   </div>
                 </div>
                 <div className="row mt-3">
@@ -377,6 +428,9 @@ export const Lostanimals = () => {
                         )}
                         <div className="card-body">
                           <h4 className="card-title mb-4"><b>{animal.name}</b> </h4>
+                          <p className="card-text text-start fs-5"><b>Breed Mixture: </b>{animal.mixture}</p>
+                          <p className="card-text text-start fs-5"><b>Gender: </b>{animal.gender}</p>
+                          <p className="card-text text-start fs-5"><b>Age: </b>{animal.age}</p>
                           <p className="card-text text-start fs-5"><b>City: </b>{animal.city}</p>
                           <p className="card-text text-start fs-5"><b>Phone: </b>{animal.phone}</p>
                           <p className="card-text text-start fs-5"><b>Size Type: </b>{animal.size}</p>
@@ -408,6 +462,9 @@ export const Lostanimals = () => {
                         )}
                         <div className="card-body">
                           <h4 className="card-title mb-4"><b>{animal.name}</b></h4>
+                          <p className="card-text text-start fs-5"><b>Breed Mixture: </b>{animal.mixture}</p>
+                          <p className="card-text text-start fs-5"><b>Gender: </b>{animal.gender}</p>
+                          <p className="card-text text-start fs-5"><b>Age: </b>{animal.age}</p>
                           <p className="card-text text-start fs-5"><b>City: </b>{animal.city}</p>
                           <p className="card-text text-start fs-5"><b>Phone: </b>{animal.phone}</p>
                           <p className="card-text text-start fs-5"><b>Size Type: </b>{animal.size}</p>

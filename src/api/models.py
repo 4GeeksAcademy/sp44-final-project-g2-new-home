@@ -182,6 +182,9 @@ class Animal(db.Model):
     type_of_animal = db.Column(db.Enum('Dog', 'Cat', name='type_of_animal'), nullable=False)
     description = db.Column(db.String(1000), nullable=False)
     animal_status = db.Column(db.Enum('Lost', 'Found', 'Adoption', name='animal_status'), nullable=False)
+    gender = db.Column(db.Enum('Female', 'Male', name='gender'), nullable=False)
+    age = db.Column(db.Enum('Baby', 'Young', 'Adult', 'Senior', name='age'), nullable=False)
+    mixture = db.Column(db.String(30), nullable=False)
     date = db.Column(DateTime, default=datetime.utcnow, nullable=True)
     contact = db.Column(db.String(1000),  nullable=False)
     photo = db.Column(db.String(1250), nullable=False)
@@ -207,6 +210,9 @@ class Animal(db.Model):
             "date":self.date,
             "contact": self.contact,
             "animal_status": self.animal_status,
+            "gender": self.gender,
+            "age":self.age,
+            "mixture":self.mixture,
             "user_id": self.user_id,
             # "date": self.post_date.isoformat()
         }

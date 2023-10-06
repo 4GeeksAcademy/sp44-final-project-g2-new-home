@@ -150,9 +150,9 @@ export const Experiences = () => {
   
 
   const handleDelete = async () => {
-    if (window.confirm("Are you sure you want to delete your experience?")) {
+
     const success = await actions.deleteExperience(store.experienceId);
-      if (success) {
+      if (success.success) {
         console.log("Experiencie Deleted")
         setShowForm(false); 
         setTitle("");
@@ -168,7 +168,7 @@ export const Experiences = () => {
       } else {
         alert("Failed to delete the experience. Please try again later.");
       }
-    }
+    
   };
 
   useEffect(() => {
