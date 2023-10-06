@@ -459,7 +459,7 @@ def handle_experience(id):
       experience = db.get_or_404(ExperiencesBlog, id)
       db.session.delete(experience)
       db.session.commit()
-      response_body = {"message": "Delete experience",
+      response_body = {"message": "Deleted experience",
                        "status": "ok",
                        "experience_deleting": id,
                        }

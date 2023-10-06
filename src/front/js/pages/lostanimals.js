@@ -16,7 +16,8 @@ export const Lostanimals = () => {
   const [phone, setPhone] = useState("");
   const [size, setSize] = useState("");
   const [color, setColor] = useState("");
-  const [type, setType] = useState("");
+  const initialType = localStorage.getItem("selectedType") || "Dog";
+  const [type, setType] = useState(initialType);
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [contact, setContact] = useState("");
@@ -30,6 +31,7 @@ export const Lostanimals = () => {
   const [status, setStatus] = useState("Lost");
 
   useEffect(() => {
+    localStorage.setItem("selectedType", type);
     actions.get_all_animals()
   }, []);
 
@@ -266,7 +268,7 @@ export const Lostanimals = () => {
                     >
                       <option value="" disabled>Select a type of animal</option>
                       <option value="Dog">Dog</option>
-                      <option value="Cat">Cat</option>
+                      {/* <option value="Cat">Cat</option> */}
                     </select>
                   </div>
                   <div className="col-md-3">
@@ -374,15 +376,15 @@ export const Lostanimals = () => {
                           />
                         )}
                         <div className="card-body">
-                          <h4 className="card-title">Name: {animal.name}</h4>
-                          <p className="card-text">City: {animal.city}</p>
-                          <p className="card-text">Phone: {animal.phone}</p>
-                          <p className="card-text">Size Type: {animal.size}</p>
-                          <p className="card-text">Color: {animal.color}</p>
-                          <p className="card-text">Type of Animal: {animal.type_of_animal}</p>
-                          <p className="card-text">Description: {animal.description}</p>
-                          <p className="card-text">Contact: {animal.contact}</p>
-                          <p className="card-text">Date: {animal.date}</p>
+                          <h4 className="card-title mb-4"><b>{animal.name}</b> </h4>
+                          <p className="card-text text-start fs-5"><b>City: </b>{animal.city}</p>
+                          <p className="card-text text-start fs-5"><b>Phone: </b>{animal.phone}</p>
+                          <p className="card-text text-start fs-5"><b>Size Type: </b>{animal.size}</p>
+                          <p className="card-text text-start fs-5"><b>Color: </b>{animal.color}</p>
+                          <p className="card-text text-start fs-5"><b>Type of Animal: </b>{animal.type_of_animal}</p>
+                          <p className="card-text text-start fs-5"><b>Description: </b>{animal.description}</p>
+                          <p className="card-text text-start fs-5"><b>Contact: </b>{animal.contact}</p>
+                          <p className="card-text text-start fs-5"><b>Date: </b>{animal.date}</p>
                         </div>
                       </div>
                     </div>
@@ -405,16 +407,16 @@ export const Lostanimals = () => {
                           />
                         )}
                         <div className="card-body">
-                          <h4 className="card-title">Name: {animal.name}</h4>
-                          <p className="card-text">City: {animal.city}</p>
-                          <p className="card-text">Phone: {animal.phone}</p>
-                          <p className="card-text">Size Type: {animal.size}</p>
-                          <p className="card-text">Color: {animal.color}</p>
-                          <p className="card-text">Type of Animal: {animal.type_of_animal}</p>
-                          <p className="card-text">Description: {animal.description}</p>
-                          <p className="card-text">Animal Status: {animal.animal_status}</p>
-                          <p className="card-text">Contact: {animal.contact}</p>
-                          <p className="card-text">Date: {animal.date}</p>
+                          <h4 className="card-title mb-4"><b>{animal.name}</b></h4>
+                          <p className="card-text text-start fs-5"><b>City: </b>{animal.city}</p>
+                          <p className="card-text text-start fs-5"><b>Phone: </b>{animal.phone}</p>
+                          <p className="card-text text-start fs-5"><b>Size Type: </b>{animal.size}</p>
+                          <p className="card-text text-start fs-5"><b>Color: </b>{animal.color}</p>
+                          <p className="card-text text-start fs-5"><b>Type of Animal: </b>{animal.type_of_animal}</p>
+                          <p className="card-text text-start fs-5"><b>Description: </b>{animal.description}</p>
+                          <p className="card-text text-start fs-5"><b>Animal Status: </b>{animal.animal_status}</p>
+                          <p className="card-text text-start fs-5"><b>Contact: </b>{animal.contact}</p>
+                          <p className="card-text text-start fs-5"><b>Date: </b>{animal.date}</p>
                         </div>
                       </div>
                     </div>

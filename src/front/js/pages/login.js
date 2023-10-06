@@ -33,8 +33,8 @@ export const Login = () => {
         <div className="container mt-5">
             <div className="row">
                 <div className="col-md-4"></div>
-                <div className="col-md-4">
-                    <div className="card p-0 m-0 w-100 fondo">
+                <div className="col-md-4 mt-2">
+                    <div className="card mt-5 p-0 m-0 w-100 fondo">
                         <h1 className="esmeralda text-center my-3">Login</h1>
                         <div className="card-body">
                             <form>

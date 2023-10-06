@@ -353,9 +353,9 @@ box-shadow: 0 0 5px #147a5c !important;
 }
 .custom-logo {
   position: absolute;
-  top: 1rem; 
-  right: 1rem; 
-  max-width: 20%;
+  top: 0.1rem; 
+  right: 0.1rem; 
+  max-width: 30%;
   z-index: 1; 
 }
 @media (max-width: 578px) {

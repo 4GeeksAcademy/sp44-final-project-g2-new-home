@@ -2,19 +2,20 @@ import React, { useState, useContext, useEffect } from "react";
 import "../../styles/index.css";
 import { Context } from "../store/appContext";
 import Masonry from "react-masonry-css";
+import { set } from "date-fns";
 
 
 export const Experiences = () => {
   const { actions, store } = useContext(Context);
   // const [experiences, setExperiences] = useState([]); // Store published experiences
-  const [title, setTitle] = useState(localStorage.getItem("experienceTitle") ?? "");
-  const [body, setBody] = useState(localStorage.getItem("experienceBody") ?? "");
-  const [photolist, setPhotolist] = useState([]);
-  const [isEditing, setIsEditing] = useState(false);
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
   const [showForm, setShowForm] = useState(false);
   const[file, setFile]= useState("");
-  const[fileUrl, setFileUrl]= useState(localStorage.getItem("experienceFileUrl") ?? "");
-  const [likedExperiences, setLikedExperiences] = useState(new Set());
+  const[fileUrl, setFileUrl]= useState("");
+  const [imageChange, setImageChange] = useState(false);
+  const[cloud, setCloud]= useState("");
+
 
   const peopleId = store.peopleId; 
   const userId = store.user_id;
@@ -22,29 +23,33 @@ export const Experiences = () => {
   const experienceId = localStorage.getItem("experienceId")
 
   const handleShowForm = () => {
-    if (peopleId) {
-      setShowForm(true); 
+    if (peopleId) { 
+      setShowForm(true);
+      if (experienceId !== 'false' || !experienceId) {
+        const localTitle = localStorage.getItem("experienceTitle");
+        const localBody = localStorage.getItem("experienceBody");
+        const localImg = localStorage.getItem("experienceimageUrl");
+        setFileUrl(localImg || "");
+        setTitle(localTitle || "");
+        setBody(localBody || ""); 
+    } 
     } else if (!userId) {
       alert("You need to log in to post your experience.");
     } else if (shelterId != null || (shelterId && peopleId === null)) {
       alert("You do not have permission to publish");
     }
-      const experienceToEdit = store.experiences.find((experience) => experience.id === store.experienceId);
-      if(experienceToEdit){
-        localStorage.setItem("experienceTitle", experienceToEdit.title);
-        localStorage.setItem("experienceBody", experienceToEdit.body);
-        localStorage.setItem("experienceFileUrl", experienceToEdit.photo);
-        setFileUrl(experienceToEdit.photo);
-        setTitle(experienceToEdit.title );
-        setBody(experienceToEdit.body );
-      }
   };
+  
   
   
   
   const handleBackToPosts = () => {
     setShowForm(false); 
-    setFileUrl(false);
+    if(experienceId !== 'false'){
+      setFileUrl("");
+      setTitle("");
+      setBody("");
+    }
   };
   
   const handleTitleChange = (e) => {
@@ -55,93 +60,111 @@ export const Experiences = () => {
     setBody(e.target.value);
   };
 
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     if (e.target.files.length) {
       const imageUrl = URL.createObjectURL(e.target.files[0]);
-      setFileUrl(imageUrl); // Actualizar el estado de la vista previa de la imagen
+      setFileUrl(imageUrl);
       setFile(e.target.files[0]);
+  
+      try {
+        const form = new FormData();
+        form.append("img", e.target.files[0]);
+  
+        const response = await fetch(process.env.BACKEND_URL + "/api/img", {
+          method: "POST",
+          body: form,
+        });
+  
+        const data = await response.json();
+        const cloudinaryUrl = await data["img_url: "];
+  
+        // Establece la URL de Cloudinary en el estado solo si se cargó una nueva imagen
+        if (cloudinaryUrl) {
+          setCloud(cloudinaryUrl);
+          console.log("CLOUD:",cloudinaryUrl)
+          setImageChange(true);
+        }
+      } catch (error) {
+        console.error("Error al cargar la imagen en Cloudinary", error);
+      }
     }
   };
   
+  
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  if (experienceId === 'false') {
-    if (!title || !body || !file) {
-      alert("Please fill in all required fields (Title, Description, and Image).");
-      return;
+    e.preventDefault();
+  
+    if (experienceId === 'false') {
+      if (!title || !body || !file) {
+        alert("Please fill in all required fields (Title, Description, and Image).");
+        return;
+      }
     }
-  }
-
-  try {
-    const form = new FormData();
-    form.append("img", file);
-
-    const response = await fetch(process.env.BACKEND_URL + "/api/img", {
-      method: "POST",
-      body: form
-    });
-
-    const data = await response.json();
-    const imageUrl = data["img_url: "];
-    const id = store.experienceId;
-    console.log("data fetch img: ", data);
-    console.log("imageUUUUUUUUURL: ", imageUrl)
-
+  
     if (experienceId === 'false' || !experienceId) {
-      
       // Llama a la función de publicar si no hay experiencia ID
-      const success = await actions.publishExperience(title, body, imageUrl, peopleId);
+      const success = await actions.publishExperience(title, body, cloud, peopleId);
       if (success) {
-        const experienceToEdit = store.experiences.find((experience) => experience.id === store.experienceId);
-        if(experienceToEdit){
-          localStorage.setItem("experienceTitle", experienceToEdit.title);
-          localStorage.setItem("experienceBody", experienceToEdit.body);
-          localStorage.setItem("experienceFileUrl", experienceToEdit.photo);
-          setFileUrl(experienceToEdit.photo);
-          setTitle(experienceToEdit.title );
-          setBody(experienceToEdit.body );}
-          actions.get_experiences();
-          setTitle("");
-          setBody("");
-          setFileUrl("");
+        localStorage.setItem("experienceTitle", title);
+        localStorage.setItem("experienceBody", body);
+        localStorage.setItem("experienceimageUrl", cloud);
+        setFileUrl(fileUrl);
+        setTitle(title);
+        setBody(body);
+        actions.get_experiences();
       }
     } else {
-       // Llama a la función de actualizar
-       const success = await actions.update_experience(id, title, body, imageUrl);
-       if (success) {
-         const experienceToEdit = store.experiences.find((experience) => experience.id === store.experienceId);
-         if(experienceToEdit){
-           localStorage.setItem("experienceTitle", experienceToEdit.title);
-           localStorage.setItem("experienceBody", experienceToEdit.body);
-           localStorage.setItem("experienceFileUrl", experienceToEdit.photo);
-           setFileUrl(experienceToEdit.photo);
-           setTitle(experienceToEdit.title );
-           setBody(experienceToEdit.body );}
-         actions.get_experiences();
-       }
+      // Llama a la función de actualizar
+      const id = store.experienceId;
+  
+      if (imageChange) {
+        // Si se cargó una nueva imagen, actualiza con la nueva imagen
+        const success = await actions.update_experience(id, title, body, cloud);
+        if (success) {
+          localStorage.setItem("experienceTitle", title);
+          localStorage.setItem("experienceBody", body);
+          localStorage.setItem("experienceFileUrl", cloud);
+          setFileUrl(cloud);
+          setTitle(title);
+          setBody(body);
+          setImageChange(false);
+          actions.get_experiences();
+        }
+      } else {
+        // Si no se cargó una nueva imagen, actualiza con la imagen existente
+        const success = await actions.update_experience(id, title, body, fileUrl);
+        if (success) {
+          localStorage.setItem("experienceTitle", title);
+          localStorage.setItem("experienceBody", body);
+          setFileUrl(fileUrl);
+          setTitle(title);
+          setBody(body);
+          actions.get_experiences();
+        }
+      }
     }
+  
     setShowForm(false);
-  } catch (e) {
-    console.error("ERROR IMAGEN", e);
-  }
   };
+  
 
   const handleDelete = async () => {
-    if (window.confirm("Are you sure you want to delete this experience?")) {
-      const success = await actions.delete_experience(experienceId);
+    if (window.confirm("Are you sure you want to delete your experience?")) {
+    const success = await actions.deleteExperience(store.experienceId);
       if (success) {
-        actions.get_experiences(); 
+        console.log("Experiencie Deleted")
         setShowForm(false); 
         setTitle("");
         setBody("");
-        setPhotolist([]);
         setFileUrl("");
-        localStorage.removeItem("experienceId")
-        localStorage.removeItem("experienceTitle") 
-        localStorage.removeItem("experienceBody")
-        localStorage.removeItem("experienceFileUrl")
+        setCloud("");
+        localStorage.removeItem("experienceId");
+        localStorage.removeItem("experienceTitle");
+        localStorage.removeItem("experienceBody");
+        localStorage.removeItem("experienceFileUrl");
+        localStorage.removeItem("experienceimageUrl");
+        actions.get_experiences();
       } else {
         alert("Failed to delete the experience. Please try again later.");
       }
@@ -172,32 +195,11 @@ export const Experiences = () => {
               
               {fileUrl && (
                 <div className="custom-experience-preview-image custom-upload-container">
-                  <img src={fileUrl} alt="Preview" />
+                  <img src={(fileUrl)} alt="Preview" />
                 </div>
               )} 
                 <form className="row g-3" onSubmit={handleSubmit}>
-                  <div className="row mt-5 d-flex text-start justify-content-center">
-                      <div className="col-md-10">
-                        <label className="form-label"><b>Title:</b></label>
-                        <input
-                          type="text"
-                          placeholder="Title"
-                          value={title}
-                          onChange={handleTitleChange}
-                          className="form-control mt-3"
-                        />
-                      </div>
-                      <div className="col-md-10 mt-3 mb-3">
-                        <label className="form-label"><b>Description:</b></label>
-                        <textarea
-                          placeholder="Description"
-                          value={body}
-                          onChange={handleDescriptionChange}
-                          className="form-control mt-3"
-                        ></textarea>
-                      </div>
-                  </div>
-                  <div className="row"> 
+                  <div className="row mt-5"> 
                     <div className="col-1" style={{maxWidth: "9%"}}></div>
                     <div className="col-md-3 text-light text-start">
                       <label className="form-label  text-dark "><b>Photo:</b></label>
@@ -213,6 +215,29 @@ export const Experiences = () => {
                       />
                     </div>
                   </div> 
+                  <div className="row  d-flex text-start justify-content-center">
+                      <div className="col-md-10">
+                        <label className="form-label"><b>Title:</b></label>
+                        <input
+                          type="text"
+                          placeholder="Title"
+                          value={title}
+                          onChange={handleTitleChange}
+                          className="form-control mt-3"
+                          id="title"
+                        />
+                      </div>
+                      <div className="col-md-10 mt-3 mb-3">
+                        <label className="form-label"><b>Description:</b></label>
+                        <textarea
+                          placeholder="Description"
+                          value={body}
+                          onChange={handleDescriptionChange}
+                          className="form-control mt-3"
+                          id="description"
+                        ></textarea>
+                      </div>
+                  </div>
               { (experienceId === 'false'  || !experienceId) ? (
                 <div className="row d-flex justify-content-center">
                     <div className="col-md-12">
