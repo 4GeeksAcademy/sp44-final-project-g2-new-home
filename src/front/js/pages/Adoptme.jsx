@@ -96,7 +96,7 @@ export const Adoptme = () => {
 
   
   return (
-    <div className="container-fluid mb-3">
+    <div className="container-fluid px-4 mb-3">
       <h1 className="esmeralda text-center mt-5 mb-5">Adopt a pet</h1>
       <div className="row d-flex justify-content-center p-5">
       <div className="col-md-2 px-0 pt-0 pb-0 card  border border-4 sombra rounded-2" style={{ maxHeight: "380px", overflowY: "auto" }}>
@@ -157,9 +157,9 @@ export const Adoptme = () => {
             breakpointCols={breakpointColumnsObj}
             className="my-masonry-grid"
             columnClassName="my-masonry-grid_column"
-          >
-            
+          > 
               {filteredAnimals.map((animal, index) => (
+                (animal.animal_status === "Adoption") && (
                 <div key={animal.id} className="card  rounded col-12 col-md-6 col-lg-4">
                   <img
                     src={animal.photo || backupImages[backupImageIndex].default}
@@ -181,7 +181,7 @@ export const Adoptme = () => {
                   </div>
                   </div>
                 </div>
-              ))}
+              )))}
             {pets ? (
               filteredPets.map((animal, id) => (
                 <div key={id} className="card rounded col-12 col-md-6 col-lg-4">

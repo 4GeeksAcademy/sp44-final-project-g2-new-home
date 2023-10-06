@@ -30,6 +30,8 @@ const UploadAnimal = () => {
 
 
   const userId = store.user_id;
+  const animalshelterId = localStorage.getItem("animalshelterId");
+  const peopleId = localStorage.getItem("peopleId");
   const filteredAnimals = store.filteredAnimals;
   console.log("filteredAnimals en mi componente upload:", store.filteredAnimals);
  
@@ -396,7 +398,10 @@ const UploadAnimal = () => {
                       value={status}
                       onChange={(e) => setStatus(e.target.value)}
                     >
-                      <option value="" disabled>Select the status of animal</option> 
+                      <option value="" disabled>Select the status of animal</option>
+                      {(animalshelterId !== 'false' || userId && animalshelterId === 'false' && peopleId === 'false') && (
+                        <option value="Adoption">Adoption</option>
+                      )} 
                       <option value="Lost">Lost</option>
                       <option value="Found">Found</option>
                     </select>
@@ -568,8 +573,13 @@ const UploadAnimal = () => {
                                   onChange={(e) => setStatus(e.target.value)}
                                 >
                                   <option value="" disabled>Select the status of animal</option> 
-                                  <option value="Lost">Lost</option>
+                                  {(animalshelterId !== 'false' || userId && animalshelterId === 'false' && peopleId === 'false') && (
+                                    <option value="Adoption">Adoption</option>
+                                  )}
                                   <option value="Found">Found</option>
+                                  <option value="Lost">Lost</option>
+
+                                  
                                 </select>
                               </div>
                             </div>
