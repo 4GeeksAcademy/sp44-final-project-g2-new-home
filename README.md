@@ -17,7 +17,28 @@ It is recomended to install the backend first, make sure you have Python 3.8, Pi
 
 1. Install the python packages: `$ pipenv install`
 2. Create a .env file based on the .env.example: `$ cp .env.example .env`
-3. Install your database engine and create your database, depending on your database you have to create a DATABASE_URL variable with one of the possible values, make sure you replace the valudes with your database information:
+3. Replace the content of your .env with this one and complete the BACKEND_URL variable with the url of your back:
+   
+    # This file includes global variables that will be available inside your project
+    # 1. In the front end code you can access this variables like this: console.log(process.env.VARIABLE_NAME)
+    # 1. In the back end code you access the variable by importing os and then typing print(os.getenv('VARIABLE_NAME'))
+    # Back-End Variables
+    DATABASE_URL=postgres://gitpod:postgres@localhost:5432/example
+    FLASK_APP_KEY="any key works"
+    FLASK_APP=src/app.py
+    FLASK_DEBUG=1
+    DEBUG=TRUE
+    JWT_SECRET=fkjldhfa98sf789as7dfuoiq3r98f029840urfi32oedc398uwe7f982498f
+    CLOUD_NAME="dtbjchcht"
+    CLOUD_API_SECRET="giznhoqflAxt2lY-MaZKGklZYCE"
+    CLOUD_KEY=447492239567353
+    API_KEY=43K0NJRKxBRfIqPDpHt9buA50H6NpDkiZEw5yyEnsPo5nQv2ri
+    KEY_SECRET=jswVOs8TwvJn9QUnMY8Ukad0xmrrr3A4rqrtkkUF
+    # Front-End Variables
+    BASENAME=/
+    BACKEND_URL=
+  
+5. Install your database engine and create your database, depending on your database you have to create a DATABASE_URL variable with one of the possible values, make sure you replace the valudes with your database information:
 
 | Engine    | DATABASE_URL                                        |
 | --------- | --------------------------------------------------- |
